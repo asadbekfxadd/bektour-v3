@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Мои объекты — Bek Tour Partner Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="b2b-shell">
+
+  <aside class="b2b-sidebar" id="b2bSidebar">
+    <div class="b2b-sidebar-logo">
+      <a href="index.html" style="text-decoration:none;">
+        <div class="b2b-logo-text">BEK<em>TOUR</em></div>
+        <div class="b2b-logo-sub">Partner Hub</div>
+      </a>
+    </div>
+    <nav class="b2b-nav">
+      <div class="b2b-nav-sec">Обзор</div>
+      <a href="dashboard.html" class="b2b-nav-item"><i class="fa fa-gauge-high"></i> Dashboard</a>
+      <div class="b2b-nav-sec">Объекты</div>
+      <a href="properties.html" class="b2b-nav-item active"><i class="fa fa-building"></i> Мои объекты</a>
+      <a href="property-form.html" class="b2b-nav-item"><i class="fa fa-plus"></i> Добавить объект</a>
+      <div class="b2b-nav-sec">Продажи</div>
+      <a href="bookings.html" class="b2b-nav-item"><i class="fa fa-calendar-check"></i> Бронирования</a>
+      <div class="b2b-nav-sec">Прочее</div>
+      <a href="index.html" class="b2b-nav-item"><i class="fa fa-globe"></i> На сайт</a>
+      <a href="register.html" class="b2b-nav-item" onclick="localStorage.removeItem('bt_user')"><i class="fa fa-sign-out-alt"></i> Выйти</a>
+    </nav>
+    <div class="b2b-sidebar-foot">
+      <div class="b2b-user">
+        <div class="b2b-user-av" id="userAv">A</div>
+        <div><div class="b2b-user-name" id="userName">Партнёр</div><div class="b2b-user-role">Agent</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="b2b-main">
+    <div class="b2b-topbar">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <button data-b2b-toggle style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:1.1rem;"><i class="fa fa-bars"></i></button>
+        <div class="b2b-topbar-title">Мои объекты</div>
+      </div>
+      <div class="b2b-topbar-right">
+        <div style="display:flex;gap:.5rem;align-items:center;">
+          <input type="text" id="searchInput" placeholder="Поиск..." style="padding:.5rem .9rem;border:1.5px solid #e8e8e8;border-radius:8px;font-family:inherit;font-size:.8rem;outline:none;width:180px;" oninput="renderProps()">
+          <select id="filterType" onchange="renderProps()" style="padding:.5rem .8rem;border:1.5px solid #e8e8e8;border-radius:8px;font-family:inherit;font-size:.78rem;outline:none;">
+            <option value="">Все типы</option>
+            <option value="hotel">Отели</option>
+            <option value="villa">Виллы</option>
+            <option value="dacha">Дачи</option>
+            <option value="guesthouse">Гост. дома</option>
+            <option value="apartment">Апартаменты</option>
+            <option value="tour">Туры</option>
+          </select>
+          <select id="filterCity" onchange="renderProps()" style="padding:.5rem .8rem;border:1.5px solid #e8e8e8;border-radius:8px;font-family:inherit;font-size:.78rem;outline:none;">
+            <option value="">Все города</option>
+            <option value="tashkent">Ташкент</option>
+            <option value="samarkand">Самарканд</option>
+            <option value="bukhara">Бухара</option>
+            <option value="khiva">Хива</option>
+            <option value="charvak">Чарвак</option>
+          </select>
+        </div>
+        <a href="property-form.html" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Добавить</a>
+      </div>
+    </div>
+
+    <div class="b2b-content">
+
+      <!-- Stats row -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;" id="statsRow"></div>
+
+      <!-- Props grid -->
+      <div id="propsGrid"></div>
+
+      <!-- Empty state -->
+      <div id="emptyState" style="display:none;text-align:center;padding:4rem 2rem;">
+        <i class="fa fa-building" style="font-size:3rem;color:#e0e0e0;margin-bottom:1rem;display:block;"></i>
+        <div style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:.6rem;">Объектов пока нет</div>
+        <p style="color:var(--gray-500);margin-bottom:1.5rem;">Добавьте первый объект чтобы начать получать бронирования</p>
+        <a href="property-form.html" class="btn btn-primary"><i class="fa fa-plus"></i> Добавить объект</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Delete confirm modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-head"><h2>Удалить объект?</h2><span class="modal-close" onclick="closeDeleteModal()">✕</span></div>
+    <div class="modal-body">
+      <p style="color:var(--gray-500);font-size:.88rem;">Это действие нельзя отменить. Объект будет удалён вместе со всеми фотографиями.</p>
+      <div style="background:var(--cream);border-radius:10px;padding:1rem;margin-top:1rem;font-weight:700;" id="deleteModalName"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeDeleteModal()">Отмена</button>
+      <button onclick="confirmDelete()" style="background:#dc2626;color:#fff;border:none;padding:.7rem 1.8rem;font-family:inherit;font-size:.82rem;font-weight:700;cursor:pointer;border-radius:8px;">Удалить</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap"></div>
+<script src="bundle.js"></script>
+<script>
+const user = JSON.parse(localStorage.getItem('bt_user') || '{}');
+if (!user.email) window.location.href = 'register.html';
+document.getElementById('userName').textContent = user.name || 'Партнёр';
+document.getElementById('userAv').textContent = (user.name || 'A')[0].toUpperCase();
+
+const TYPE_LABELS = { hotel:'Отель', villa:'Вилла', dacha:'Дача', guesthouse:'Гостевой дом', apartment:'Апартаменты', tour:'Тур' };
+const CITY_LABELS = { tashkent:'Ташкент', samarkand:'Самарканд', bukhara:'Бухара', khiva:'Хива', fergana:'Фергана', charvak:'Чарвак', other:'Другой' };
+const TYPE_ICONS  = { hotel:'fa-hotel', villa:'fa-house', dacha:'fa-tree', guesthouse:'fa-door-open', apartment:'fa-building', tour:'fa-route' };
+
+let deleteTargetId = null;
+
+function renderProps() {
+  const props = BT.getProps();
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const filterType = document.getElementById('filterType').value;
+  const filterCity = document.getElementById('filterCity').value;
+
+  const filtered = props.filter(p => {
+    const matchSearch = !search || p.name?.toLowerCase().includes(search) || p.city?.includes(search);
+    const matchType = !filterType || p.type === filterType;
+    const matchCity = !filterCity || p.city === filterCity;
+    return matchSearch && matchType && matchCity;
+  });
+
+  // Stats
+  document.getElementById('statsRow').innerHTML = `
+    <div class="b2b-stat"><div class="b2b-stat-label">Всего</div><div class="b2b-stat-value">${props.length}</div><div class="b2b-stat-sub">объектов</div></div>
+    <div class="b2b-stat"><div class="b2b-stat-label">Активных</div><div class="b2b-stat-value" style="color:#22c55e;">${props.filter(p=>p.active).length}</div><div class="b2b-stat-sub">опубликовано</div></div>
+    <div class="b2b-stat"><div class="b2b-stat-label">Черновиков</div><div class="b2b-stat-value">${props.filter(p=>!p.active).length}</div><div class="b2b-stat-sub">не опубликовано</div></div>
+    <div class="b2b-stat"><div class="b2b-stat-label">Дач</div><div class="b2b-stat-value">${props.filter(p=>p.type==='dacha').length}</div><div class="b2b-stat-sub">загородных</div></div>
+  `;
+
+  if (!filtered.length) {
+    document.getElementById('propsGrid').innerHTML = '';
+    document.getElementById('emptyState').style.display = props.length ? 'none' : 'block';
+    if (props.length && !filtered.length) {
+      document.getElementById('propsGrid').innerHTML = `<div style="text-align:center;padding:3rem;color:var(--gray-500);"><i class="fa fa-search" style="font-size:2rem;opacity:.3;margin-bottom:.8rem;display:block;"></i>Ничего не найдено</div>`;
+    }
+    return;
+  }
+  document.getElementById('emptyState').style.display = 'none';
+
+  document.getElementById('propsGrid').innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem;">
+      ${filtered.map(p => `
+        <div class="b2b-card" style="overflow:visible;">
+          <!-- Image -->
+          <div style="height:200px;overflow:hidden;border-radius:10px 10px 0 0;position:relative;background:linear-gradient(135deg,var(--dark),var(--dark-2));">
+            ${p.photos?.[0] ? `<img src="${p.photos[0]}" style="width:100%;height:100%;object-fit:cover;">` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;"><i class="fa ${TYPE_ICONS[p.type]||'fa-building'}" style="color:rgba(255,255,255,.15);"></i></div>`}
+            <div style="position:absolute;top:.7rem;left:.7rem;">
+              <span class="b2b-badge ${p.active ? 'b2b-badge-active' : 'b2b-badge-draft'}">${p.active ? '● Активен' : '○ Черновик'}</span>
+            </div>
+            <div style="position:absolute;top:.7rem;right:.7rem;background:rgba(6,24,38,.8);color:#fff;font-size:.65rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;">
+              ${TYPE_LABELS[p.type] || p.type || '—'}
+            </div>
+          </div>
+          <!-- Body -->
+          <div style="padding:1.1rem 1.2rem;">
+            <div style="font-size:.68rem;color:var(--gold);font-weight:700;margin-bottom:.3rem;">
+              <i class="fa fa-map-marker-alt"></i> ${CITY_LABELS[p.city] || p.city || '—'}
+            </div>
+            <div style="font-family:var(--font-display);font-size:1rem;font-weight:600;margin-bottom:.5rem;line-height:1.3;">${p.name || 'Без названия'}</div>
+            <div style="display:flex;gap:.8rem;font-size:.72rem;color:var(--gray-500);margin-bottom:.9rem;flex-wrap:wrap;">
+              ${p.rooms ? `<span><i class="fa fa-door-open"></i> ${p.rooms} комн.</span>` : ''}
+              ${p.guests ? `<span><i class="fa fa-users"></i> до ${p.guests} гостей</span>` : ''}
+              ${p.photos?.length ? `<span><i class="fa fa-image"></i> ${p.photos.length} фото</span>` : ''}
+              ${p.stars ? `<span>${'★'.repeat(p.stars)}</span>` : ''}
+            </div>
+            <!-- Amenities -->
+            ${p.amenities?.length ? `
+              <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.9rem;">
+                ${p.amenities.slice(0,4).map(a => `<span style="font-size:.62rem;padding:.18rem .5rem;background:var(--cream);border-radius:4px;color:var(--gray-700);">${a}</span>`).join('')}
+                ${p.amenities.length > 4 ? `<span style="font-size:.62rem;padding:.18rem .5rem;background:var(--cream);border-radius:4px;color:var(--gray-500);">+${p.amenities.length-4}</span>` : ''}
+              </div>` : ''}
+            <!-- Price & Actions -->
+            <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f0f0f0;padding-top:.9rem;">
+              <div>
+                ${p.price ? `<div style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--gold);">$${p.price}<span style="font-size:.6em;color:var(--gray-500);font-family:var(--font-body);font-weight:400;">/сут</span></div>` : '<div style="color:var(--gray-500);font-size:.8rem;">Цена не указана</div>'}
+              </div>
+              <div style="display:flex;gap:.4rem;">
+                <button onclick="toggleActive('${p.id}')" title="${p.active?'Снять с публикации':'Опубликовать'}"
+                  style="width:32px;height:32px;border-radius:8px;border:1.5px solid #e8e8e8;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:${p.active?'#22c55e':'var(--gray-500)'};">
+                  <i class="fa ${p.active?'fa-eye':'fa-eye-slash'}"></i>
+                </button>
+                <a href="property-form.html?id=${p.id}" title="Редактировать"
+                  style="width:32px;height:32px;border-radius:8px;border:1.5px solid #e8e8e8;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--gray-700);text-decoration:none;">
+                  <i class="fa fa-pen"></i>
+                </a>
+                <button onclick="openDeleteModal('${p.id}','${(p.name||'').replace(/'/g,"\\'")}' )" title="Удалить"
+                  style="width:32px;height:32px;border-radius:8px;border:1.5px solid #fee2e2;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#dc2626;">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function toggleActive(id) {
+  const isNowActive = BT.toggleActive(id);
+  showToast(isNowActive ? '✅ Объект опубликован' : 'Объект снят с публикации', isNowActive ? 'success' : '');
+  renderProps();
+}
+
+function openDeleteModal(id, name) {
+  deleteTargetId = id;
+  document.getElementById('deleteModalName').textContent = name;
+  document.getElementById('deleteModal').classList.add('open');
+}
+function closeDeleteModal() {
+  deleteTargetId = null;
+  document.getElementById('deleteModal').classList.remove('open');
+}
+function confirmDelete() {
+  if (!deleteTargetId) return;
+  BT.deleteProp(deleteTargetId);
+  closeDeleteModal();
+  showToast('Объект удалён');
+  renderProps();
+}
+
+// Mobile sidebar
+document.querySelector('[data-b2b-toggle]')?.addEventListener('click', () => {
+  document.getElementById('b2bSidebar').classList.toggle('open');
+});
+
+renderProps();
+</script>
+</body>
+</html>

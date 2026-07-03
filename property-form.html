@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Добавить объект — Bek Tour Partner Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .photo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:.8rem; margin-top:1rem; }
+    .photo-slot {
+      aspect-ratio:4/3; border-radius:10px; border:2px dashed #ddd;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      cursor:pointer; transition:all .2s; position:relative; overflow:hidden; background:#fafafa;
+    }
+    .photo-slot:hover { border-color:var(--gold); background:rgba(200,164,93,.05); }
+    .photo-slot.has-img { border-style:solid; border-color:var(--gray-100); }
+    .photo-slot img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .photo-slot .del-btn {
+      position:absolute; top:6px; right:6px; width:24px; height:24px;
+      background:#dc2626; color:#fff; border-radius:50%; border:none;
+      display:flex; align-items:center; justify-content:center; font-size:.7rem;
+      cursor:pointer; z-index:2; opacity:0; transition:opacity .2s;
+    }
+    .photo-slot:hover .del-btn { opacity:1; }
+    .photo-slot .add-icon { font-size:1.5rem; color:#ccc; margin-bottom:.4rem; }
+    .photo-slot .add-text { font-size:.7rem; color:#aaa; }
+    .photo-slot.main-slot { grid-column: span 2; grid-row: span 2; }
+    .amenity-grid { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .amenity-btn {
+      display:flex; align-items:center; gap:.4rem; padding:.4rem .9rem;
+      border-radius:20px; border:1.5px solid var(--gray-100); font-size:.76rem;
+      font-family:inherit; cursor:pointer; transition:all .15s; background:#fff;
+      color:var(--gray-700);
+    }
+    .amenity-btn.on { background:var(--gold); color:#fff; border-color:var(--gold); }
+    .amenity-btn i { font-size:.72rem; }
+    .star-rating { display:flex; gap:.3rem; }
+    .star-btn { font-size:1.4rem; color:#ddd; cursor:pointer; transition:color .15s; background:none; border:none; }
+    .star-btn.on { color:var(--gold); }
+    .map-preview { background:var(--gray-100); border-radius:10px; height:200px; display:flex; align-items:center; justify-content:center; margin-top:.8rem; }
+    .price-inputs { display:grid; grid-template-columns:1fr 1fr 1fr; gap:.8rem; }
+    .section-divider { font-size:.62rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gray-500); margin:2rem 0 1rem; padding-bottom:.6rem; border-bottom:1px solid var(--gray-100); display:flex; align-items:center; gap:.6rem; }
+    .section-divider::before { content:attr(data-num); width:22px; height:22px; background:var(--gold); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.7rem; flex-shrink:0; }
+    .progress-bar { display:flex; gap:0; margin-bottom:2rem; }
+    .progress-step { flex:1; padding:.6rem; text-align:center; font-size:.72rem; font-weight:700; color:var(--gray-500); border-bottom:2px solid var(--gray-100); transition:all .2s; cursor:pointer; }
+    .progress-step.active { color:var(--gold); border-bottom-color:var(--gold); }
+    .progress-step.done { color:var(--gray-700); border-bottom-color:var(--gray-300); }
+    .form-step { display:none; }
+    .form-step.active { display:block; }
+    .preview-card { background:#fff; border:1px solid var(--gray-100); border-radius:14px; overflow:hidden; }
+    .preview-card-img { height:200px; background:var(--gray-100); overflow:hidden; }
+    .preview-card-img img { width:100%; height:100%; object-fit:cover; }
+    .preview-card-body { padding:1.2rem; }
+    @media(max-width:640px){ .photo-grid{grid-template-columns:repeat(2,1fr);} .photo-slot.main-slot{grid-column:span 1;grid-row:span 1;} .price-inputs{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+<div class="b2b-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="b2b-sidebar" id="b2bSidebar">
+    <div class="b2b-sidebar-logo">
+      <a href="index.html" style="text-decoration:none;">
+        <div class="b2b-logo-text">BEK<em>TOUR</em></div>
+        <div class="b2b-logo-sub">Partner Hub</div>
+      </a>
+    </div>
+    <nav class="b2b-nav">
+      <div class="b2b-nav-sec">Обзор</div>
+      <a href="dashboard.html" class="b2b-nav-item"><i class="fa fa-gauge-high"></i> Dashboard</a>
+      <div class="b2b-nav-sec">Объекты</div>
+      <a href="properties.html" class="b2b-nav-item"><i class="fa fa-building"></i> Мои объекты</a>
+      <a href="property-form.html" class="b2b-nav-item active"><i class="fa fa-plus"></i> Добавить объект</a>
+      <div class="b2b-nav-sec">Продажи</div>
+      <a href="bookings.html" class="b2b-nav-item"><i class="fa fa-calendar-check"></i> Бронирования</a>
+      <div class="b2b-nav-sec">Прочее</div>
+      <a href="index.html" class="b2b-nav-item"><i class="fa fa-globe"></i> На сайт</a>
+      <a href="register.html" class="b2b-nav-item" onclick="localStorage.removeItem('bt_user')"><i class="fa fa-sign-out-alt"></i> Выйти</a>
+    </nav>
+    <div class="b2b-sidebar-foot">
+      <div class="b2b-user">
+        <div class="b2b-user-av" id="userAv">A</div>
+        <div><div class="b2b-user-name" id="userName">Партнёр</div><div class="b2b-user-role">Agent</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="b2b-main">
+    <div class="b2b-topbar">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <button data-b2b-toggle style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:1.1rem;"><i class="fa fa-bars"></i></button>
+        <div class="b2b-topbar-title" id="formTitle">Добавить объект</div>
+      </div>
+      <div class="b2b-topbar-right">
+        <a href="properties.html" class="btn btn-outline btn-sm"><i class="fa fa-arrow-left"></i> Назад</a>
+      </div>
+    </div>
+
+    <div class="b2b-content">
+      <div style="max-width:860px;">
+
+        <!-- Progress -->
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-step active" onclick="goStep(1)">1. Основное</div>
+          <div class="progress-step" onclick="goStep(2)">2. Детали</div>
+          <div class="progress-step" onclick="goStep(3)">3. Фотографии</div>
+          <div class="progress-step" onclick="goStep(4)">4. Цены</div>
+          <div class="progress-step" onclick="goStep(5)">5. Публикация</div>
+        </div>
+
+        <!-- STEP 1: Basic info -->
+        <div class="form-step active" id="step1">
+          <div class="b2b-card">
+            <div class="b2b-card-head"><h3>Основная информация</h3></div>
+            <div class="b2b-card-body">
+              <div class="form-group">
+                <div class="form-label">Тип объекта *</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;" id="typeGrid">
+                  <button type="button" class="type-btn" data-type="hotel" onclick="selectType('hotel',this)">
+                    <i class="fa fa-hotel" style="font-size:1.5rem;color:var(--gold);margin-bottom:.5rem;display:block;"></i>
+                    <div style="font-weight:700;font-size:.84rem;">Отель</div>
+                    <div style="font-size:.68rem;color:var(--gray-500);">3–5★ городской</div>
+                  </button>
+                  <button type="button" class="type-btn" data-type="villa" onclick="selectType('villa',this)">
+                    <i class="fa fa-house" style="font-size:1.5rem;color:var(--gold);margin-bottom:.5rem;display:block;"></i>
+                    <div style="font-weight:700;font-size:.84rem;">Вилла</div>
+                    <div style="font-size:.68rem;color:var(--gray-500);">Частная вилла</div>
+                  </button>
+                  <button type="button" class="type-btn" data-type="dacha" onclick="selectType('dacha',this)">
+                    <i class="fa fa-tree" style="font-size:1.5rem;color:var(--gold);margin-bottom:.5rem;display:block;"></i>
+                    <div style="font-weight:700;font-size:.84rem;">Дача</div>
+                    <div style="font-size:.68rem;color:var(--gray-500);">Загородная дача</div>
+                  </button>
+                  <button type="button" class="type-btn" data-type="guesthouse" onclick="selectType('guesthouse',this)">
+                    <i class="fa fa-door-open" style="font-size:1.5rem;color:var(--gold);margin-bottom:.5rem;display:block;"></i>
+                    <div style="font-weight:700;font-size:.84rem;">Гостевой дом</div>
+                    <div style="font-size:.68rem;color:var(--gray-500);">Б&Б, хостел</div>
+                  </button>
+                  <button type="button" class="type-btn" data-type="apartment" onclick="selectType('apartment',this)">
+                    <i class="fa fa-building" style="font-size:1.5rem;color:var(--gold);margin-bottom:.5rem;display:block;"></i>
+                    <div style="font-weight:700;font-size:.84rem;">Апартаменты</div>
+                    <div style="font-size:.68rem;color:var(--gray-500);">Квартира посуточно</div>
+                  </button>
+                  <button type="button" class="type-btn" data-type="tour" onclick="selectType('tour',this)">
+                    <i class="fa fa-route" style="font-size:1.5rem;color:var(--gold);margin-bottom:.5rem;display:block;"></i>
+                    <div style="font-weight:700;font-size:.84rem;">Тур</div>
+                    <div style="font-size:.68rem;color:var(--gray-500);">Экскурсия, маршрут</div>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label">Название объекта *</div>
+                <input type="text" class="form-input" id="propName" placeholder="Например: Дача у реки Чирчик · Уютная вилла в Самарканде">
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <div class="form-label">Город / Регион *</div>
+                  <select class="form-select" id="propCity">
+                    <option value="">— Выберите —</option>
+                    <option value="tashkent">Ташкент</option>
+                    <option value="samarkand">Самарканд</option>
+                    <option value="bukhara">Бухара</option>
+                    <option value="khiva">Хива</option>
+                    <option value="fergana">Ферганская долина</option>
+                    <option value="namangan">Наманган</option>
+                    <option value="andijan">Андижан</option>
+                    <option value="nukus">Нукус</option>
+                    <option value="termez">Термез</option>
+                    <option value="shahrisabz">Шахрисабз</option>
+                    <option value="charvak">Чарвак / Чимган</option>
+                    <option value="other">Другой</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div class="form-label">Точный адрес</div>
+                  <input type="text" class="form-input" id="propAddress" placeholder="Улица, дом, ориентир">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label">Краткое описание *</div>
+                <textarea class="form-textarea" id="propDesc" placeholder="Опишите объект — расположение, особенности, атмосфера. Чем больше деталей, тем лучше." style="min-height:120px;"></textarea>
+                <div style="font-size:.68rem;color:var(--gray-500);margin-top:.3rem;"><span id="descCount">0</span>/500 символов</div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label">Рейтинг (звёзды)</div>
+                <div class="star-rating" id="starRating">
+                  <button class="star-btn" data-star="1" onclick="setStar(1)">★</button>
+                  <button class="star-btn" data-star="2" onclick="setStar(2)">★</button>
+                  <button class="star-btn" data-star="3" onclick="setStar(3)">★</button>
+                  <button class="star-btn" data-star="4" onclick="setStar(4)">★</button>
+                  <button class="star-btn" data-star="5" onclick="setStar(5)">★</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;margin-top:1rem;">
+            <button onclick="goStep(2)" class="btn btn-primary">Далее <i class="fa fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Details -->
+        <div class="form-step" id="step2">
+          <div class="b2b-card">
+            <div class="b2b-card-head"><h3>Детали и удобства</h3></div>
+            <div class="b2b-card-body">
+
+              <div class="section-divider" data-num="A">Параметры</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <div class="form-label">Количество комнат</div>
+                  <input type="number" class="form-input" id="propRooms" placeholder="4" min="1">
+                </div>
+                <div class="form-group">
+                  <div class="form-label">Гостей (макс.)</div>
+                  <input type="number" class="form-input" id="propGuests" placeholder="8" min="1">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <div class="form-label">Площадь (м²)</div>
+                  <input type="number" class="form-input" id="propArea" placeholder="200">
+                </div>
+                <div class="form-group">
+                  <div class="form-label">Этаж / Этажей</div>
+                  <input type="text" class="form-input" id="propFloor" placeholder="2 этажа">
+                </div>
+              </div>
+
+              <div class="section-divider" data-num="B">Удобства</div>
+              <div class="amenity-grid" id="amenityGrid">
+                <button class="amenity-btn" data-am="wifi" onclick="toggleAm(this)"><i class="fa fa-wifi"></i> WiFi</button>
+                <button class="amenity-btn" data-am="pool" onclick="toggleAm(this)"><i class="fa fa-swimming-pool"></i> Бассейн</button>
+                <button class="amenity-btn" data-am="parking" onclick="toggleAm(this)"><i class="fa fa-square-parking"></i> Парковка</button>
+                <button class="amenity-btn" data-am="ac" onclick="toggleAm(this)"><i class="fa fa-snowflake"></i> Кондиционер</button>
+                <button class="amenity-btn" data-am="bbq" onclick="toggleAm(this)"><i class="fa fa-fire"></i> Мангал / BBQ</button>
+                <button class="amenity-btn" data-am="garden" onclick="toggleAm(this)"><i class="fa fa-leaf"></i> Сад / Огород</button>
+                <button class="amenity-btn" data-am="tv" onclick="toggleAm(this)"><i class="fa fa-tv"></i> Телевизор</button>
+                <button class="amenity-btn" data-am="kitchen" onclick="toggleAm(this)"><i class="fa fa-utensils"></i> Кухня</button>
+                <button class="amenity-btn" data-am="washing" onclick="toggleAm(this)"><i class="fa fa-shirt"></i> Стиральная машина</button>
+                <button class="amenity-btn" data-am="sauna" onclick="toggleAm(this)"><i class="fa fa-hot-tub-person"></i> Сауна / Хаммам</button>
+                <button class="amenity-btn" data-am="playground" onclick="toggleAm(this)"><i class="fa fa-child"></i> Детская площадка</button>
+                <button class="amenity-btn" data-am="river" onclick="toggleAm(this)"><i class="fa fa-water"></i> Река / Озеро рядом</button>
+                <button class="amenity-btn" data-am="mountain" onclick="toggleAm(this)"><i class="fa fa-mountain"></i> Вид на горы</button>
+                <button class="amenity-btn" data-am="breakfast" onclick="toggleAm(this)"><i class="fa fa-mug-saucer"></i> Завтрак включён</button>
+                <button class="amenity-btn" data-am="transfer" onclick="toggleAm(this)"><i class="fa fa-car"></i> Трансфер</button>
+                <button class="amenity-btn" data-am="security" onclick="toggleAm(this)"><i class="fa fa-shield"></i> Охрана 24ч</button>
+              </div>
+
+              <div class="section-divider" data-num="C">Контакты для связи</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <div class="form-label">WhatsApp</div>
+                  <input type="tel" class="form-input" id="propWa" placeholder="+998 90 123 45 67">
+                </div>
+                <div class="form-group">
+                  <div class="form-label">Telegram</div>
+                  <input type="text" class="form-input" id="propTg" placeholder="@username">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:1rem;">
+            <button onclick="goStep(1)" class="btn btn-outline btn-sm"><i class="fa fa-arrow-left"></i> Назад</button>
+            <button onclick="goStep(3)" class="btn btn-primary">Далее <i class="fa fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Photos -->
+        <div class="form-step" id="step3">
+          <div class="b2b-card">
+            <div class="b2b-card-head">
+              <h3>Фотографии</h3>
+              <span style="font-size:.76rem;color:var(--gray-500);">Минимум 3, рекомендуется 10+</span>
+            </div>
+            <div class="b2b-card-body">
+              <div style="background:var(--cream);border-radius:10px;padding:1rem;margin-bottom:1.2rem;font-size:.8rem;color:var(--gray-700);display:flex;align-items:flex-start;gap:.6rem;">
+                <i class="fa fa-info-circle" style="color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
+                <div>Загружайте фото в формате JPG или PNG. Первое фото будет главным на карточке. Рекомендуемый размер: минимум 1200×800px. Объекты с 10+ фото получают в 3 раза больше просмотров.</div>
+              </div>
+
+              <!-- Upload area -->
+              <div class="upload-area" id="uploadArea" onclick="document.getElementById('photoInput').click()">
+                <i class="fa fa-cloud-upload-alt"></i>
+                <p style="font-weight:700;margin-bottom:.3rem;">Нажмите или перетащите фото сюда</p>
+                <p>JPG, PNG · до 10MB каждое · до 20 фото</p>
+              </div>
+              <input type="file" id="photoInput" multiple accept="image/*" style="display:none" onchange="handlePhotos(this.files)">
+
+              <!-- Photo grid -->
+              <div class="photo-grid" id="photoGrid" style="display:none;margin-top:1.2rem;"></div>
+
+              <!-- URL input alternative -->
+              <div style="margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid var(--gray-100);">
+                <div class="form-label" style="margin-bottom:.6rem;">Или добавьте ссылки на фото (по одной)</div>
+                <div style="display:flex;gap:.6rem;">
+                  <input type="url" class="form-input" id="photoUrl" placeholder="https://example.com/photo.jpg" style="flex:1;">
+                  <button onclick="addPhotoUrl()" class="btn btn-outline btn-sm" style="flex-shrink:0;"><i class="fa fa-plus"></i> Добавить</button>
+                </div>
+              </div>
+
+              <!-- Photos count -->
+              <div style="margin-top:1rem;font-size:.8rem;color:var(--gray-500);">
+                Добавлено фото: <strong id="photoCount">0</strong>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:1rem;">
+            <button onclick="goStep(2)" class="btn btn-outline btn-sm"><i class="fa fa-arrow-left"></i> Назад</button>
+            <button onclick="goStep(4)" class="btn btn-primary">Далее <i class="fa fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 4: Pricing -->
+        <div class="form-step" id="step4">
+          <div class="b2b-card">
+            <div class="b2b-card-head"><h3>Цены и условия</h3></div>
+            <div class="b2b-card-body">
+
+              <div class="section-divider" data-num="A">Базовые цены</div>
+              <div class="price-inputs">
+                <div class="form-group">
+                  <div class="form-label">Цена за сутки ($) *</div>
+                  <input type="number" class="form-input" id="propPrice" placeholder="150" min="0">
+                </div>
+                <div class="form-group">
+                  <div class="form-label">Цена за сутки (₽)</div>
+                  <input type="number" class="form-input" id="propPriceRub" placeholder="13500" min="0">
+                </div>
+                <div class="form-group">
+                  <div class="form-label">Цена за сутки (сум)</div>
+                  <input type="number" class="form-input" id="propPriceUzs" placeholder="1900000" min="0">
+                </div>
+              </div>
+
+              <div class="section-divider" data-num="B">Доп. условия</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <div class="form-label">Минимальный срок аренды</div>
+                  <select class="form-select" id="propMinStay">
+                    <option value="1">1 сутки</option>
+                    <option value="2">2 суток</option>
+                    <option value="3" selected>3 суток</option>
+                    <option value="7">1 неделя</option>
+                    <option value="30">1 месяц</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div class="form-label">Залог ($)</div>
+                  <input type="number" class="form-input" id="propDeposit" placeholder="100 (необязательно)" min="0">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label">Сезонные цены / особые условия</div>
+                <textarea class="form-textarea" id="propSeasonalNote" placeholder="Например: В праздники цена +20%. Выходные дни — минимум 2 ночи. Скидка 10% от 7 ночей." style="min-height:80px;"></textarea>
+              </div>
+
+              <div class="section-divider" data-num="C">Правила</div>
+              <div class="amenity-grid">
+                <button class="amenity-btn" data-rule="pets" onclick="toggleAm(this)"><i class="fa fa-paw"></i> Можно с животными</button>
+                <button class="amenity-btn" data-rule="kids" onclick="toggleAm(this)"><i class="fa fa-child"></i> Можно с детьми</button>
+                <button class="amenity-btn" data-rule="events" onclick="toggleAm(this)"><i class="fa fa-music"></i> Можно проводить события</button>
+                <button class="amenity-btn" data-rule="smoking" onclick="toggleAm(this)"><i class="fa fa-smoking"></i> Курение разрешено</button>
+                <button class="amenity-btn" data-rule="24h" onclick="toggleAm(this)"><i class="fa fa-clock"></i> Заезд 24/7</button>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:1rem;">
+            <button onclick="goStep(3)" class="btn btn-outline btn-sm"><i class="fa fa-arrow-left"></i> Назад</button>
+            <button onclick="goStep(5)" class="btn btn-primary">Предпросмотр <i class="fa fa-eye"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 5: Preview & Publish -->
+        <div class="form-step" id="step5">
+          <div class="b2b-card" style="margin-bottom:1.5rem;">
+            <div class="b2b-card-head"><h3><i class="fa fa-eye" style="color:var(--gold);margin-right:.4rem;"></i> Предпросмотр карточки</h3></div>
+            <div class="b2b-card-body">
+              <div style="max-width:320px;">
+                <div class="preview-card">
+                  <div class="preview-card-img" id="previewImg">
+                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--gray-500);font-size:.84rem;"><i class="fa fa-image" style="margin-right:.4rem;"></i> Нет фото</div>
+                  </div>
+                  <div class="preview-card-body">
+                    <div style="font-size:.68rem;color:var(--gold);font-weight:700;margin-bottom:.3rem;" id="previewCity">📍 Город</div>
+                    <div style="font-family:var(--font-display);font-size:1.05rem;font-weight:600;margin-bottom:.5rem;" id="previewName">Название объекта</div>
+                    <div style="font-size:.72rem;color:var(--gray-500);margin-bottom:.8rem;" id="previewAmenities">— удобства —</div>
+                    <div style="display:flex;align-items:flex-end;justify-content:space-between;border-top:1px solid var(--gray-100);padding-top:.7rem;">
+                      <div><div style="font-size:.55rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray-500);">от</div><div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;" id="previewPrice">$0</div></div>
+                      <div style="font-size:.7rem;font-weight:700;padding:.4rem .9rem;background:var(--dark);color:#fff;border-radius:7px;" id="previewType">Объект</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Summary -->
+          <div class="b2b-card" style="margin-bottom:1.5rem;">
+            <div class="b2b-card-head"><h3>Проверьте данные</h3></div>
+            <div class="b2b-card-body">
+              <table style="width:100%;font-size:.84rem;border-collapse:collapse;">
+                <tr style="border-bottom:1px solid var(--gray-100);"><td style="padding:.6rem 0;color:var(--gray-500);width:40%;">Тип</td><td id="sumType" style="font-weight:600;">—</td></tr>
+                <tr style="border-bottom:1px solid var(--gray-100);"><td style="padding:.6rem 0;color:var(--gray-500);">Название</td><td id="sumName" style="font-weight:600;">—</td></tr>
+                <tr style="border-bottom:1px solid var(--gray-100);"><td style="padding:.6rem 0;color:var(--gray-500);">Город</td><td id="sumCity">—</td></tr>
+                <tr style="border-bottom:1px solid var(--gray-100);"><td style="padding:.6rem 0;color:var(--gray-500);">Цена</td><td id="sumPrice" style="color:var(--gold);font-weight:700;">—</td></tr>
+                <tr style="border-bottom:1px solid var(--gray-100);"><td style="padding:.6rem 0;color:var(--gray-500);">Фотографий</td><td id="sumPhotos">—</td></tr>
+                <tr><td style="padding:.6rem 0;color:var(--gray-500);">Удобства</td><td id="sumAmenities">—</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Publish options -->
+          <div class="b2b-card">
+            <div class="b2b-card-head"><h3>Публикация</h3></div>
+            <div class="b2b-card-body">
+              <div style="display:flex;flex-direction:column;gap:.8rem;margin-bottom:1.5rem;">
+                <label style="display:flex;align-items:center;gap:.8rem;cursor:pointer;padding:1rem;border:1.5px solid var(--gray-100);border-radius:10px;transition:all .2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--gray-100)'">
+                  <input type="radio" name="publishMode" value="draft" checked style="accent-color:var(--gold);">
+                  <div><div style="font-weight:700;font-size:.86rem;">Сохранить как черновик</div><div style="font-size:.74rem;color:var(--gray-500);">Объект не будет виден посетителям пока вы не опубликуете</div></div>
+                </label>
+                <label style="display:flex;align-items:center;gap:.8rem;cursor:pointer;padding:1rem;border:1.5px solid var(--gray-100);border-radius:10px;transition:all .2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--gray-100)'">
+                  <input type="radio" name="publishMode" value="publish" style="accent-color:var(--gold);">
+                  <div><div style="font-weight:700;font-size:.86rem;">Опубликовать сейчас</div><div style="font-size:.74rem;color:var(--gray-500);">Объект сразу появится на сайте после проверки модератором</div></div>
+                </label>
+              </div>
+              <div style="display:flex;gap:.8rem;">
+                <button onclick="saveProp()" class="btn btn-primary btn-lg" style="flex:1;justify-content:center;">
+                  <i class="fa fa-save"></i> Сохранить объект
+                </button>
+                <button onclick="goStep(4)" class="btn btn-outline">
+                  <i class="fa fa-arrow-left"></i> Изменить
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:flex-start;margin-top:1rem;">
+            <button onclick="goStep(4)" class="btn btn-outline btn-sm"><i class="fa fa-arrow-left"></i> Назад</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap"></div>
+
+<style>
+.type-btn {
+  padding:1.2rem .8rem; border:2px solid var(--gray-100); border-radius:12px;
+  background:#fff; cursor:pointer; text-align:center; transition:all .2s;
+  font-family:inherit;
+}
+.type-btn:hover { border-color:var(--gold); }
+.type-btn.on { border-color:var(--gold); background:rgba(200,164,93,.08); }
+.upload-area {
+  border:2px dashed #ddd; border-radius:12px; padding:2.5rem 1.5rem;
+  text-align:center; cursor:pointer; transition:all .2s;
+}
+.upload-area:hover { border-color:var(--gold); background:rgba(200,164,93,.04); }
+.upload-area i { font-size:2.5rem; color:var(--gold); margin-bottom:.8rem; display:block; }
+</style>
+
+<script src="bundle.js"></script>
+<script>
+// Auth guard
+const user = JSON.parse(localStorage.getItem('bt_user') || '{}');
+if (!user.email) window.location.href = 'register.html';
+document.getElementById('userName').textContent = user.name || 'Партнёр';
+document.getElementById('userAv').textContent = (user.name || 'A')[0].toUpperCase();
+
+// State
+let state = {
+  type: '', stars: 0, amenities: [], rules: [],
+  photos: [], step: 1,
+};
+
+// Check if editing
+const editId = new URLSearchParams(location.search).get('id');
+if (editId) {
+  const props = JSON.parse(localStorage.getItem('bt_props') || '[]');
+  const prop = props.find(p => p.id === editId);
+  if (prop) {
+    document.getElementById('formTitle').textContent = 'Редактировать объект';
+    setTimeout(() => {
+      if (prop.type) selectType(prop.type, document.querySelector(`[data-type="${prop.type}"]`));
+      if (prop.name) document.getElementById('propName').value = prop.name;
+      if (prop.city) document.getElementById('propCity').value = prop.city;
+      if (prop.address) document.getElementById('propAddress').value = prop.address;
+      if (prop.desc) document.getElementById('propDesc').value = prop.desc;
+      if (prop.stars) setStar(prop.stars);
+      if (prop.rooms) document.getElementById('propRooms').value = prop.rooms;
+      if (prop.guests) document.getElementById('propGuests').value = prop.guests;
+      if (prop.price) document.getElementById('propPrice').value = prop.price;
+      if (prop.photos) state.photos = prop.photos;
+      if (prop.amenities) {
+        prop.amenities.forEach(am => {
+          const btn = document.querySelector(`[data-am="${am}"]`);
+          if (btn) { btn.classList.add('on'); state.amenities.push(am); }
+        });
+      }
+    }, 100);
+  }
+}
+
+// Steps
+function goStep(n) {
+  if (n > 1 && !validate(n-1)) return;
+  state.step = n;
+  document.querySelectorAll('.form-step').forEach((s,i) => s.classList.toggle('active', i+1 === n));
+  document.querySelectorAll('.progress-step').forEach((s,i) => {
+    s.classList.toggle('active', i+1 === n);
+    s.classList.toggle('done', i+1 < n);
+  });
+  if (n === 5) updatePreview();
+  window.scrollTo(0,0);
+}
+
+function validate(step) {
+  if (step === 1) {
+    if (!state.type) { showToast('Выберите тип объекта', 'error'); return false; }
+    if (!document.getElementById('propName').value.trim()) { showToast('Введите название', 'error'); return false; }
+    if (!document.getElementById('propCity').value) { showToast('Выберите город', 'error'); return false; }
+    if (!document.getElementById('propDesc').value.trim()) { showToast('Добавьте описание', 'error'); return false; }
+  }
+  return true;
+}
+
+// Type selection
+function selectType(type, btn) {
+  state.type = type;
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('on'));
+  btn?.classList.add('on');
+}
+
+// Stars
+function setStar(n) {
+  state.stars = n;
+  document.querySelectorAll('.star-btn').forEach((b,i) => b.classList.toggle('on', i < n));
+}
+
+// Amenities
+function toggleAm(btn) {
+  const key = btn.dataset.am || btn.dataset.rule;
+  btn.classList.toggle('on');
+  if (btn.classList.contains('on')) {
+    if (!state.amenities.includes(key)) state.amenities.push(key);
+  } else {
+    state.amenities = state.amenities.filter(a => a !== key);
+  }
+}
+
+// Photos
+function handlePhotos(files) {
+  Array.from(files).forEach(file => {
+    if (state.photos.length >= 20) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      state.photos.push({ src: e.target.result, name: file.name });
+      renderPhotos();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function addPhotoUrl() {
+  const url = document.getElementById('photoUrl').value.trim();
+  if (!url) return;
+  state.photos.push({ src: url, name: 'url-photo' });
+  document.getElementById('photoUrl').value = '';
+  renderPhotos();
+}
+
+function removePhoto(i) {
+  state.photos.splice(i, 1);
+  renderPhotos();
+}
+
+function renderPhotos() {
+  const grid = document.getElementById('photoGrid');
+  const count = document.getElementById('photoCount');
+  count.textContent = state.photos.length;
+  if (!state.photos.length) { grid.style.display = 'none'; return; }
+  grid.style.display = 'grid';
+  grid.innerHTML = state.photos.map((p,i) => `
+    <div class="photo-slot has-img ${i===0?'main-slot':''}">
+      <img src="${p.src}" alt="фото ${i+1}">
+      ${i===0 ? '<div style="position:absolute;top:8px;left:8px;background:var(--gold);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:4px;z-index:1;">Главное</div>' : ''}
+      <button class="del-btn" onclick="removePhoto(${i})"><i class="fa fa-times"></i></button>
+    </div>
+  `).join('');
+}
+
+// Preview
+function updatePreview() {
+  const name = document.getElementById('propName').value || 'Название объекта';
+  const city = document.getElementById('propCity').value || '';
+  const price = document.getElementById('propPrice').value || '0';
+  const typeLabels = { hotel:'Отель', villa:'Вилла', dacha:'Дача', guesthouse:'Гостевой дом', apartment:'Апартаменты', tour:'Тур' };
+  const cityLabels = { tashkent:'Ташкент', samarkand:'Самарканд', bukhara:'Бухара', khiva:'Хива', fergana:'Фергана', charvak:'Чарвак', other:'Другой' };
+
+  document.getElementById('previewName').textContent = name;
+  document.getElementById('previewCity').textContent = '📍 ' + (cityLabels[city] || city);
+  document.getElementById('previewPrice').textContent = '$' + price + '/сут';
+  document.getElementById('previewType').textContent = typeLabels[state.type] || 'Объект';
+
+  const amLabels = { wifi:'WiFi', pool:'Бассейн', parking:'Парковка', ac:'Кондиционер', bbq:'Мангал', breakfast:'Завтрак', garden:'Сад' };
+  const amText = state.amenities.slice(0,3).map(a => amLabels[a] || a).join(' · ');
+  document.getElementById('previewAmenities').textContent = amText || '— удобства —';
+
+  if (state.photos.length) {
+    document.getElementById('previewImg').innerHTML = `<img src="${state.photos[0].src}" style="width:100%;height:100%;object-fit:cover;">`;
+  }
+
+  // Summary
+  document.getElementById('sumType').textContent = typeLabels[state.type] || '—';
+  document.getElementById('sumName').textContent = name;
+  document.getElementById('sumCity').textContent = cityLabels[city] || city || '—';
+  document.getElementById('sumPrice').textContent = price ? '$' + price + '/сут' : '—';
+  document.getElementById('sumPhotos').textContent = state.photos.length + ' фото';
+  document.getElementById('sumAmenities').textContent = state.amenities.map(a => amLabels[a] || a).join(', ') || '—';
+}
+
+// Save
+function saveProp() {
+  const mode = document.querySelector('input[name="publishMode"]:checked').value;
+  const prop = {
+    type: state.type,
+    name: document.getElementById('propName').value.trim(),
+    city: document.getElementById('propCity').value,
+    address: document.getElementById('propAddress').value,
+    desc: document.getElementById('propDesc').value,
+    stars: state.stars,
+    rooms: document.getElementById('propRooms').value,
+    guests: document.getElementById('propGuests').value,
+    area: document.getElementById('propArea').value,
+    price: document.getElementById('propPrice').value,
+    priceRub: document.getElementById('propPriceRub').value,
+    priceUzs: document.getElementById('propPriceUzs').value,
+    minStay: document.getElementById('propMinStay').value,
+    deposit: document.getElementById('propDeposit').value,
+    wa: document.getElementById('propWa').value,
+    tg: document.getElementById('propTg').value,
+    amenities: state.amenities,
+    photos: state.photos.map(p => p.src),
+    active: mode === 'publish',
+  };
+
+  if (editId) {
+    BT.updateProp(editId, prop);
+    showToast('✅ Объект обновлён', 'success');
+  } else {
+    BT.addProp(prop);
+    showToast('✅ Объект сохранён', 'success');
+  }
+
+  setTimeout(() => window.location.href = 'properties.html', 1500);
+}
+
+// Desc counter
+document.getElementById('propDesc')?.addEventListener('input', function() {
+  document.getElementById('descCount').textContent = this.value.length;
+});
+
+// Drag & drop
+const uploadArea = document.getElementById('uploadArea');
+uploadArea?.addEventListener('dragover', e => { e.preventDefault(); uploadArea.style.borderColor = 'var(--gold)'; });
+uploadArea?.addEventListener('dragleave', () => { uploadArea.style.borderColor = '#ddd'; });
+uploadArea?.addEventListener('drop', e => { e.preventDefault(); uploadArea.style.borderColor = '#ddd'; handlePhotos(e.dataTransfer.files); });
+
+// Mobile sidebar
+const toggle = document.querySelector('[data-b2b-toggle]');
+const sidebar = document.getElementById('b2bSidebar');
+toggle?.addEventListener('click', () => sidebar.classList.toggle('open'));
+</script>
+</body>
+</html>
