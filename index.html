@@ -543,8 +543,7 @@
 
 <div id="footer-ph"></div>
 
-<script src="js/i18n.js"></script>
-<script src="js/main.js"></script>
+<script src="bundle.js"></script>
 <script>
 async function loadComponent(url, id) {
   try { const r = await fetch(url); document.getElementById(id).innerHTML = await r.text(); } catch(e) {}
