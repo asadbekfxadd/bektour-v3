@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Туры по Узбекистану — Bek Tour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="navbar-ph"></div>
+
+<div class="page-hero">
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-inner container">
+    <div class="breadcrumb"><a href="index.html">Главная</a><span>/</span><span>Туры</span></div>
+    <div class="page-hero-eyebrow">120+ маршрутов · Гиды на 5 языках</div>
+    <div class="page-hero-title">Туры по <em>Узбекистану</em></div>
+    <p class="page-hero-desc">Готовые маршруты или индивидуальные туры — создаём путешествие мечты под ваш запрос.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="chips-row">
+      <button class="chip on" data-cat="" onclick="filterCat(this,'')">Все туры</button>
+      <button class="chip" data-cat="silk" onclick="filterCat(this,'silk')">Шёлковый путь</button>
+      <button class="chip" data-cat="luxury" onclick="filterCat(this,'luxury')">Luxury</button>
+      <button class="chip" data-cat="nature" onclick="filterCat(this,'nature')">Природа</button>
+      <button class="chip" data-cat="city" onclick="filterCat(this,'city')">Городские</button>
+      <button class="chip" data-cat="custom" onclick="filterCat(this,'custom')">Индивидуальные</button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1.5rem;" id="toursGrid">
+
+      <div class="tour-card-wide" data-card data-cat="silk">
+        <div class="tour-card-wide-img">
+          <img src="https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=600&q=75&auto=format&fit=crop" alt="Золотое кольцо">
+          <div class="product-badge badge-hot" style="position:absolute;top:1rem;left:1rem;">Хит продаж</div>
+        </div>
+        <div class="tour-card-wide-body">
+          <div class="product-dest"><i class="fa fa-map-marker-alt"></i> Самарканд · Бухара · Хива</div>
+          <div class="tour-card-wide-name">Золотое кольцо Узбекистана</div>
+          <div class="tour-card-wide-desc">Самый популярный маршрут по трём главным городам Шёлкового пути. Регистан, минарет Калон, Ичан-Кала — шедевры исламской архитектуры в одном путешествии.</div>
+          <div class="tour-highlights">
+            <div class="tour-highlight"><i class="fa fa-clock"></i> 10 дней</div>
+            <div class="tour-highlight"><i class="fa fa-users"></i> 2–12 человек</div>
+            <div class="tour-highlight"><i class="fa fa-landmark"></i> 3 UNESCO города</div>
+            <div class="tour-highlight"><i class="fa fa-user-tie"></i> Гид включён</div>
+            <div class="tour-highlight"><i class="fa fa-train"></i> Трансфер включён</div>
+            <div class="tour-highlight"><i class="fa fa-mug-saucer"></i> Завтраки</div>
+          </div>
+          <div class="product-foot">
+            <div><div class="price-label">от</div><div class="price-main">$890 <span class="price-per">/чел.</span></div></div>
+            <div style="display:flex;gap:.6rem;">
+              <a href="https://wa.me/998901234567?text=Интересует тур Золотое кольцо Узбекистана" target="_blank" class="btn btn-primary btn-sm"><i class="fab fa-whatsapp"></i> Забронировать</a>
+              <a href="contacts.html" class="btn btn-outline btn-sm">Подробнее</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tour-card-wide" data-card data-cat="luxury">
+        <div class="tour-card-wide-img" style="background:linear-gradient(135deg,#1a1a0a,#0a0a05);">
+          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=75&auto=format&fit=crop" alt="Luxury">
+          <div class="product-badge" style="position:absolute;top:1rem;left:1rem;background:var(--gold-dark);">Эксклюзив</div>
+        </div>
+        <div class="tour-card-wide-body">
+          <div class="product-dest"><i class="fa fa-gem"></i> Весь Узбекистан · Отели 5★</div>
+          <div class="tour-card-wide-name">Luxury Silk Road — Полный Узбекистан</div>
+          <div class="tour-card-wide-desc">Эксклюзивный маршрут для ценителей роскоши. Частный самолёт между городами, ужины в исторических дворцах, персональный гид-историк.</div>
+          <div class="tour-highlights">
+            <div class="tour-highlight"><i class="fa fa-clock"></i> 14 дней</div>
+            <div class="tour-highlight"><i class="fa fa-users"></i> 2–6 человек</div>
+            <div class="tour-highlight"><i class="fa fa-hotel"></i> Отели 5★</div>
+            <div class="tour-highlight"><i class="fa fa-plane"></i> Чартер</div>
+            <div class="tour-highlight"><i class="fa fa-star"></i> Персональный гид</div>
+          </div>
+          <div class="product-foot">
+            <div><div class="price-label">от</div><div class="price-main">$1,890 <span class="price-per">/чел.</span></div></div>
+            <div style="display:flex;gap:.6rem;">
+              <a href="https://wa.me/998901234567?text=Интересует Luxury тур по Узбекистану" target="_blank" class="btn btn-primary btn-sm"><i class="fab fa-whatsapp"></i> Запросить</a>
+              <a href="contacts.html" class="btn btn-outline btn-sm">Подробнее</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tour-card-wide" data-card data-cat="nature">
+        <div class="tour-card-wide-img" style="background:linear-gradient(135deg,#0a1a08,#05100a);">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;">🏔</div>
+          <div class="product-badge badge-new" style="position:absolute;top:1rem;left:1rem;">Популярный</div>
+        </div>
+        <div class="tour-card-wide-body">
+          <div class="product-dest"><i class="fa fa-mountain"></i> Чарвак · Чимган · Аральское море</div>
+          <div class="tour-card-wide-name">Природа Узбекистана</div>
+          <div class="tour-card-wide-desc">Горные озёра Чарвака, треккинг в Чимгане, заброшенные корабли Аральского моря. Узбекистан не только о городах.</div>
+          <div class="tour-highlights">
+            <div class="tour-highlight"><i class="fa fa-clock"></i> 7 дней</div>
+            <div class="tour-highlight"><i class="fa fa-users"></i> 2–8 человек</div>
+            <div class="tour-highlight"><i class="fa fa-mountain"></i> Треккинг</div>
+            <div class="tour-highlight"><i class="fa fa-water"></i> Аральское море</div>
+          </div>
+          <div class="product-foot">
+            <div><div class="price-label">от</div><div class="price-main">$590 <span class="price-per">/чел.</span></div></div>
+            <div style="display:flex;gap:.6rem;">
+              <a href="https://wa.me/998901234567?text=Интересует тур Природа Узбекистана" target="_blank" class="btn btn-primary btn-sm"><i class="fab fa-whatsapp"></i> Забронировать</a>
+              <a href="contacts.html" class="btn btn-outline btn-sm">Подробнее</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tour-card-wide" data-card data-cat="custom">
+        <div class="tour-card-wide-img" style="background:linear-gradient(135deg,var(--dark),var(--dark-2));display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:center;color:rgba(255,255,255,.3);">
+            <i class="fa fa-sliders-h" style="font-size:3rem;color:var(--gold);display:block;margin-bottom:.8rem;"></i>
+            <div style="font-size:.8rem;letter-spacing:2px;text-transform:uppercase;">Ваш маршрут</div>
+          </div>
+        </div>
+        <div class="tour-card-wide-body">
+          <div class="product-dest"><i class="fa fa-sliders-h"></i> Любые города · Любые даты</div>
+          <div class="tour-card-wide-name">Индивидуальный тур под ваш запрос</div>
+          <div class="tour-card-wide-desc">Сами выбираете города, отели, активности и даты. Мы составим идеальный маршрут и позаботимся о каждой детали — от встречи в аэропорту до последнего ужина.</div>
+          <div class="tour-highlights">
+            <div class="tour-highlight"><i class="fa fa-calendar"></i> Любые даты</div>
+            <div class="tour-highlight"><i class="fa fa-users"></i> Любая группа</div>
+            <div class="tour-highlight"><i class="fa fa-cog"></i> Полная кастомизация</div>
+          </div>
+          <div class="product-foot">
+            <div><div class="price-label">цена</div><div class="price-main">По запросу</div></div>
+            <div style="display:flex;gap:.6rem;">
+              <a href="https://wa.me/998901234567?text=Хочу индивидуальный тур по Узбекистану" target="_blank" class="btn btn-primary btn-sm"><i class="fab fa-whatsapp"></i> Написать</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div id="footer-ph"></div>
+<script>
+async function loadComponent(url, id) { try { const r = await fetch(url); document.getElementById(id).innerHTML = await r.text(); } catch(e){} }
+Promise.all([loadComponent('navbar.html','navbar-ph'), loadComponent('footer.html','footer-ph')]);
+function filterCat(btn, cat) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('[data-card]').forEach(card => {
+    card.style.display = (!cat || card.dataset.cat === cat) ? '' : 'none';
+  });
+}
+// Set active from URL
+const urlCat = new URLSearchParams(location.search).get('cat');
+if (urlCat) { const btn = document.querySelector(`.chip[data-cat="${urlCat}"]`); if(btn) filterCat(btn, urlCat); }
+</script>
+<script src="bundle.js"></script>
+</body>
+</html>

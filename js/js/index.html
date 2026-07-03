@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Bek Tour — Откройте Узбекистан</title>
+  <meta name="description" content="Премиальный туризм в Узбекистане. Самарканд, Бухара, Хива. С 1999 года.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="bt-loader" aria-hidden="true">
+  <div style="position:relative;text-align:center;z-index:2;">
+    <div class="loader-logo">BEK TOUR</div>
+    <div class="loader-sub">Uzbekistan · Silk Road Tourism</div>
+  </div>
+  <div class="loader-bar"><span class="loader-bar-fill"></span></div>
+  <div class="loader-pct">0</div>
+  <div class="loader-status">Открываем карту...</div>
+  <div class="loader-curtain"><span></span><span></span><span></span><span></span><span></span></div>
+</div>
+<style>
+#bt-loader{position:fixed;inset:0;z-index:99999;background:#061826;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.loader-logo{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.5rem);color:#C8A45D;letter-spacing:6px;font-weight:700;opacity:0;clip-path:inset(0 100% 0 0)}
+.loader-sub{margin-top:1.2rem;font-size:.62rem;letter-spacing:.5em;text-transform:uppercase;color:rgba(255,255,255,.3);opacity:0;transform:translateY(8px)}
+.loader-bar{position:absolute;left:7vw;right:7vw;bottom:8%;height:1.5px;background:rgba(255,255,255,.1);z-index:2}
+.loader-bar-fill{display:block;height:100%;width:0;background:#C8A45D;box-shadow:0 0 10px #C8A45D;transition:width .1s linear}
+.loader-pct{position:absolute;left:7vw;bottom:10.5%;font-family:'Playfair Display',serif;font-size:clamp(3rem,9vw,7rem);line-height:.9;color:#fff;letter-spacing:2px;z-index:2}
+.loader-status{position:absolute;right:7vw;bottom:10.5%;font-size:.56rem;letter-spacing:.38em;text-transform:uppercase;color:rgba(255,255,255,.35);text-align:right;max-width:45%;z-index:2}
+.loader-curtain{position:absolute;inset:0;z-index:5;display:flex;pointer-events:none}
+.loader-curtain span{flex:1;background:#061826}
+@media(prefers-reduced-motion:reduce){#bt-loader{display:none!important}}
+</style>
+
+<div id="navbar-ph"></div>
+
+<!-- HERO SLIDER -->
+<div class="hero-slider" id="heroSlider">
+
+  <!-- Slide 1: Samarkand -->
+  <div class="hero-slide active">
+    <div class="hero-slide-bg" style="background-image:url('https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=1920&q=80&auto=format&fit=crop')"></div>
+    <div class="hero-slide-overlay"></div>
+    <div class="hero-content">
+      <div>
+        <div class="hero-eyebrow" data-i18n="h1_eyebrow">Шёлковый Путь · Узбекистан · UNESCO</div>
+        <h1 class="hero-h1">
+          <span data-i18n="h1_title1">Откройте</span><br>
+          <em data-i18n="h1_title2">Душу</em><br>
+          <span data-i18n="h1_title3">Самарканда</span>
+          <span class="sub" data-i18n="h1_sub">Жемчужина Востока с 2500-летней историей</span>
+        </h1>
+        <p class="hero-desc" data-i18n="h1_desc">Регистан, мечеть Биби-Ханым, мавзолей Гур-Эмир — легендарные памятники архитектуры в сердце Шёлкового Пути.</p>
+        <div class="hero-cta">
+          <a href="destination.html?slug=samarkand" class="btn btn-primary btn-lg"><i class="fa fa-landmark"></i> <span data-i18n="h1_btn1">Самарканд</span></a>
+          <a href="tours.html" class="btn btn-ghost btn-lg"><i class="fa fa-route"></i> <span data-i18n="h1_btn2">Все туры</span></a>
+        </div>
+        <div class="hero-stats">
+          <div><div class="hs-n">50<em>K+</em></div><div class="hs-l" data-i18n="stat_tourists">Туристов</div></div>
+          <div><div class="hs-n">120<em>+</em></div><div class="hs-l" data-i18n="stat_routes">Маршрутов</div></div>
+          <div><div class="hs-n">4.9<em>★</em></div><div class="hs-l" data-i18n="stat_rating">Рейтинг</div></div>
+          <div><div class="hs-n">25<em>+</em></div><div class="hs-l" data-i18n="stat_years">Лет</div></div>
+        </div>
+      </div>
+      <div class="hero-right-card">
+        <div class="hero-card-title" data-i18n="card_title">🗺 Популярные маршруты</div>
+        <a href="tours.html?cat=silk" class="hero-card-item">
+          <div class="hero-card-thumb" style="background:linear-gradient(135deg,#1a3858,#061826);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🏛</div>
+          <div><div class="hero-card-name" data-i18n="card1_name">Золотое кольцо</div><div class="hero-card-sub" data-i18n="card1_sub">Самарканд · Бухара · Хива</div></div>
+          <div class="hero-card-badge" data-i18n="card1_badge">10 дней</div>
+        </a>
+        <a href="tours.html?cat=luxury" class="hero-card-item">
+          <div class="hero-card-thumb" style="background:linear-gradient(135deg,#2a1a08,#1a0a00);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">💎</div>
+          <div><div class="hero-card-name" data-i18n="card2_name">Luxury Silk Road</div><div class="hero-card-sub" data-i18n="card2_sub">Весь Узбекистан · 5★</div></div>
+          <div class="hero-card-badge" data-i18n="card2_badge">14 дней</div>
+        </a>
+        <a href="tours.html?cat=nature" class="hero-card-item">
+          <div class="hero-card-thumb" style="background:linear-gradient(135deg,#0a1a08,#05100a);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🏔</div>
+          <div><div class="hero-card-name" data-i18n="card3_name">Природа Узбекистана</div><div class="hero-card-sub" data-i18n="card3_sub">Чарвак · Чимган · Аральское</div></div>
+          <div class="hero-card-badge" data-i18n="card3_badge">7 дней</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 2: Bukhara -->
+  <div class="hero-slide">
+    <div class="hero-slide-bg" style="background-image:url('https://images.unsplash.com/photo-1630591197025-84a01b2d3fc0?w=1920&q=80&auto=format&fit=crop')"></div>
+    <div class="hero-slide-overlay" style="background:linear-gradient(120deg,rgba(26,8,40,.96) 0%,rgba(26,8,40,.6) 55%,transparent 100%)"></div>
+    <div class="hero-content">
+      <div>
+        <div class="hero-eyebrow" data-i18n="h2_eyebrow">Священный город · 140 памятников · UNESCO</div>
+        <h1 class="hero-h1">
+          <span data-i18n="h2_title1">Бухара —</span><br>
+          <em data-i18n="h2_title2">Сердце</em><br>
+          <span data-i18n="h2_title3">Востока</span>
+          <span class="sub" data-i18n="h2_sub">2500 лет непрерывной истории</span>
+        </h1>
+        <p class="hero-desc" data-i18n="h2_desc">Минарет Калон, которым восхитился Чингисхан. Мечети, медресе и бесконечные лабиринты старого города.</p>
+        <div class="hero-cta">
+          <a href="destination.html?slug=bukhara" class="btn btn-primary btn-lg" style="background:#6a2080;"><i class="fa fa-mosque"></i> <span data-i18n="h2_btn1">Бухара</span></a>
+          <a href="contacts.html" class="btn btn-ghost btn-lg"><i class="fa fa-calendar"></i> <span data-i18n="h2_btn2">Забронировать</span></a>
+        </div>
+        <div class="hero-stats">
+          <div><div class="hs-n">140<em>+</em></div><div class="hs-l">Памятников</div></div>
+          <div><div class="hs-n">2500<em>л</em></div><div class="hs-l">Истории</div></div>
+          <div><div class="hs-n">7<em>+</em></div><div class="hs-l">UNESCO</div></div>
+          <div><div class="hs-n">4.9<em>★</em></div><div class="hs-l" data-i18n="stat_rating">Рейтинг</div></div>
+        </div>
+      </div>
+      <div class="hero-right-card" style="border-color:rgba(160,80,200,.25);">
+        <div class="hero-card-title">🕌 Что посмотреть</div>
+        <a href="destination.html?slug=bukhara" class="hero-card-item">
+          <div class="hero-card-thumb" style="background:linear-gradient(135deg,#3d1850,#1a0828);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🕌</div>
+          <div><div class="hero-card-name">Минарет Калон</div><div class="hero-card-sub">Символ Бухары · IX век</div></div>
+          <div class="hero-card-badge">Must see</div>
+        </a>
+        <a href="destination.html?slug=bukhara" class="hero-card-item">
+          <div class="hero-card-thumb" style="background:linear-gradient(135deg,#2a0818,#1a0508);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🏰</div>
+          <div><div class="hero-card-name">Арк · Цитадель</div><div class="hero-card-sub">Древняя крепость</div></div>
+          <div class="hero-card-badge">История</div>
+        </a>
+        <a href="destination.html?slug=bukhara" class="hero-card-item">
+          <div class="hero-card-thumb" style="background:linear-gradient(135deg,#1a0d28,#0d0518);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🛒</div>
+          <div><div class="hero-card-name">Ляби-Хауз</div><div class="hero-card-sub">Площадь и базары</div></div>
+          <div class="hero-card-badge">Атмосфера</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Khiva -->
+  <div class="hero-slide">
+    <div class="hero-slide-bg" style="background-image:url('https://images.unsplash.com/photo-1683547572736-f5f3e2e66c98?w=1920&q=80&auto=format&fit=crop')"></div>
+    <div class="hero-slide-overlay" style="background:linear-gradient(120deg,rgba(46,21,5,.96) 0%,rgba(46,21,5,.62) 55%,transparent 100%)"></div>
+    <div class="hero-content">
+      <div>
+        <div class="hero-eyebrow" data-i18n="h3_eyebrow">Ичан-Кала · Первый UNESCO Узбекистана · X век</div>
+        <h1 class="hero-h1">
+          <span data-i18n="h3_title1">Хива —</span><br>
+          <em data-i18n="h3_title2">Живой</em><br>
+          <span data-i18n="h3_title3">Музей</span>
+          <span class="sub" data-i18n="h3_sub">Средневековый город-крепость без изменений</span>
+        </h1>
+        <p class="hero-desc" data-i18n="h3_desc">Единственный в мире полностью сохранившийся средневековый восточный город.</p>
+        <div class="hero-cta">
+          <a href="destination.html?slug=khiva" class="btn btn-primary btn-lg" style="background:#c47030;"><i class="fa fa-fort-awesome"></i> <span data-i18n="h3_btn1">Хива</span></a>
+          <a href="tours.html" class="btn btn-ghost btn-lg"><i class="fa fa-map"></i> <span data-i18n="h3_btn2">Подобрать тур</span></a>
+        </div>
+        <div class="hero-stats">
+          <div><div class="hs-n">60<em>+</em></div><div class="hs-l">Мечетей</div></div>
+          <div><div class="hs-n">X<em>в</em></div><div class="hs-l">Основан</div></div>
+          <div><div class="hs-n">1<em>й</em></div><div class="hs-l">UNESCO</div></div>
+          <div><div class="hs-n">5.0<em>★</em></div><div class="hs-l" data-i18n="stat_rating">Рейтинг</div></div>
+        </div>
+      </div>
+      <div class="hero-right-card" style="border-color:rgba(196,112,48,.25);">
+        <div class="hero-card-title">🏰 Ичан-Кала</div>
+        <a href="destination.html?slug=khiva" class="hero-card-item">
+          <div class="hero-card-thumb" style="background:linear-gradient(135deg,#5a2a0a,#2e1505);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🏰</div>
+          <div><div class="hero-card-name">Ичан-Кала</div><div class="hero-card-sub">Внутренний город · UNESCO</div></div>
+          <div class="hero-card-badge">Главное</div>
+        </a>
+        <a href="destination.html?slug=khiva" class="hero-card-item">
+          <div class="hero-card-thumb" style="background:linear-gradient(135deg,#401a05,#200a00);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🕌</div>
+          <div><div class="hero-card-name">Кальта Минор</div><div class="hero-card-sub">Незаконченный минарет</div></div>
+          <div class="hero-card-badge">Фото</div>
+        </a>
+        <a href="destination.html?slug=khiva" class="hero-card-item">
+          <div class="hero-card-thumb" style="background:linear-gradient(135deg,#302005,#1a1000);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🎨</div>
+          <div><div class="hero-card-name">Ремёсла и базары</div><div class="hero-card-sub">Шёлк, вышивка, медь</div></div>
+          <div class="hero-card-badge">Сувениры</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider-controls">
+    <div class="slider-dots" id="slider-dots"></div>
+    <div class="slider-arrows">
+      <button class="slider-arrow slider-prev"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="slider-arrow slider-next"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<!-- DESTINATIONS STRIP -->
+<div class="collections-section">
+  <div class="collections-header">
+    <div>
+      <div class="section-label" data-i18n="sec_dest_label">Направления</div>
+      <div class="section-title light" style="font-size:clamp(1.4rem,3vw,2.2rem);" data-i18n="sec_dest_title1">ИССЛЕДУЙТЕ <em data-i18n="sec_dest_title2">УЗБЕКИСТАН</em></div>
+    </div>
+    <a href="destinations.html" class="see-all" style="color:var(--gold);" data-i18n="dest_all">Все направления →</a>
+  </div>
+  <div class="collections-grid">
+    <a href="destinations.html" class="collections-side-label" style="text-decoration:none;"><span>Все</span><span>—</span><span>Места</span></a>
+    <a href="destination.html?slug=samarkand" class="collection-card">
+      <div class="collection-img-wrap"><img src="https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=600&q=75" alt="Самарканд"></div>
+      <div class="collection-overlay"></div>
+      <div class="collection-card-badge">UNESCO</div>
+      <div class="collection-label" data-i18n="nav_samarkand">Самарканд</div>
+    </a>
+    <a href="destination.html?slug=bukhara" class="collection-card">
+      <div class="collection-img-wrap"><img src="https://images.unsplash.com/photo-1630591197025-84a01b2d3fc0?w=600&q=75" alt="Бухара"></div>
+      <div class="collection-overlay"></div>
+      <div class="collection-card-badge">UNESCO</div>
+      <div class="collection-label" data-i18n="nav_bukhara">Бухара</div>
+    </a>
+    <a href="destination.html?slug=khiva" class="collection-card">
+      <div class="collection-img-wrap" style="background:linear-gradient(135deg,#5a2a0a,#2e1505);display:flex;align-items:center;justify-content:center;font-size:5rem;">🏰</div>
+      <div class="collection-overlay"></div>
+      <div class="collection-card-badge">UNESCO</div>
+      <div class="collection-label" data-i18n="nav_khiva">Хива</div>
+    </a>
+    <a href="destination.html?slug=tashkent" class="collection-card">
+      <div class="collection-img-wrap" style="background:linear-gradient(135deg,#0a2030,#051218);display:flex;align-items:center;justify-content:center;font-size:5rem;">🏙</div>
+      <div class="collection-overlay"></div>
+      <div class="collection-label" data-i18n="nav_tashkent">Ташкент</div>
+    </a>
+    <a href="destination.html?slug=fergana" class="collection-card">
+      <div class="collection-img-wrap" style="background:linear-gradient(135deg,#401500,#200a00);display:flex;align-items:center;justify-content:center;font-size:5rem;">🌿</div>
+      <div class="collection-overlay"></div>
+      <div class="collection-label" data-i18n="nav_fergana">Ферганская долина</div>
+    </a>
+  </div>
+</div>
+
+<!-- TOURS -->
+<section class="section bg-white">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="reveal">
+        <div class="section-label" data-i18n="sec_tours_label">Туры</div>
+        <div class="section-title"><span data-i18n="sec_tours_title1">ПОПУЛЯРНЫЕ</span><br><em data-i18n="sec_tours_title2">МАРШРУТЫ</em></div>
+      </div>
+      <a href="tours.html" class="see-all reveal d2" data-i18n="tours_all">Все туры →</a>
+    </div>
+    <div class="products-grid">
+      <div class="product-card reveal" data-card data-cat="silk" data-price="890">
+        <div class="product-img-wrap">
+          <img class="product-img" src="https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=600&q=75" alt="">
+          <div class="product-badge badge-hot" data-i18n="tour1_badge">Хит</div>
+        </div>
+        <div class="product-body">
+          <div class="product-dest"><i class="fa fa-map-marker-alt"></i> <span data-i18n="tour1_dest">Самарканд · Бухара · Хива</span></div>
+          <div class="product-name" data-i18n="tour1_name">Золотое кольцо Узбекистана</div>
+          <div class="product-meta">
+            <span><i class="fa fa-clock"></i> 10 <span data-i18n="days">дней</span></span>
+            <span><i class="fa fa-users"></i> 2–12 <span data-i18n="guests">чел.</span></span>
+            <span><i class="fa fa-star" style="color:var(--gold)"></i> 4.9</span>
+          </div>
+          <div class="product-foot">
+            <div><div class="price-label" data-i18n="from">от</div><div class="price-main">$890 <span class="price-per" data-i18n="per_person">/чел.</span></div></div>
+            <a href="tours.html" class="btn btn-dark btn-sm" data-i18n="btn_more">Подробнее</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal d1" data-card data-cat="luxury" data-price="1890">
+        <div class="product-img-wrap">
+          <img class="product-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=75" alt="">
+          <div class="product-badge" style="background:var(--gold-dark);" data-i18n="tour2_badge">Эксклюзив</div>
+        </div>
+        <div class="product-body">
+          <div class="product-dest"><i class="fa fa-map-marker-alt"></i> <span data-i18n="tour2_dest">Весь Узбекистан · 5★</span></div>
+          <div class="product-name" data-i18n="tour2_name">Luxury Silk Road</div>
+          <div class="product-meta">
+            <span><i class="fa fa-clock"></i> 14 <span data-i18n="days">дней</span></span>
+            <span><i class="fa fa-users"></i> 2–6 <span data-i18n="guests">чел.</span></span>
+            <span><i class="fa fa-star" style="color:var(--gold)"></i> 5.0</span>
+          </div>
+          <div class="product-foot">
+            <div><div class="price-label" data-i18n="from">от</div><div class="price-main">$1,890 <span class="price-per" data-i18n="per_person">/чел.</span></div></div>
+            <a href="tours.html" class="btn btn-dark btn-sm" data-i18n="btn_more">Подробнее</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal d2" data-card data-cat="nature" data-price="590">
+        <div class="product-img-wrap" style="background:linear-gradient(135deg,#152808,#0a1a05);">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;">🏔</div>
+          <div class="product-badge badge-new" data-i18n="tour3_badge">Новый</div>
+        </div>
+        <div class="product-body">
+          <div class="product-dest"><i class="fa fa-map-marker-alt"></i> <span data-i18n="tour3_dest">Чарвак · Чимган · Аральское</span></div>
+          <div class="product-name" data-i18n="tour3_name">Природа Узбекистана</div>
+          <div class="product-meta">
+            <span><i class="fa fa-clock"></i> 7 <span data-i18n="days">дней</span></span>
+            <span><i class="fa fa-users"></i> 2–8 <span data-i18n="guests">чел.</span></span>
+            <span><i class="fa fa-star" style="color:var(--gold)"></i> 4.8</span>
+          </div>
+          <div class="product-foot">
+            <div><div class="price-label" data-i18n="from">от</div><div class="price-main">$590 <span class="price-per" data-i18n="per_person">/чел.</span></div></div>
+            <a href="tours.html" class="btn btn-dark btn-sm" data-i18n="btn_more">Подробнее</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal d3" data-card data-cat="city" data-price="390">
+        <div class="product-img-wrap" style="background:linear-gradient(135deg,#0a2030,#051218);display:flex;align-items:center;justify-content:center;font-size:5rem;">🏙</div>
+        <div class="product-body">
+          <div class="product-dest"><i class="fa fa-map-marker-alt"></i> <span data-i18n="tour4_dest">Ташкент · Самарканд</span></div>
+          <div class="product-name" data-i18n="tour4_name">Ташкент + Самарканд за выходные</div>
+          <div class="product-meta">
+            <span><i class="fa fa-clock"></i> 3 <span data-i18n="days">дней</span></span>
+            <span><i class="fa fa-users"></i> 1–20 <span data-i18n="guests">чел.</span></span>
+            <span><i class="fa fa-star" style="color:var(--gold)"></i> 4.7</span>
+          </div>
+          <div class="product-foot">
+            <div><div class="price-label" data-i18n="from">от</div><div class="price-main">$390 <span class="price-per" data-i18n="per_person">/чел.</span></div></div>
+            <a href="tours.html" class="btn btn-dark btn-sm" data-i18n="btn_more">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section bg-dark">
+  <div class="section-inner">
+    <div class="center reveal">
+      <div class="section-label center-label" data-i18n="sec_why_label">Почему Узбекистан</div>
+      <div class="section-title light"><span data-i18n="sec_why_title1">Страна которая</span> <em data-i18n="sec_why_title2">удивит</em> <span data-i18n="sec_why_title3">вас</span></div>
+      <p class="section-desc light" style="margin:.8rem auto 0;" data-i18n="sec_why_desc">Узбекистан — одно из самых недооценённых направлений в мире.</p>
+    </div>
+    <div class="why-grid" style="margin-top:3rem;">
+      <div class="why-card reveal"><div class="why-card-icon"><i class="fa fa-landmark"></i></div><div class="why-card-title" data-i18n="why1_title">7 объектов ЮНЕСКО</div><div class="why-card-desc" data-i18n="why1_desc">Регистан, Ичан-Кала, Бухара, Шахрисабз</div></div>
+      <div class="why-card reveal d1"><div class="why-card-icon"><i class="fa fa-shield-alt"></i></div><div class="why-card-title" data-i18n="why2_title">Безопасная страна</div><div class="why-card-desc" data-i18n="why2_desc">Один из самых низких уровней преступности</div></div>
+      <div class="why-card reveal d2"><div class="why-card-icon"><i class="fa fa-passport"></i></div><div class="why-card-title" data-i18n="why3_title">Безвизовый въезд</div><div class="why-card-desc" data-i18n="why3_desc">Гражданам 90+ стран не нужна виза</div></div>
+      <div class="why-card reveal d3"><div class="why-card-icon"><i class="fa fa-utensils"></i></div><div class="why-card-title" data-i18n="why4_title">Легендарная кухня</div><div class="why-card-desc" data-i18n="why4_desc">Плов, самса, лагман — гастрономия Шёлкового пути</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOTELS -->
+<section class="section bg-cream">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="reveal">
+        <div class="section-label" data-i18n="sec_hotels_label">Отели</div>
+        <div class="section-title"><span data-i18n="sec_hotels_title1">ЛУЧШИЕ</span> <em data-i18n="sec_hotels_title2">ОТЕЛИ</em><br><span data-i18n="sec_hotels_title3">УЗБЕКИСТАНА</span></div>
+      </div>
+      <a href="hotels.html" class="see-all reveal d2" data-i18n="hotels_all">Все отели →</a>
+    </div>
+    <div class="products-grid">
+      <div class="product-card reveal">
+        <div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=75" alt=""><div class="product-badge badge-hot">★ 4.9</div></div>
+        <div class="product-body">
+          <div class="product-dest"><i class="fa fa-map-marker-alt"></i> <span data-i18n="nav_samarkand">Самарканд</span></div>
+          <div class="product-name">Registan View Boutique</div>
+          <div class="product-meta"><span><i class="fa fa-bed"></i> 4★</span><span><i class="fa fa-wifi"></i> WiFi</span><span><i class="fa fa-star" style="color:var(--gold)"></i> 4.9</span></div>
+          <div class="product-foot"><div><div class="price-label" data-i18n="from">от</div><div class="price-main">$120 <span class="price-per" data-i18n="per_night">/ночь</span></div></div><a href="https://wa.me/998901234567" target="_blank" class="btn btn-dark btn-sm" data-i18n="btn_book">Забронировать</a></div>
+        </div>
+      </div>
+      <div class="product-card reveal d1">
+        <div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1455587734955-081b22074882?w=600&q=75" alt=""><div class="product-badge badge-new">UNESCO вид</div></div>
+        <div class="product-body">
+          <div class="product-dest"><i class="fa fa-map-marker-alt"></i> <span data-i18n="nav_bukhara">Бухара</span></div>
+          <div class="product-name">Kalon Minaret Hotel</div>
+          <div class="product-meta"><span><i class="fa fa-bed"></i> 4★</span><span><i class="fa fa-swimming-pool"></i> Pool</span><span><i class="fa fa-star" style="color:var(--gold)"></i> 4.8</span></div>
+          <div class="product-foot"><div><div class="price-label" data-i18n="from">от</div><div class="price-main">$85 <span class="price-per" data-i18n="per_night">/ночь</span></div></div><a href="https://wa.me/998901234567" target="_blank" class="btn btn-dark btn-sm" data-i18n="btn_book">Забронировать</a></div>
+        </div>
+      </div>
+      <div class="product-card reveal d2">
+        <div class="product-img-wrap" style="background:linear-gradient(135deg,#5a2a0a,#2e1505);"><div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;">🏰</div><div class="product-badge" style="background:var(--gold-dark);">Ичан-Кала</div></div>
+        <div class="product-body">
+          <div class="product-dest"><i class="fa fa-map-marker-alt"></i> <span data-i18n="nav_khiva">Хива</span></div>
+          <div class="product-name">Ichan Kala Residence</div>
+          <div class="product-meta"><span><i class="fa fa-bed"></i> Boutique</span><span><i class="fa fa-wifi"></i> WiFi</span><span><i class="fa fa-star" style="color:var(--gold)"></i> 4.9</span></div>
+          <div class="product-foot"><div><div class="price-label" data-i18n="from">от</div><div class="price-main">$75 <span class="price-per" data-i18n="per_night">/ночь</span></div></div><a href="https://wa.me/998901234567" target="_blank" class="btn btn-dark btn-sm" data-i18n="btn_book">Забронировать</a></div>
+        </div>
+      </div>
+      <div class="product-card reveal d3">
+        <div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=75" alt=""><div class="product-badge badge-promo">4★</div></div>
+        <div class="product-body">
+          <div class="product-dest"><i class="fa fa-map-marker-alt"></i> <span data-i18n="nav_tashkent">Ташкент</span></div>
+          <div class="product-name">Tashkent Grand Hotel</div>
+          <div class="product-meta"><span><i class="fa fa-bed"></i> Deluxe</span><span><i class="fa fa-swimming-pool"></i> Pool</span><span><i class="fa fa-star" style="color:var(--gold)"></i> 4.7</span></div>
+          <div class="product-foot"><div><div class="price-label" data-i18n="from">от</div><div class="price-main">$150 <span class="price-per" data-i18n="per_night">/ночь</span></div></div><a href="https://wa.me/998901234567" target="_blank" class="btn btn-dark btn-sm" data-i18n="btn_book">Забронировать</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="section bg-dark" style="position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-20%;right:-5%;width:500px;height:500px;background:radial-gradient(circle,rgba(200,164,93,.07) 0%,transparent 70%);pointer-events:none;"></div>
+  <div class="section-inner" style="position:relative;z-index:1;">
+    <div class="center reveal">
+      <div class="section-label center-label" data-i18n="sec_calc_label">Калькулятор</div>
+      <div class="section-title light"><span data-i18n="sec_calc_title1">Рассчитайте стоимость</span> <em data-i18n="sec_calc_title2">вашего тура</em></div>
+      <p class="section-desc light" style="margin:.8rem auto 0;" data-i18n="sec_calc_desc">Укажите параметры и получите предварительную стоимость за несколько секунд</p>
+    </div>
+    <div style="max-width:920px;margin:2.5rem auto 0;">
+      <div class="calc-grid">
+        <div class="calc-field"><div class="calc-lbl" data-i18n="calc_route">Маршрут</div>
+          <select class="calc-select" data-key="tour">
+            <option value="silk" data-i18n="opt_silk">Шёлковый путь (3 города)</option>
+            <option value="city" data-i18n="opt_city">Один город</option>
+            <option value="nature" data-i18n="opt_nature">Природа Узбекистана</option>
+            <option value="luxury" data-i18n="opt_luxury">Luxury (весь Узбекистан)</option>
+          </select>
+        </div>
+        <div class="calc-field"><div class="calc-lbl" data-i18n="calc_days">Количество дней</div>
+          <select class="calc-select" data-key="days">
+            <option value="3" data-i18n="opt_3d">3 дня</option>
+            <option value="5" selected data-i18n="opt_5d">5 дней</option>
+            <option value="7" data-i18n="opt_7d">7 дней</option>
+            <option value="10" data-i18n="opt_10d">10 дней</option>
+            <option value="14" data-i18n="opt_14d">14 дней</option>
+          </select>
+        </div>
+        <div class="calc-field"><div class="calc-lbl" data-i18n="calc_guests">Туристов</div>
+          <select class="calc-select" data-key="guests">
+            <option value="1" data-i18n="opt_1p">1 турист</option>
+            <option value="2" selected data-i18n="opt_2p">2 туриста</option>
+            <option value="4" data-i18n="opt_4p">4 туриста</option>
+            <option value="6" data-i18n="opt_6p">6 туристов</option>
+          </select>
+        </div>
+        <div class="calc-field"><div class="calc-lbl" data-i18n="calc_hotel">Категория отеля</div>
+          <select class="calc-select" data-key="hotel">
+            <option value="3" data-i18n="opt_3s">3 звезды</option>
+            <option value="4" selected data-i18n="opt_4s">4 звезды</option>
+            <option value="5" data-i18n="opt_5s">5 звёзд</option>
+          </select>
+        </div>
+        <div class="calc-field"><div class="calc-lbl" data-i18n="calc_currency">Валюта</div>
+          <select class="calc-select" data-key="currency">
+            <option value="usd">USD $</option>
+            <option value="eur">EUR €</option>
+            <option value="rub">RUB ₽</option>
+            <option value="uzs">UZS сум</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <div class="calc-lbl" style="margin-bottom:.7rem;" data-i18n="calc_extras">Дополнительные услуги</div>
+        <div class="calc-svcs">
+          <button class="calc-svc" data-svc="transfer"><i class="fa fa-car"></i> <span data-i18n="calc_transfer">Трансфер</span></button>
+          <button class="calc-svc" data-svc="guide"><i class="fa fa-user-tie"></i> <span data-i18n="calc_guide">Гид</span></button>
+          <button class="calc-svc" data-svc="visa"><i class="fa fa-passport"></i> <span data-i18n="calc_visa">Визовая поддержка</span></button>
+          <button class="calc-svc" data-svc="meals"><i class="fa fa-utensils"></i> <span data-i18n="calc_meals">Питание</span></button>
+          <button class="calc-svc" data-svc="photo"><i class="fa fa-camera"></i> <span data-i18n="calc_photo">Фотограф</span></button>
+          <button class="calc-svc" data-svc="car"><i class="fa fa-car-side"></i> <span data-i18n="calc_car">Аренда авто</span></button>
+        </div>
+      </div>
+      <div class="calc-result">
+        <div>
+          <div class="calc-total-lbl" data-i18n="calc_total_label">Предварительная стоимость</div>
+          <div class="calc-total" id="calcTotal">$1,200</div>
+          <div class="calc-per" data-i18n="calc_note">Точная цена формируется после консультации</div>
+        </div>
+        <div class="calc-actions">
+          <a href="https://wa.me/998901234567?text=Здравствуйте! Хочу узнать стоимость тура." target="_blank" class="btn btn-primary btn-lg"><i class="fab fa-whatsapp"></i> <span data-i18n="calc_btn1">Узнать цену</span></a>
+          <a href="contacts.html" class="btn btn-ghost btn-lg"><i class="fa fa-envelope"></i> <span data-i18n="calc_btn2">Написать</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="center reveal" style="margin-bottom:3rem;">
+      <div class="section-label center-label" data-i18n="sec_rev_label">Отзывы</div>
+      <div class="section-title"><span data-i18n="sec_rev_title1">ЧТО ГОВОРЯТ</span> <em data-i18n="sec_rev_title2">ТУРИСТЫ</em></div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal"><div class="review-stars">★★★★★</div><div class="review-text">«Потрясающая организация! Самарканд превзошёл все ожидания. Регистан на закате — незабываемо.»</div><div class="review-author"><div class="review-av">М</div><div><div class="review-name">Михаил С.</div><div class="review-from">Москва · 2024</div></div></div></div>
+      <div class="review-card reveal d1"><div class="review-stars">★★★★★</div><div class="review-text">«We traveled for 10 days through Uzbekistan and it was life-changing. The history, food, people — incredible!»</div><div class="review-author"><div class="review-av">S</div><div><div class="review-name">Sarah T.</div><div class="review-from">London, UK · 2024</div></div></div></div>
+      <div class="review-card reveal d2"><div class="review-stars">★★★★★</div><div class="review-text">«Уже третий тур с Bek Tour. Хива просто покорила — как будто попал в сказку. Рекомендую всем!»</div><div class="review-author"><div class="review-av">А</div><div><div class="review-name">Аида Н.</div><div class="review-from">Алматы · 2023</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section bg-cream">
+  <div class="section-inner">
+    <div class="center reveal" style="margin-bottom:3rem;">
+      <div class="section-label center-label" data-i18n="sec_faq_label">FAQ</div>
+      <div class="section-title"><span data-i18n="sec_faq_title1">ЧАСТО ЗАДАВАЕМЫЕ</span> <em data-i18n="sec_faq_title2">ВОПРОСЫ</em></div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal"><div class="faq-q"><span data-i18n="faq1_q">Нужна ли виза?</span><div class="faq-ico"><i class="fa fa-plus"></i></div></div><div class="faq-a"><div class="faq-a-inner" data-i18n="faq1_a">Гражданам 90+ стран не нужна виза.</div></div></div>
+      <div class="faq-item reveal d1"><div class="faq-q"><span data-i18n="faq2_q">Когда лучше ехать?</span><div class="faq-ico"><i class="fa fa-plus"></i></div></div><div class="faq-a"><div class="faq-a-inner" data-i18n="faq2_a">Лучшее время — весна и осень.</div></div></div>
+      <div class="faq-item reveal d2"><div class="faq-q"><span data-i18n="faq3_q">Что входит в стоимость?</span><div class="faq-ico"><i class="fa fa-plus"></i></div></div><div class="faq-a"><div class="faq-a-inner" data-i18n="faq3_a">Проживание, трансфер, гид, билеты, завтраки.</div></div></div>
+      <div class="faq-item reveal d3"><div class="faq-q"><span data-i18n="faq4_q">Какая валюта?</span><div class="faq-ico"><i class="fa fa-plus"></i></div></div><div class="faq-a"><div class="faq-a-inner" data-i18n="faq4_a">Узбекский сум. Доллары и евро принимаются везде.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- B2B -->
+<section class="section bg-dark" style="position:relative;overflow:hidden;">
+  <div class="section-inner" style="position:relative;z-index:1;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1040px;margin:0 auto;" class="reveal">
+      <div>
+        <div class="section-label" data-i18n="sec_b2b_label">B2B Партнёрам</div>
+        <div class="section-title light" style="margin-top:.5rem;"><span data-i18n="sec_b2b_title1">Присоединяйтесь к</span> <em data-i18n="sec_b2b_title2">экосистеме</em></div>
+        <p class="section-desc light" style="margin-top:.8rem;" data-i18n="sec_b2b_desc">Турагентства, отельеры, гиды — добавляйте объекты, получайте клиентов.</p>
+        <ul style="margin:1.5rem 0;display:flex;flex-direction:column;gap:.7rem;">
+          <li style="display:flex;align-items:center;gap:.7rem;font-size:.84rem;color:rgba(255,255,255,.55);"><i class="fa fa-check-circle" style="color:var(--gold);"></i> <span data-i18n="b2b_feat1">Бесплатная регистрация за 2 минуты</span></li>
+          <li style="display:flex;align-items:center;gap:.7rem;font-size:.84rem;color:rgba(255,255,255,.55);"><i class="fa fa-check-circle" style="color:var(--gold);"></i> <span data-i18n="b2b_feat2">Личный кабинет — объекты, фото, бронирования</span></li>
+          <li style="display:flex;align-items:center;gap:.7rem;font-size:.84rem;color:rgba(255,255,255,.55);"><i class="fa fa-check-circle" style="color:var(--gold);"></i> <span data-i18n="b2b_feat3">Загрузка фото через ImageKit CDN</span></li>
+          <li style="display:flex;align-items:center;gap:.7rem;font-size:.84rem;color:rgba(255,255,255,.55);"><i class="fa fa-check-circle" style="color:var(--gold);"></i> <span data-i18n="b2b_feat4">Аналитика и отчёты в реальном времени</span></li>
+        </ul>
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;">
+          <a href="b2b/register.html" class="btn btn-primary btn-lg"><i class="fa fa-handshake"></i> <span data-i18n="b2b_btn1">Стать партнёром</span></a>
+          <a href="contacts.html" class="btn btn-ghost btn-lg" data-i18n="b2b_btn2">Подробнее</a>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:1.5rem;text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold);font-weight:700;">$0</div><div style="font-size:.6rem;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:1.5px;margin-top:.4rem;" data-i18n="b2b_reg">Регистрация</div></div>
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:1.5rem;text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold);font-weight:700;">24ч</div><div style="font-size:.6rem;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:1.5px;margin-top:.4rem;" data-i18n="b2b_act">Активация</div></div>
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:1.5rem;text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold);font-weight:700;">∞</div><div style="font-size:.6rem;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:1.5px;margin-top:.4rem;" data-i18n="b2b_props">Объектов</div></div>
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:1.5rem;text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold);font-weight:700;">20%</div><div style="font-size:.6rem;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:1.5px;margin-top:.4rem;" data-i18n="b2b_comm">Комиссия</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section bg-dark-2" style="padding:4rem 1.5rem;border-top:1px solid rgba(255,255,255,.06);">
+  <div class="section-inner">
+    <div class="nl-inner reveal">
+      <div class="section-label center-label" data-i18n="sec_nl_label">Рассылка</div>
+      <div class="nl-title" data-i18n="nl_title">Специальные предложения</div>
+      <p class="nl-desc" data-i18n="nl_desc">Подпишитесь и получайте эксклюзивные скидки первыми</p>
+      <div class="nl-form">
+        <input type="email" class="nl-input" id="nlEmail" data-i18n-ph="nl_ph" placeholder="ваш@email.com">
+        <button class="nl-btn" onclick="nlSubmit()" data-i18n="nl_btn">Подписаться</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-ph"></div>
+
+<script src="bundle.js"></script>
+<script>
+async function loadComponent(url, id) {
+  try { const r = await fetch(url); document.getElementById(id).innerHTML = await r.text(); } catch(e) {}
+}
+Promise.all([
+  loadComponent('navbar.html', 'navbar-ph'),
+  loadComponent('footer.html', 'footer-ph'),
+]).then(() => { if(window.onComponentsLoaded) onComponentsLoaded(); });
+</script>
+</body>
+</html>
