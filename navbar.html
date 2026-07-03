@@ -1,0 +1,118 @@
+<div class="scroll-progress"></div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><em>Самарканд</em> — Жемчужина Шёлкового Пути · Объект ЮНЕСКО</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><em>Бухара</em> — 2500 лет истории и легендарный минарет Калон</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><em>Хива</em> — Ичан-Кала · Первый объект ЮНЕСКО в Узбекистане</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item">Безвизовый въезд для <em>90+ стран</em></span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><em>Bek Tour</em> — Лицензированный туроператор с 1999 года</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><em>Самарканд</em> — Жемчужина Шёлкового Пути · Объект ЮНЕСКО</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><em>Бухара</em> — 2500 лет истории и легендарный минарет Калон</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><em>Хива</em> — Ичан-Кала · Первый объект ЮНЕСКО в Узбекистане</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item">Безвизовый въезд для <em>90+ стран</em></span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><em>Bek Tour</em> — Лицензированный туроператор с 1999 года</span>
+    <span class="ticker-sep">✦</span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-mark">✈</div>
+      <div>
+        <div class="nav-logo-name">BEK<em>TOUR</em></div>
+        <div class="nav-logo-sub">Uzbekistan</div>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Главная</a></li>
+      <li class="nav-mega">
+        <a href="destinations.html" class="nav-link">Направления <i class="fa fa-chevron-down" style="font-size:.56rem;opacity:.5;margin-left:2px;"></i></a>
+        <div class="nav-mega-menu">
+          <a href="destination.html?slug=samarkand" class="nav-mega-item"><i class="fa fa-landmark"></i> Самарканд</a>
+          <a href="destination.html?slug=bukhara"   class="nav-mega-item"><i class="fa fa-mosque"></i> Бухара</a>
+          <a href="destination.html?slug=khiva"     class="nav-mega-item"><i class="fa fa-fort-awesome"></i> Хива</a>
+          <a href="destination.html?slug=tashkent"  class="nav-mega-item"><i class="fa fa-city"></i> Ташкент</a>
+          <a href="destination.html?slug=fergana"   class="nav-mega-item"><i class="fa fa-tree"></i> Ферганская долина</a>
+          <div class="nav-mega-divider"></div>
+          <a href="destinations.html" class="nav-mega-item nav-mega-all"><i class="fa fa-arrow-right"></i> Все направления</a>
+        </div>
+      </li>
+      <li class="nav-mega">
+        <a href="tours.html" class="nav-link">Туры <i class="fa fa-chevron-down" style="font-size:.56rem;opacity:.5;margin-left:2px;"></i></a>
+        <div class="nav-mega-menu">
+          <a href="tours.html?cat=silk"   class="nav-mega-item"><i class="fa fa-route"></i> Шёлковый путь</a>
+          <a href="tours.html?cat=luxury" class="nav-mega-item"><i class="fa fa-gem"></i> Luxury туры</a>
+          <a href="tours.html?cat=nature" class="nav-mega-item"><i class="fa fa-mountain"></i> Природа</a>
+          <a href="tours.html?cat=city"   class="nav-mega-item"><i class="fa fa-building"></i> Городские</a>
+          <a href="tours.html?cat=custom" class="nav-mega-item"><i class="fa fa-sliders-h"></i> Индивидуальные</a>
+        </div>
+      </li>
+      <li><a href="hotels.html"   class="nav-link">Отели</a></li>
+      <li><a href="about.html"    class="nav-link">О нас</a></li>
+      <li><a href="contacts.html" class="nav-link">Контакты</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="nav-icon-btn" id="searchToggle" title="Поиск">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <div class="nav-lang">
+        <a href="#" onclick="setLang('ru');return false;">RU</a>
+        <a href="#" onclick="setLang('en');return false;">EN</a>
+        <a href="#" onclick="setLang('uz');return false;">UZ</a>
+      </div>
+      <a href="register.html" class="nav-cta">B2B</a>
+      <button class="nav-burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Search bar -->
+<div id="searchBar" class="hidden" style="position:sticky;top:var(--nav-h);z-index:490;background:var(--dark-2);padding:.8rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.08);">
+  <div style="max-width:600px;margin:0 auto;display:flex;gap:.6rem;">
+    <input id="searchInput" type="text" placeholder="Самарканд, тур на 7 дней..."
+      style="flex:1;padding:.75rem 1.1rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:10px;color:#fff;font-family:inherit;font-size:.88rem;outline:none;"
+      onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,.14)'">
+    <button onclick="showToast('Поиск скоро будет доступен')"
+      style="background:var(--gold);color:#fff;border:none;padding:.75rem 1.2rem;border-radius:10px;font-family:inherit;font-size:.84rem;font-weight:700;cursor:pointer;">
+      Найти
+    </button>
+  </div>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="menu-overlay"></div>
+<div class="mobile-nav">
+  <div class="mobile-nav-head">
+    <div class="mobile-nav-logo">BEK<em>TOUR</em></div>
+    <button class="mobile-nav-close"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="mobile-nav-links">
+    <a href="index.html"        class="mobile-nav-link">Главная            <i class="fa fa-chevron-right"></i></a>
+    <a href="destinations.html" class="mobile-nav-link">Направления        <i class="fa fa-chevron-right"></i></a>
+    <a href="tours.html"        class="mobile-nav-link">Туры               <i class="fa fa-chevron-right"></i></a>
+    <a href="hotels.html"       class="mobile-nav-link">Отели              <i class="fa fa-chevron-right"></i></a>
+    <a href="about.html"        class="mobile-nav-link">О нас              <i class="fa fa-chevron-right"></i></a>
+    <a href="contacts.html"     class="mobile-nav-link">Контакты           <i class="fa fa-chevron-right"></i></a>
+    <a href="register.html" class="mobile-nav-link gold">B2B Партнёр  <i class="fa fa-chevron-right"></i></a>
+  </div>
+  <div class="mobile-nav-footer">
+    <a href="register.html" class="mobile-nav-cta">Стать партнёром</a>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Отели Узбекистана — Bek Tour</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="css/styles.css"></head><body>
+<link rel="stylesheet" href="styles.css"></head><body>
 <div id="navbar-ph"></div>
 <div class="page-hero"><div class="page-hero-overlay"></div><div class="page-hero-inner container">
   <div class="breadcrumb"><a href="index.html">Главная</a><span>/</span><span>Отели</span></div>
@@ -30,8 +30,8 @@
 <div id="footer-ph"></div>
 <script>
 async function loadComponent(url,id){try{const r=await fetch(url);document.getElementById(id).innerHTML=await r.text();}catch(e){}}
-Promise.all([loadComponent('components/navbar.html','navbar-ph'),loadComponent('components/footer.html','footer-ph')]).then(()=>{ if(window.onComponentsLoaded) onComponentsLoaded(); });
+Promise.all([loadComponent('navbar.html','navbar-ph'),loadComponent('footer.html','footer-ph')]).then(()=>{ if(window.onComponentsLoaded) onComponentsLoaded(); });
 function filterCat(btn,cat){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('[data-card]').forEach(card=>{card.style.display=(!cat||card.dataset.cat?.includes(cat))?'':'none';});}
 </script>
-<script src="js/main.js"></script>
+<script src="bundle.js"></script>
 </body></html>

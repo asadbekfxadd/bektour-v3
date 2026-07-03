@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div id="navbar-ph"></div>
@@ -144,7 +144,7 @@
 <div id="footer-ph"></div>
 <script>
 async function loadComponent(url, id) { try { const r = await fetch(url); document.getElementById(id).innerHTML = await r.text(); } catch(e){} }
-Promise.all([loadComponent('components/navbar.html','navbar-ph'), loadComponent('components/footer.html','footer-ph')]);
+Promise.all([loadComponent('navbar.html','navbar-ph'), loadComponent('footer.html','footer-ph')]);
 function filterCat(btn, cat) {
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
   btn.classList.add('on');
@@ -156,6 +156,6 @@ function filterCat(btn, cat) {
 const urlCat = new URLSearchParams(location.search).get('cat');
 if (urlCat) { const btn = document.querySelector(`.chip[data-cat="${urlCat}"]`); if(btn) filterCat(btn, urlCat); }
 </script>
-<script src="js/main.js"></script>
+<script src="bundle.js"></script>
 </body>
 </html>

@@ -2,231 +2,184 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Dashboard — Bek Tour Partner Hub</title>
+  <title>B2B Регистрация — Bek Tour Partner Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<div class="b2b-shell">
+<body style="background:var(--cream);min-height:100vh;">
 
-  <!-- SIDEBAR -->
-  <aside class="b2b-sidebar" id="b2bSidebar">
-    <div class="b2b-sidebar-logo">
-      <a href="../index.html" style="text-decoration:none;">
-        <div class="b2b-logo-text">BEK<em>TOUR</em></div>
-        <div class="b2b-logo-sub">Partner Hub</div>
+<div style="min-height:100vh;display:grid;grid-template-columns:1fr 1fr;">
+
+  <!-- LEFT: Form -->
+  <div style="display:flex;flex-direction:column;justify-content:center;padding:3rem 2.5rem;background:#fff;min-height:100vh;">
+    <div style="max-width:420px;width:100%;margin:0 auto;">
+
+      <a href="index.html" style="display:inline-flex;align-items:center;gap:.5rem;color:var(--gray-500);font-size:.78rem;margin-bottom:2.5rem;transition:color .2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray-500)'">
+        <i class="fa fa-arrow-left" style="font-size:.7rem;"></i> Вернуться на сайт
       </a>
-    </div>
-    <nav class="b2b-nav">
-      <div class="b2b-nav-sec">Обзор</div>
-      <a href="dashboard.html" class="b2b-nav-item active"><i class="fa fa-gauge-high"></i> Dashboard</a>
 
-      <div class="b2b-nav-sec">Объекты</div>
-      <a href="properties.html" class="b2b-nav-item"><i class="fa fa-building"></i> Мои объекты</a>
-      <a href="property-form.html" class="b2b-nav-item"><i class="fa fa-plus"></i> Добавить объект</a>
+      <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--gold);font-weight:700;margin-bottom:.25rem;">✈ BEK TOUR</div>
+      <div style="font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--gray-500);margin-bottom:2rem;">Partner Hub</div>
 
-      <div class="b2b-nav-sec">Продажи</div>
-      <a href="bookings.html" class="b2b-nav-item"><i class="fa fa-calendar-check"></i> Бронирования <span class="b2b-nav-badge" id="newBadge" style="display:none;"></span></a>
-      <a href="analytics.html" class="b2b-nav-item"><i class="fa fa-chart-line"></i> Аналитика</a>
+      <h1 style="font-family:var(--font-display);font-size:2rem;font-weight:600;margin-bottom:.5rem;line-height:1.1;">Стать партнёром</h1>
+      <p style="color:var(--gray-500);font-size:.85rem;margin-bottom:2rem;line-height:1.7;">Добавляйте объекты, управляйте бронированиями и получайте клиентов через платформу Bek Tour.</p>
 
-      <div class="b2b-nav-sec">Прочее</div>
-      <a href="../index.html" class="b2b-nav-item"><i class="fa fa-globe"></i> На сайт</a>
-      <a href="register.html?logout" class="b2b-nav-item" onclick="logout()"><i class="fa fa-sign-out-alt"></i> Выйти</a>
-    </nav>
-    <div class="b2b-sidebar-foot">
-      <div class="b2b-user">
-        <div class="b2b-user-av" id="userAv">A</div>
-        <div>
-          <div class="b2b-user-name" id="userName">Партнёр</div>
-          <div class="b2b-user-role" id="userRole">Agent</div>
-        </div>
+      <!-- Tabs -->
+      <div style="display:flex;background:var(--gray-100);border-radius:10px;padding:3px;margin-bottom:1.8rem;">
+        <button id="tabReg" onclick="switchTab('reg')" style="flex:1;padding:.55rem;border:none;border-radius:8px;font-family:inherit;font-size:.8rem;font-weight:700;cursor:pointer;background:var(--dark);color:#fff;transition:all .2s;">Регистрация</button>
+        <button id="tabLogin" onclick="switchTab('login')" style="flex:1;padding:.55rem;border:none;border-radius:8px;font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;background:transparent;color:var(--gray-500);transition:all .2s;">Войти</button>
       </div>
-    </div>
-  </aside>
 
-  <!-- MAIN -->
-  <div class="b2b-main">
-
-    <!-- Topbar -->
-    <div class="b2b-topbar">
-      <div style="display:flex;align-items:center;gap:1rem;">
-        <button id="sidebarToggle" style="background:none;border:none;cursor:pointer;color:var(--gray-500);font-size:1.1rem;display:none;" data-b2b-toggle>
-          <i class="fa fa-bars"></i>
+      <!-- Register form -->
+      <div id="formReg">
+        <div class="form-group">
+          <div class="form-label">Имя и фамилия *</div>
+          <input type="text" class="form-input" id="regName" placeholder="Asadbek Yusupov" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <div class="form-label">Email *</div>
+            <input type="email" class="form-input" id="regEmail" placeholder="you@company.com" required>
+          </div>
+          <div class="form-group">
+            <div class="form-label">Телефон</div>
+            <input type="tel" class="form-input" id="regPhone" placeholder="+998 90 123 45 67">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Тип партнёра *</div>
+          <select class="form-select" id="regType">
+            <option value="">— Выберите —</option>
+            <option value="hotel">Отель / Гостевой дом</option>
+            <option value="agency">Турагентство</option>
+            <option value="guide">Гид / Экскурсовод</option>
+            <option value="transport">Транспортная компания</option>
+            <option value="other">Другое</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Компания (необязательно)</div>
+          <input type="text" class="form-input" id="regCompany" placeholder="Название компании">
+        </div>
+        <div class="form-group">
+          <div class="form-label">Пароль *</div>
+          <div style="position:relative;">
+            <input type="password" class="form-input" id="regPass" placeholder="Минимум 6 символов" required minlength="6" style="padding-right:2.8rem;">
+            <button type="button" onclick="togglePass('regPass',this)" style="position:absolute;right:.8rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray-500);cursor:pointer;font-size:.9rem;">
+              <i class="fa fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:.6rem;margin-bottom:1.5rem;font-size:.78rem;color:var(--gray-500);">
+          <input type="checkbox" id="regAgree" style="margin-top:2px;accent-color:var(--gold);flex-shrink:0;">
+          <label for="regAgree">Я согласен с <a href="#" style="color:var(--gold);">условиями использования</a> и <a href="#" style="color:var(--gold);">политикой конфиденциальности</a></label>
+        </div>
+        <button onclick="handleReg()" class="btn btn-primary btn-w100" style="padding:1rem;font-size:.88rem;">
+          <i class="fa fa-handshake"></i> Зарегистрироваться
         </button>
-        <div class="b2b-topbar-title">Dashboard</div>
       </div>
-      <div class="b2b-topbar-right">
-        <span style="font-size:.78rem;color:var(--gray-500);" id="topDate"></span>
-        <a href="property-form.html" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Добавить объект</a>
+
+      <!-- Login form -->
+      <div id="formLogin" style="display:none;">
+        <div class="form-group">
+          <div class="form-label">Email</div>
+          <input type="email" class="form-input" id="loginEmail" placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <div class="form-label">Пароль</div>
+          <div style="position:relative;">
+            <input type="password" class="form-input" id="loginPass" placeholder="Ваш пароль" style="padding-right:2.8rem;">
+            <button type="button" onclick="togglePass('loginPass',this)" style="position:absolute;right:.8rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray-500);cursor:pointer;font-size:.9rem;">
+              <i class="fa fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <button onclick="handleLogin()" class="btn btn-primary btn-w100" style="padding:1rem;font-size:.88rem;">
+          <i class="fa fa-sign-in-alt"></i> Войти в кабинет
+        </button>
+        <p style="text-align:center;margin-top:1rem;font-size:.78rem;color:var(--gray-500);">
+          <a href="#" style="color:var(--gold);">Забыли пароль?</a>
+        </p>
+      </div>
+
+      <!-- Socials -->
+      <div style="display:flex;gap:.8rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--gray-100);">
+        <a href="https://wa.me/998901234567" target="_blank" class="btn btn-outline btn-sm" style="flex:1;justify-content:center;">
+          <i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp
+        </a>
+        <a href="https://t.me/bektop" target="_blank" class="btn btn-outline btn-sm" style="flex:1;justify-content:center;">
+          <i class="fab fa-telegram" style="color:#2CA5E0;"></i> Telegram
+        </a>
       </div>
     </div>
+  </div>
 
-    <!-- Content -->
-    <div class="b2b-content">
+  <!-- RIGHT: Benefits -->
+  <div style="background:var(--dark);display:flex;align-items:center;justify-content:center;padding:3rem 2.5rem;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-10%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(200,164,93,.08) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-10%;left:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(200,164,93,.05) 0%,transparent 70%);pointer-events:none;"></div>
 
-      <!-- Welcome banner -->
-      <div style="background:linear-gradient(135deg,var(--dark) 0%,var(--dark-2) 100%);border-radius:16px;padding:2rem 2.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:-30%;right:-5%;width:320px;height:320px;background:radial-gradient(circle,rgba(200,164,93,.1) 0%,transparent 70%);pointer-events:none;"></div>
-        <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;">
+    <div style="max-width:440px;width:100%;position:relative;z-index:1;">
+      <div style="font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;">
+        <span style="width:28px;height:1.5px;background:var(--gold);display:block;"></span>
+        Почему Bek Tour
+      </div>
+      <h2 style="font-family:var(--font-display);font-size:2.4rem;color:#fff;font-weight:600;line-height:1.05;margin-bottom:1rem;">
+        Ваш бизнес — <em style="color:var(--gold);">наша платформа</em>
+      </h2>
+      <p style="color:rgba(255,255,255,.4);font-size:.88rem;line-height:1.85;margin-bottom:2.5rem;">
+        Тысячи туристов ищут жильё и туры через Bek Tour каждый месяц. Станьте частью экосистемы и получайте прямые бронирования.
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:1.2rem;margin-bottom:2.5rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.9rem;"><i class="fa fa-cloud-upload-alt"></i></div>
           <div>
-            <div style="font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:.6rem;">Partner Hub</div>
-            <h2 style="font-family:var(--font-display);font-size:1.7rem;color:#fff;font-weight:600;margin-bottom:.4rem;">
-              Добро пожаловать, <span id="welcomeName">Партнёр</span>! 👋
-            </h2>
-            <p style="color:rgba(255,255,255,.4);font-size:.84rem;" id="welcomeSub">Добавьте первый объект чтобы начать получать бронирования</p>
+            <div style="font-size:.86rem;font-weight:700;color:#fff;margin-bottom:.25rem;">Загрузка фото через ImageKit</div>
+            <div style="font-size:.76rem;color:rgba(255,255,255,.35);line-height:1.6;">CDN по всему миру, автооптимизация, мгновенная загрузка</div>
           </div>
-          <a href="property-form.html" class="btn btn-primary"><i class="fa fa-plus"></i> Добавить объект</a>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.9rem;"><i class="fa fa-calendar-check"></i></div>
+          <div>
+            <div style="font-size:.86rem;font-weight:700;color:#fff;margin-bottom:.25rem;">Управление бронированиями</div>
+            <div style="font-size:.76rem;color:rgba(255,255,255,.35);line-height:1.6;">Принимайте заявки, подтверждайте бронирования в личном кабинете</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.9rem;"><i class="fa fa-chart-line"></i></div>
+          <div>
+            <div style="font-size:.86rem;font-weight:700;color:#fff;margin-bottom:.25rem;">Аналитика в реальном времени</div>
+            <div style="font-size:.76rem;color:rgba(255,255,255,.35);line-height:1.6;">Просмотры, конверсия, выручка — всё в одном дашборде</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.9rem;"><i class="fa fa-headset"></i></div>
+          <div>
+            <div style="font-size:.86rem;font-weight:700;color:#fff;margin-bottom:.25rem;">Поддержка 24/7</div>
+            <div style="font-size:.76rem;color:rgba(255,255,255,.35);line-height:1.6;">Персональный менеджер для каждого партнёра</div>
+          </div>
         </div>
       </div>
 
-      <!-- Stats -->
-      <div class="b2b-stats" style="margin-bottom:1.5rem;">
-        <div class="b2b-stat">
-          <div class="b2b-stat-label">Объектов</div>
-          <div class="b2b-stat-value" id="statProps">0</div>
-          <div class="b2b-stat-sub">В вашем каталоге</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.2rem;text-align:center;">
+          <div style="font-family:var(--font-display);font-size:2rem;color:var(--gold);font-weight:700;">$0</div>
+          <div style="font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-top:.3rem;">Регистрация</div>
         </div>
-        <div class="b2b-stat">
-          <div class="b2b-stat-label">Активных</div>
-          <div class="b2b-stat-value" id="statActive">0</div>
-          <div class="b2b-stat-sub">Опубликовано</div>
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.2rem;text-align:center;">
+          <div style="font-family:var(--font-display);font-size:2rem;color:var(--gold);font-weight:700;">24ч</div>
+          <div style="font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-top:.3rem;">Активация</div>
         </div>
-        <div class="b2b-stat">
-          <div class="b2b-stat-label">Бронирований</div>
-          <div class="b2b-stat-value" id="statBookings">0</div>
-          <div class="b2b-stat-sub">Всего получено</div>
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.2rem;text-align:center;">
+          <div style="font-family:var(--font-display);font-size:2rem;color:var(--gold);font-weight:700;">∞</div>
+          <div style="font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-top:.3rem;">Объектов</div>
         </div>
-        <div class="b2b-stat">
-          <div class="b2b-stat-label">Новых заявок</div>
-          <div class="b2b-stat-value" id="statNew" style="color:#dc2626;">0</div>
-          <div class="b2b-stat-sub">Требуют ответа</div>
-        </div>
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 340px;gap:1.5rem;align-items:start;">
-
-        <!-- Left col -->
-        <div style="display:flex;flex-direction:column;gap:1.5rem;">
-
-          <!-- Quick actions -->
-          <div class="b2b-card">
-            <div class="b2b-card-head"><h3>Быстрые действия</h3></div>
-            <div class="b2b-card-body">
-              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;">
-                <a href="property-form.html" class="b2b-quick-action">
-                  <div class="b2b-qa-icon"><i class="fa fa-building"></i></div>
-                  <div class="b2b-qa-label">Добавить объект</div>
-                </a>
-                <a href="properties.html" class="b2b-quick-action">
-                  <div class="b2b-qa-icon"><i class="fa fa-list"></i></div>
-                  <div class="b2b-qa-label">Мои объекты</div>
-                </a>
-                <a href="bookings.html" class="b2b-quick-action">
-                  <div class="b2b-qa-icon"><i class="fa fa-calendar-check"></i></div>
-                  <div class="b2b-qa-label">Бронирования</div>
-                </a>
-                <a href="analytics.html" class="b2b-quick-action">
-                  <div class="b2b-qa-icon"><i class="fa fa-chart-bar"></i></div>
-                  <div class="b2b-qa-label">Аналитика</div>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Properties table -->
-          <div class="b2b-card">
-            <div class="b2b-card-head">
-              <h3>Мои объекты</h3>
-              <a href="properties.html" style="font-size:.76rem;color:var(--gold);font-weight:600;">Все →</a>
-            </div>
-            <div class="b2b-table-wrap">
-              <table class="b2b-table">
-                <thead>
-                  <tr><th>Объект</th><th>Город</th><th>Тип</th><th>Цена</th><th>Статус</th><th></th></tr>
-                </thead>
-                <tbody id="propsTbody">
-                  <tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--gray-500);">
-                    <i class="fa fa-building" style="font-size:2rem;opacity:.2;margin-bottom:.8rem;display:block;"></i>
-                    Объектов пока нет · <a href="property-form.html" style="color:var(--gold);">Добавить первый</a>
-                  </td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Right col -->
-        <div style="display:flex;flex-direction:column;gap:1.5rem;">
-
-          <!-- Profile card -->
-          <div class="b2b-card">
-            <div class="b2b-card-head"><h3>Профиль</h3><a href="settings.html" style="font-size:.76rem;color:var(--gold);">Изменить</a></div>
-            <div class="b2b-card-body">
-              <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;">
-                <div style="width:52px;height:52px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.3rem;color:#fff;font-weight:700;flex-shrink:0;" id="profileAv">A</div>
-                <div>
-                  <div style="font-weight:700;font-size:.9rem;" id="profileName">—</div>
-                  <div style="font-size:.72rem;color:var(--gray-500);" id="profileEmail">—</div>
-                </div>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:.5rem;">
-                <div style="display:flex;justify-content:space-between;font-size:.78rem;">
-                  <span style="color:var(--gray-500);">Тип партнёра</span>
-                  <span style="font-weight:600;" id="profileType">—</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;font-size:.78rem;">
-                  <span style="color:var(--gray-500);">Телефон</span>
-                  <span id="profilePhone">—</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;font-size:.78rem;">
-                  <span style="color:var(--gray-500);">Компания</span>
-                  <span id="profileCompany">—</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;font-size:.78rem;">
-                  <span style="color:var(--gray-500);">Дата регистрации</span>
-                  <span id="profileDate">—</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tips -->
-          <div class="b2b-card">
-            <div class="b2b-card-head"><h3><i class="fa fa-lightbulb" style="color:var(--gold);margin-right:.4rem;"></i>Советы</h3></div>
-            <div class="b2b-card-body" style="display:flex;flex-direction:column;gap:.8rem;">
-              <div style="padding:.9rem;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold);">
-                <div style="font-size:.76rem;font-weight:700;margin-bottom:.3rem;"><i class="fa fa-camera" style="color:var(--gold);margin-right:.4rem;"></i>10+ фотографий</div>
-                <div style="font-size:.71rem;color:var(--gray-500);line-height:1.6;">Объекты с качественными фото получают в 3× больше бронирований</div>
-              </div>
-              <div style="padding:.9rem;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold);">
-                <div style="font-size:.76rem;font-weight:700;margin-bottom:.3rem;"><i class="fa fa-reply" style="color:var(--gold);margin-right:.4rem;"></i>Отвечай быстро</div>
-                <div style="font-size:.71rem;color:var(--gray-500);line-height:1.6;">Ответ до 1 часа повышает рейтинг на 40%</div>
-              </div>
-              <div style="padding:.9rem;background:var(--cream);border-radius:10px;border-left:3px solid var(--gold);">
-                <div style="font-size:.76rem;font-weight:700;margin-bottom:.3rem;"><i class="fa fa-star" style="color:var(--gold);margin-right:.4rem;"></i>Собирай отзывы</div>
-                <div style="font-size:.71rem;color:var(--gray-500);line-height:1.6;">После каждого заезда проси гостей оставить отзыв</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Support -->
-          <div class="b2b-card">
-            <div class="b2b-card-head"><h3>Поддержка</h3></div>
-            <div class="b2b-card-body" style="display:flex;flex-direction:column;gap:.7rem;">
-              <a href="https://wa.me/998901234567" target="_blank" style="display:flex;align-items:center;gap:.8rem;padding:.8rem;background:var(--cream);border-radius:10px;text-decoration:none;transition:all .2s;" onmouseover="this.style.background='#f0fde8'" onmouseout="this.style.background='var(--cream)'">
-                <i class="fab fa-whatsapp" style="color:#25D366;font-size:1.2rem;width:20px;text-align:center;"></i>
-                <div><div style="font-size:.8rem;font-weight:700;">WhatsApp</div><div style="font-size:.68rem;color:var(--gray-500);">Быстрый ответ менеджера</div></div>
-              </a>
-              <a href="https://t.me/bektop" target="_blank" style="display:flex;align-items:center;gap:.8rem;padding:.8rem;background:var(--cream);border-radius:10px;text-decoration:none;transition:all .2s;" onmouseover="this.style.background='#e8f4fd'" onmouseout="this.style.background='var(--cream)'">
-                <i class="fab fa-telegram" style="color:#2CA5E0;font-size:1.2rem;width:20px;text-align:center;"></i>
-                <div><div style="font-size:.8rem;font-weight:700;">Telegram</div><div style="font-size:.68rem;color:var(--gray-500);">@bektop</div></div>
-              </a>
-            </div>
-          </div>
-
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.2rem;text-align:center;">
+          <div style="font-family:var(--font-display);font-size:2rem;color:var(--gold);font-weight:700;">20%</div>
+          <div style="font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-top:.3rem;">Комиссия</div>
         </div>
       </div>
     </div>
@@ -235,82 +188,72 @@
 
 <div class="toast-wrap"></div>
 
-<style>
-.b2b-quick-action {
-  display:flex;flex-direction:column;align-items:center;gap:.6rem;
-  padding:1.2rem .8rem;background:var(--cream);border-radius:10px;
-  border:1px solid var(--gray-100);transition:all .2s;text-decoration:none;
-}
-.b2b-quick-action:hover { border-color:var(--gold);background:rgba(200,164,93,.06);transform:translateY(-2px); }
-.b2b-qa-icon { width:40px;height:40px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:.95rem; }
-.b2b-qa-label { font-size:.72rem;font-weight:700;color:var(--gray-900);text-align:center;line-height:1.3; }
-@media(max-width:1100px){ .b2b-main .b2b-content > div[style*="grid-template-columns:1fr 340px"]{ grid-template-columns:1fr!important; } }
-</style>
-
-<script src="../js/main.js"></script>
+<script src="bundle.js"></script>
 <script>
-// Auth guard
-const user = JSON.parse(localStorage.getItem('bt_user') || '{}');
-if (!user.email) window.location.href = 'register.html';
-
-const props    = JSON.parse(localStorage.getItem('bt_props') || '[]');
-const bookings = JSON.parse(localStorage.getItem('bt_bookings') || '[]');
-
-// Fill user info
-const firstName = (user.name || 'Партнёр').split(' ')[0];
-document.getElementById('welcomeName').textContent  = firstName;
-document.getElementById('userName').textContent     = user.name || '—';
-document.getElementById('userRole').textContent     = user.type || 'Agent';
-document.getElementById('userAv').textContent       = (user.name || 'A')[0].toUpperCase();
-document.getElementById('profileAv').textContent    = (user.name || 'A')[0].toUpperCase();
-document.getElementById('profileName').textContent  = user.name || '—';
-document.getElementById('profileEmail').textContent = user.email || '—';
-document.getElementById('profilePhone').textContent = user.phone || '—';
-document.getElementById('profileCompany').textContent = user.company || '—';
-document.getElementById('profileDate').textContent  = user.created ? new Date(user.created).toLocaleDateString('ru-RU') : '—';
-
-const typeMap = { hotel:'Отель/Гостевой дом', agency:'Турагентство', guide:'Гид', transport:'Транспорт', other:'Другое' };
-document.getElementById('profileType').textContent = typeMap[user.type] || '—';
-
-if (props.length > 0) {
-  document.getElementById('welcomeSub').textContent = `У вас ${props.length} объект(ов) в каталоге`;
+function switchTab(tab) {
+  const isReg = tab === 'reg';
+  document.getElementById('formReg').style.display   = isReg ? '' : 'none';
+  document.getElementById('formLogin').style.display = isReg ? 'none' : '';
+  document.getElementById('tabReg').style.background   = isReg ? 'var(--dark)' : 'transparent';
+  document.getElementById('tabReg').style.color        = isReg ? '#fff' : 'var(--gray-500)';
+  document.getElementById('tabLogin').style.background = isReg ? 'transparent' : 'var(--dark)';
+  document.getElementById('tabLogin').style.color      = isReg ? 'var(--gray-500)' : '#fff';
 }
 
-// Stats
-document.getElementById('statProps').textContent    = props.length;
-document.getElementById('statActive').textContent   = props.filter(p => p.active).length;
-document.getElementById('statBookings').textContent = bookings.length;
-const newCount = bookings.filter(b => b.status === 'new').length;
-document.getElementById('statNew').textContent = newCount;
-if (newCount > 0) {
-  const badge = document.getElementById('newBadge');
-  badge.textContent = newCount;
-  badge.style.display = 'inline-block';
+function togglePass(id, btn) {
+  const input = document.getElementById(id);
+  const isPass = input.type === 'password';
+  input.type = isPass ? 'text' : 'password';
+  btn.innerHTML = `<i class="fa fa-eye${isPass ? '-slash' : ''}"></i>`;
 }
 
-// Date
-document.getElementById('topDate').textContent = new Date().toLocaleDateString('ru-RU', { day:'numeric', month:'long', year:'numeric' });
+function handleReg() {
+  const name  = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass  = document.getElementById('regPass').value;
+  const type  = document.getElementById('regType').value;
+  const agree = document.getElementById('regAgree').checked;
 
-// Props table
-if (props.length > 0) {
-  const typeLabels = { hotel:'Отель', guesthouse:'Гостевой дом', villa:'Вилла', apartment:'Апартаменты', tour:'Тур' };
-  document.getElementById('propsTbody').innerHTML = props.slice(0,5).map(p => `
-    <tr>
-      <td><strong>${p.name || '—'}</strong></td>
-      <td>${p.city || '—'}</td>
-      <td>${typeLabels[p.type] || p.type || '—'}</td>
-      <td style="color:var(--gold);font-weight:700;">${p.price ? '$' + p.price : '—'}</td>
-      <td><span class="b2b-badge ${p.active ? 'b2b-badge-active' : 'b2b-badge-draft'}">${p.active ? 'Активен' : 'Черновик'}</span></td>
-      <td><a href="property-form.html?id=${p.id}" class="btn btn-outline btn-sm">Изменить</a></td>
-    </tr>`).join('');
+  if (!name)  { showToast('Введите имя', 'error'); return; }
+  if (!email) { showToast('Введите email', 'error'); return; }
+  if (!type)  { showToast('Выберите тип партнёра', 'error'); return; }
+  if (pass.length < 6) { showToast('Пароль минимум 6 символов', 'error'); return; }
+  if (!agree) { showToast('Примите условия использования', 'error'); return; }
+
+  // Save to localStorage
+  const user = {
+    name, email, pass, type,
+    company: document.getElementById('regCompany').value.trim(),
+    phone: document.getElementById('regPhone').value.trim(),
+    created: new Date().toISOString(),
+  };
+  localStorage.setItem('bt_user', JSON.stringify(user));
+
+  showToast(`✅ Добро пожаловать, ${name.split(' ')[0]}!`, 'success');
+  setTimeout(() => window.location.href = 'dashboard.html', 1500);
 }
 
-// Mobile sidebar
-if (window.innerWidth < 900) document.getElementById('sidebarToggle').style.display = 'block';
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
 
-function logout() {
-  localStorage.removeItem('bt_user');
-  window.location.href = 'register.html';
+  if (!email || !pass) { showToast('Заполните все поля', 'error'); return; }
+
+  const user = JSON.parse(localStorage.getItem('bt_user') || '{}');
+  if (user.email === email && user.pass === pass) {
+    showToast(`✅ Добро пожаловать, ${user.name.split(' ')[0]}!`, 'success');
+    setTimeout(() => window.location.href = 'dashboard.html', 1200);
+  } else {
+    showToast('Неверный email или пароль', 'error');
+  }
+}
+
+// Check if already logged in
+const existingUser = JSON.parse(localStorage.getItem('bt_user') || '{}');
+if (existingUser.email && location.search !== '?logout') {
+  // show login tab by default if user exists
+  switchTab('login');
+  document.getElementById('loginEmail').value = existingUser.email;
 }
 </script>
 </body>
