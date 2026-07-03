@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Самарканд — Bek Tour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div id="navbar-ph"></div>
+
+<!-- HERO -->
+<div class="dest-hero" id="destHero">
+  <div class="dest-hero-bg" id="destHeroBg"></div>
+  <div class="dest-hero-overlay"></div>
+  <div class="dest-hero-inner container">
+    <div class="breadcrumb">
+      <a href="index.html">Главная</a><span>/</span>
+      <a href="destinations.html">Направления</a><span>/</span>
+      <span id="breadcrumbCity">Самарканд</span>
+    </div>
+    <div class="dest-hero-badges" id="destBadges"></div>
+    <h1 class="dest-hero-title" id="destTitle">Самарканд</h1>
+    <p class="dest-hero-sub" id="destSub">Жемчужина Шёлкового Пути</p>
+    <div class="dest-hero-stats" id="destStats"></div>
+    <div class="dest-hero-cta">
+      <a href="#tours" class="btn btn-primary btn-lg"><i class="fa fa-route"></i> Туры в этот город</a>
+      <a id="destWaBtn" href="#" target="_blank" class="btn btn-ghost btn-lg"><i class="fab fa-whatsapp"></i> Написать в WhatsApp</a>
+    </div>
+  </div>
+  <div class="dest-hero-scroll"><i class="fa fa-chevron-down"></i></div>
+</div>
+
+<!-- ABOUT CITY -->
+<section class="section bg-white">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;">
+      <div class="reveal">
+        <div class="section-label" id="aboutLabel">О городе</div>
+        <h2 class="section-title" id="aboutTitle">Открой <em>Самарканд</em></h2>
+        <p id="aboutText" style="color:var(--gray-500);font-size:.94rem;line-height:1.9;margin-top:1rem;"></p>
+        <div class="dest-facts" id="destFacts" style="margin-top:2rem;display:grid;grid-template-columns:1fr 1fr;gap:.8rem;"></div>
+      </div>
+      <div class="reveal d2">
+        <div class="dest-gallery-grid" id="destGallery"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATTRACTIONS -->
+<section class="section bg-cream">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="reveal">
+        <div class="section-label">Достопримечательности</div>
+        <h2 class="section-title">Что <em>посмотреть</em></h2>
+      </div>
+    </div>
+    <div class="attractions-grid reveal" id="attractionsGrid"></div>
+  </div>
+</section>
+
+<!-- TOURS for this city -->
+<section class="section bg-white" id="tours">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="reveal">
+        <div class="section-label">Туры</div>
+        <h2 class="section-title">Туры <em id="toursCity">в Самарканд</em></h2>
+      </div>
+      <a href="tours.html" class="see-all">Все туры →</a>
+    </div>
+    <div class="products-grid" id="cityTours"></div>
+  </div>
+</section>
+
+<!-- HOTELS -->
+<section class="section bg-cream">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="reveal">
+        <div class="section-label">Где остановиться</div>
+        <h2 class="section-title">Отели <em id="hotelsCity">Самарканда</em></h2>
+      </div>
+      <a href="hotels.html" class="see-all">Все отели →</a>
+    </div>
+    <div class="products-grid" id="cityHotels"></div>
+  </div>
+</section>
+
+<!-- PRACTICAL INFO -->
+<section class="section bg-dark">
+  <div class="section-inner">
+    <div class="center reveal" style="margin-bottom:3rem;">
+      <div class="section-label center-label">Практическая информация</div>
+      <h2 class="section-title light">Полезно <em>знать</em></h2>
+    </div>
+    <div class="why-grid" id="practicalGrid"></div>
+  </div>
+</section>
+
+<!-- BOOKING CTA -->
+<section class="section bg-cream">
+  <div class="section-inner" style="text-align:center;max-width:640px;margin:0 auto;">
+    <div class="reveal">
+      <div class="section-label center-label">Готовы?</div>
+      <h2 class="section-title">Забронируй тур <em id="ctaCity">в Самарканд</em></h2>
+      <p style="color:var(--gray-500);margin:1rem 0 2rem;font-size:.94rem;line-height:1.8;">Наши специалисты подберут лучший маршрут и отель. Ответ в течение 1 часа.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a id="finalWa" href="#" target="_blank" class="btn btn-primary btn-lg"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="contacts.html" class="btn btn-outline btn-lg"><i class="fa fa-envelope"></i> Написать</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-ph"></div>
+
+<style>
+/* Destination-specific styles */
+.dest-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  margin-top: calc(-1 * var(--nav-h));
+}
+.dest-hero-bg {
+  position: absolute; inset: -5%;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(.32);
+  transform: scale(1.08);
+  animation: kenburns 12s ease-out forwards;
+}
+@keyframes kenburns { from{transform:scale(1.12) translate(1%,.5%)} to{transform:scale(1.02) translate(-1%,-.5%)} }
+.dest-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(6,24,38,.98) 0%, rgba(6,24,38,.55) 60%, rgba(6,24,38,.1) 100%);
+}
+.dest-hero-inner {
+  position: relative; z-index: 2;
+  padding-bottom: 4rem;
+  width: 100%;
+}
+.dest-hero-badges { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+.dest-hero-badge {
+  display: inline-flex; align-items: center; gap: .35rem;
+  font-size: .6rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: .3rem .8rem; border-radius: 20px;
+  background: var(--gold-glow); border: 1px solid var(--gold-border); color: var(--gold);
+}
+.dest-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  color: #fff; font-weight: 600; line-height: .9;
+  letter-spacing: -2px; margin-bottom: .6rem;
+}
+.dest-hero-sub {
+  font-size: clamp(.9rem, 2vw, 1.1rem);
+  color: rgba(255,255,255,.45);
+  letter-spacing: 3px; text-transform: uppercase;
+  font-weight: 400; margin-bottom: 2rem;
+}
+.dest-hero-stats {
+  display: flex; gap: 2.5rem; flex-wrap: wrap;
+  padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,.08);
+  margin-bottom: 2rem;
+}
+.dest-stat-n { font-family: var(--font-display); font-size: 2rem; color: #fff; font-weight: 700; line-height: 1; }
+.dest-stat-n em { color: var(--gold); font-style: normal; font-size: .5em; vertical-align: super; }
+.dest-stat-l { font-size: .58rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.32); margin-top: .25rem; }
+.dest-hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+.dest-hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,.3); font-size: .85rem; z-index: 2;
+  animation: bounce 2s infinite;
+}
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+/* Gallery grid */
+.dest-gallery-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .6rem;
+}
+.dest-gallery-grid img {
+  width: 100%; aspect-ratio: 1;
+  object-fit: cover; border-radius: var(--r-md);
+  cursor: pointer; transition: transform .3s;
+}
+.dest-gallery-grid img:first-child { grid-column: 1/-1; aspect-ratio: 16/9; }
+.dest-gallery-grid img:hover { transform: scale(1.02); }
+
+/* Fact cards */
+.dest-fact {
+  display: flex; align-items: center; gap: .7rem;
+  padding: .85rem 1rem; background: var(--cream);
+  border: 1px solid var(--gray-100); border-radius: 10px; font-size: .82rem;
+}
+.dest-fact i { color: var(--gold); width: 16px; text-align: center; flex-shrink: 0; }
+
+/* Attractions */
+.attractions-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+}
+@media(max-width:768px) { .attractions-grid { grid-template-columns: 1fr; } }
+.attraction-card {
+  background: #fff; border-radius: var(--r-lg); border: 1px solid var(--gray-100);
+  overflow: hidden; transition: all .25s;
+}
+.attraction-card:hover { box-shadow: var(--s2); transform: translateY(-3px); }
+.attraction-card-img {
+  height: 200px; overflow: hidden; position: relative;
+  background: linear-gradient(135deg, var(--dark), var(--dark-2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 4rem;
+}
+.attraction-card-img img { width: 100%; height: 100%; object-fit: cover; }
+.attraction-card-body { padding: 1.2rem 1.3rem; }
+.attraction-card-name { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin-bottom: .4rem; }
+.attraction-card-desc { font-size: .8rem; color: var(--gray-500); line-height: 1.72; }
+.attraction-card-tag { display: inline-block; margin-top: .6rem; font-size: .62rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); background: var(--gold-glow); border: 1px solid var(--gold-border); padding: .2rem .6rem; border-radius: 20px; }
+
+@media(max-width:900px) {
+  .dest-hero-inner { padding-bottom: 6rem; }
+  section > .section-inner > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+}
+</style>
+
+<script>
+// ── City data ──────────────────────────────────────────────
+const CITIES = {
+  samarkand: {
+    name: 'Самарканд',
+    sub: 'Жемчужина Шёлкового Пути',
+    bg: 'https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=1920&q=80',
+    badges: ['UNESCO', 'Шёлковый Путь', 'VII в. до н.э.'],
+    stats: [
+      { n: '2500', suf: 'л', l: 'Истории' },
+      { n: '15', suf: '+', l: 'Памятников' },
+      { n: '4.9', suf: '★', l: 'Рейтинг' },
+      { n: '3', suf: 'ч', l: 'Из Ташкента' },
+    ],
+    about: 'Самарканд — один из древнейших городов мира и жемчужина Шёлкового пути. Основанный более 2700 лет назад, он был столицей могущественной империи Тимуридов в XIV–XV веках. Именно здесь были воздвигнуты величайшие шедевры исламской архитектуры: ансамбль Регистан, мечеть Биби-Ханым, мавзолей Гур-Эмир. Город внесён в список Всемирного наследия ЮНЕСКО.',
+    facts: [
+      { i: 'fa-thermometer-half', t: 'Климат', v: 'Весна/осень — идеально (+20°C)' },
+      { i: 'fa-plane', t: 'Как добраться', v: 'Самолёт или Афросиаб (2ч)' },
+      { i: 'fa-language', t: 'Языки', v: 'Узбекский, Русский, Таджикский' },
+      { i: 'fa-money-bill', t: 'Бюджет/день', v: '$50–150 с едой и жильём' },
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=800&q=75',
+      'https://images.unsplash.com/photo-1548199484-6a85e23d9e8e?w=400&q=70',
+      'https://images.unsplash.com/photo-1576678927484-cc907957088c?w=400&q=70',
+    ],
+    attractions: [
+      { emoji: '🏛', name: 'Регистан', desc: 'Три величественных медресе XVI–XVII вв. Центр и символ Самарканда. На закате — незабываемое зрелище.', tag: 'Must See' },
+      { emoji: '🕌', name: 'Биби-Ханым', desc: 'Грандиозная соборная мечеть, построенная Тимуром в честь своей жены. Один из крупнейших исламских храмов.', tag: 'UNESCO' },
+      { emoji: '⚰️', name: 'Гур-Эмир', desc: 'Мавзолей Тамерлана с характерным рубчатым куполом из бирюзовой плитки. Шедевр персидской архитектуры.', tag: 'История' },
+      { emoji: '🪦', name: 'Шахи-Зинда', desc: 'Аллея мавзолеев XIV–XV вв с потрясающей синей плиткой. Одно из самых красивых мест Узбекистана.', tag: 'Фото' },
+      { emoji: '🏺', name: 'Рынок Сиаб', desc: 'Самый атмосферный базар города. Горы специй, сухофруктов, самаркандский хлеб и местные продукты.', tag: 'Еда' },
+      { emoji: '🍞', name: 'Афросиаб', desc: 'Городище и музей древнего Самарканда. Уникальные настенные фрески VII века — единственные в Средней Азии.', tag: 'Музей' },
+    ],
+    tours: [
+      { name: 'Самарканд за 3 дня', dest: 'Самарканд', days: '3 дня', guests: '1–20', rating: '4.8', price: '$290', img: 'https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=400&q=70', badge: 'Популярный' },
+      { name: 'Золотое кольцо', dest: 'Самарканд · Бухара · Хива', days: '10 дней', guests: '2–12', rating: '4.9', price: '$890', img: 'https://images.unsplash.com/photo-1548199484-6a85e23d9e8e?w=400&q=70', badge: 'Хит' },
+    ],
+    hotels: [
+      { name: 'Registan View Boutique', stars: '4★', price: '$120', rating: '4.9', img: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400&q=70' },
+      { name: 'Silk Road Palace', stars: '5★', price: '$250', rating: '5.0', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=70' },
+    ],
+    practical: [
+      { i: 'fa-calendar-alt', title: 'Лучшее время', desc: 'Март–Май и Сентябрь–Ноябрь. Весной цветут сады, осенью красочные базары.' },
+      { i: 'fa-train', title: 'Транспорт', desc: 'Скоростной поезд Афросиаб из Ташкента — 2 часа. Авиарейсы из Москвы, Стамбула, Дубая.' },
+      { i: 'fa-hotel', title: 'Жильё', desc: 'Гостевые дома от $30, бутик-отели от $80, 5★ от $200. Бронируй заранее в сезон.' },
+      { i: 'fa-utensils', title: 'Кухня', desc: 'Плов, самса, лагман, шашлык. Самаркандский лепёшки — обязательно попробуй на Сиабском базаре.' },
+    ],
+    wa: 'Здравствуйте! Хочу узнать о туре в Самарканд.',
+  },
+
+  bukhara: {
+    name: 'Бухара',
+    sub: 'Священный Город Востока',
+    bg: 'https://images.unsplash.com/photo-1630591197025-84a01b2d3fc0?w=1920&q=80',
+    badges: ['UNESCO', 'Священный город', '2500 лет'],
+    stats: [
+      { n: '140', suf: '+', l: 'Памятников' },
+      { n: '2500', suf: 'л', l: 'Истории' },
+      { n: '4.9', suf: '★', l: 'Рейтинг' },
+      { n: '6', suf: 'ч', l: 'Из Ташкента' },
+    ],
+    about: 'Бухара — один из самых хорошо сохранившихся средневековых городов Центральной Азии. Весь исторический центр является объектом ЮНЕСКО. Около 140 охраняемых архитектурных памятников. Минарет Калон, которому восхитился даже Чингисхан, мечети, медресе, крепость Арк и торговые купола делают Бухару неповторимым городом.',
+    facts: [
+      { i: 'fa-thermometer-half', t: 'Климат', v: 'Весна/осень идеально, лето жарко (+42°C)' },
+      { i: 'fa-plane', t: 'Как добраться', v: 'Авиа или поезд 4ч из Самарканда' },
+      { i: 'fa-walking', t: 'Пешком', v: 'Весь исторический центр пешком' },
+      { i: 'fa-money-bill', t: 'Бюджет/день', v: '$40–120 с едой и жильём' },
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1630591197025-84a01b2d3fc0?w=800&q=75',
+      'https://images.unsplash.com/photo-1568026966663-0fbc55c1dcbb?w=400&q=70',
+      'https://images.unsplash.com/photo-1565268764627-d0fb3a3a3ece?w=400&q=70',
+    ],
+    attractions: [
+      { emoji: '🕌', name: 'Минарет Калон', desc: 'Символ Бухары высотой 47 метров. Единственное сооружение, уцелевшее при разрушении Чингисханом в 1220 году.', tag: 'Must See' },
+      { emoji: '🏰', name: 'Арк — цитадель', desc: 'Древнейшая крепость Бухары с 2000-летней историей. Резиденция бухарских эмиров вплоть до 1920 года.', tag: 'История' },
+      { emoji: '🌊', name: 'Ляби-Хауз', desc: 'Центральная площадь с хаузом (водоёмом) XVII века. Сердце старого города — рестораны, чайханы, атмосфера.', tag: 'Атмосфера' },
+      { emoji: '📚', name: 'Медресе Мири-Араб', desc: 'Действующее исламское медресе XVI века напротив Калонского минарета. Одно из ведущих в регионе.', tag: 'UNESCO' },
+      { emoji: '🛒', name: 'Торговые купола', desc: 'Средневековые крытые рынки — Токи-Заргарон (ювелиры), Токи-Тельпакфурушон (тюбетейки). Торгуют по сей день.', tag: 'Базар' },
+      { emoji: '🏺', name: 'Исмаила Самани', desc: 'Мавзолей Саманидов IX–X вв. Один из старейших сохранившихся памятников исламской архитектуры в мире.', tag: 'Древность' },
+    ],
+    tours: [
+      { name: 'Бухара за 2 дня', dest: 'Бухара', days: '2 дня', guests: '1–20', rating: '4.8', price: '$190', img: 'https://images.unsplash.com/photo-1630591197025-84a01b2d3fc0?w=400&q=70', badge: 'Популярный' },
+      { name: 'Золотое кольцо', dest: 'Самарканд · Бухара · Хива', days: '10 дней', guests: '2–12', rating: '4.9', price: '$890', img: 'https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=400&q=70', badge: 'Хит' },
+    ],
+    hotels: [
+      { name: 'Kalon Minaret Hotel', stars: '4★', price: '$85', rating: '4.8', img: 'https://images.unsplash.com/photo-1455587734955-081b22074882?w=400&q=70' },
+      { name: 'Old City Guesthouse', stars: 'Boutique', price: '$45', rating: '4.6', img: '' },
+    ],
+    practical: [
+      { i: 'fa-calendar-alt', title: 'Лучшее время', desc: 'Апрель–Май и Сентябрь–Октябрь. Летом +42°C, зимой холодно.' },
+      { i: 'fa-train', title: 'Транспорт', desc: 'Поезд из Самарканда 4ч, из Ташкента 6ч. Авиа напрямую из Москвы.' },
+      { i: 'fa-walking', title: 'По городу', desc: 'Весь исторический центр компактный — ходить пешком. Такси для выездов.' },
+      { i: 'fa-star', title: 'Совет', desc: 'Приходи на площадь Калон на закате — свет на минарете невероятный.' },
+    ],
+    wa: 'Здравствуйте! Хочу узнать о туре в Бухару.',
+  },
+
+  khiva: {
+    name: 'Хива',
+    sub: 'Живой Музей под Открытым Небом',
+    bg: 'https://images.unsplash.com/photo-1683547572736-f5f3e2e66c98?w=1920&q=80',
+    badges: ['UNESCO', 'Ичан-Кала', 'X век'],
+    stats: [
+      { n: '60', suf: '+', l: 'Мечетей' },
+      { n: 'X', suf: 'в', l: 'Основан' },
+      { n: '5.0', suf: '★', l: 'Рейтинг' },
+      { n: '7', suf: 'ч', l: 'Из Ташкента' },
+    ],
+    about: 'Хива — самый хорошо сохранившийся средневековый город Центральной Азии и первый объект ЮНЕСКО в Узбекистане. Ичан-Кала (внутренний город) — это живой музей: узкие улочки, десятки мечетей, медресе и минаретов, всё в пределах крепостных стен. Шагая по Хиве, буквально ощущаешь, что попал в X–XIX века.',
+    facts: [
+      { i: 'fa-thermometer-half', t: 'Климат', v: 'Весна/осень лучше, лето жаркое' },
+      { i: 'fa-plane', t: 'Как добраться', v: 'Авиа Ташкент–Ургенч, затем 30 мин авто' },
+      { i: 'fa-clock', t: 'Сколько времени', v: '1–2 дня хватит для Ичан-Кала' },
+      { i: 'fa-money-bill', t: 'Бюджет/день', v: '$35–100 с едой и жильём' },
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1683547572736-f5f3e2e66c98?w=800&q=75',
+      'https://images.unsplash.com/photo-1565268764627-d0fb3a3a3ece?w=400&q=70',
+      'https://images.unsplash.com/photo-1568026966663-0fbc55c1dcbb?w=400&q=70',
+    ],
+    attractions: [
+      { emoji: '🏰', name: 'Ичан-Кала', desc: 'Внутренний город — весь комплекс внесён в список ЮНЕСКО. Стены, башни, 50+ архитектурных памятников.', tag: 'Must See' },
+      { emoji: '🕌', name: 'Кальта Минор', desc: 'Незавершённый минарет с уникальной синей плиткой. Должен был стать самым высоким в мире — строительство остановилось.', tag: 'Иконика' },
+      { emoji: '🏛', name: 'Медресе Мухаммада Амин-хана', desc: 'Крупнейшее медресе Хорезма, рядом с Кальта Минором. Сейчас — роскошный отель внутри UNESCO.', tag: 'Необычно' },
+      { emoji: '🗼', name: 'Ислам-Ходжа', desc: 'Самый высокий минарет Хивы с панорамным видом на весь Ичан-Кала. Подняться обязательно.', tag: 'Панорама' },
+      { emoji: '🎨', name: 'Мастерские ремёсел', desc: 'Вышивка, ювелирное дело, деревянная резьба — мастера работают прямо в городе, можно наблюдать.', tag: 'Культура' },
+      { emoji: '🌅', name: 'Закат со стен', desc: 'Поднимись на стену Ичан-Кала на закате — один из лучших видов во всём Узбекистане.', tag: 'Фото' },
+    ],
+    tours: [
+      { name: 'Хива за 2 дня', dest: 'Хива · Ичан-Кала', days: '2 дня', guests: '1–20', rating: '4.9', price: '$210', img: 'https://images.unsplash.com/photo-1683547572736-f5f3e2e66c98?w=400&q=70', badge: 'Популярный' },
+      { name: 'Золотое кольцо', dest: 'Самарканд · Бухара · Хива', days: '10 дней', guests: '2–12', rating: '4.9', price: '$890', img: 'https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=400&q=70', badge: 'Хит' },
+    ],
+    hotels: [
+      { name: 'Ichan Kala Residence', stars: 'Boutique', price: '$75', rating: '4.9', img: '' },
+      { name: 'Orient Star Khiva', stars: '4★', price: '$110', rating: '4.7', img: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400&q=70' },
+    ],
+    practical: [
+      { i: 'fa-calendar-alt', title: 'Лучшее время', desc: 'Апрель–Июнь и Сентябрь–Октябрь. Лето очень жаркое (+42°C).' },
+      { i: 'fa-plane', title: 'Как добраться', desc: 'Рейс Ташкент–Ургенч (1ч), затем 30 минут до Хивы. Или поезд.' },
+      { i: 'fa-moon', title: 'Ночью', desc: 'Ичан-Кала ночью без туристов — особая магия. Останови в отеле внутри крепости.' },
+      { i: 'fa-star', title: 'Лайфхак', desc: 'Купи единый билет на все объекты — выгоднее чем по отдельности.' },
+    ],
+    wa: 'Здравствуйте! Хочу узнать о туре в Хиву.',
+  },
+
+  tashkent: {
+    name: 'Ташкент',
+    sub: 'Современная Столица Востока',
+    bg: 'https://images.unsplash.com/photo-1596386461350-326ccb383e9f?w=1920&q=80',
+    badges: ['Столица', 'Метро-музей', 'Ворота Узбекистана'],
+    stats: [
+      { n: '3', suf: 'M', l: 'Жителей' },
+      { n: '1966', suf: '', l: 'Год метро' },
+      { n: '4.7', suf: '★', l: 'Рейтинг' },
+      { n: '2', suf: 'ч', l: 'Авиа Москва' },
+    ],
+    about: 'Ташкент — столица Узбекистана и крупнейший город Центральной Азии. Это не только транзитная точка, но и интересный город сам по себе. Уникальное советское метро с роскошными мозаичными станциями, базары, современные рестораны, Хаст-Имом — духовный центр страны и один из крупнейших исламских комплексов региона.',
+    facts: [
+      { i: 'fa-thermometer-half', t: 'Климат', v: 'Умеренный, 4 сезона' },
+      { i: 'fa-plane', t: 'Аэропорт', v: 'Международный — рейсы со всего мира' },
+      { i: 'fa-subway', t: 'Метро', v: '3 линии, уникальные станции' },
+      { i: 'fa-money-bill', t: 'Бюджет/день', v: '$60–200 с едой и жильём' },
+    ],
+    gallery: [
+      'https://images.unsplash.com/photo-1596386461350-326ccb383e9f?w=800&q=75',
+      'https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=400&q=70',
+      'https://images.unsplash.com/photo-1630591197025-84a01b2d3fc0?w=400&q=70',
+    ],
+    attractions: [
+      { emoji: '🚇', name: 'Метро Ташкента', desc: 'Построено в 1977 году. Каждая станция — отдельное произведение искусства с мозаиками и уникальным дизайном.', tag: 'Must See' },
+      { emoji: '🕌', name: 'Хаст-Имом', desc: 'Духовный центр Узбекистана. Здесь хранится один из древнейших Коранов в мире — Коран Усмана.', tag: 'Духовное' },
+      { emoji: '🛒', name: 'Чорсу Базар', desc: 'Грандиозный крытый базар под куполом. Специи, фрукты, мясо, ткани — все краски востока в одном месте.', tag: 'Базар' },
+      { emoji: '🎨', name: 'Ташкент-Сити', desc: 'Современный деловой центр с небоскрёбами, ресторанами и торговыми центрами — контраст со старым городом.', tag: 'Модерн' },
+      { emoji: '🏛', name: 'Музей Темуридов', desc: 'Отличный музей истории Тимуридской империи с богатой коллекцией артефактов и интерактивными экспозициями.', tag: 'История' },
+      { emoji: '🍽', name: 'Gastro-сцена', desc: 'Лучшие рестораны Узбекистана — от традиционного плова до fusion кухни. Ночная жизнь и кофейни мирового уровня.', tag: 'Еда' },
+    ],
+    tours: [
+      { name: 'Ташкент + Самарканд', dest: 'Ташкент · Самарканд', days: '3 дня', guests: '1–20', rating: '4.7', price: '$390', img: 'https://images.unsplash.com/photo-1596386461350-326ccb383e9f?w=400&q=70', badge: 'Популярный' },
+      { name: 'Золотое кольцо', dest: 'Ташкент · Самарканд · Бухара · Хива', days: '10 дней', guests: '2–12', rating: '4.9', price: '$890', img: 'https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=400&q=70', badge: 'Хит' },
+    ],
+    hotels: [
+      { name: 'Tashkent Grand Hotel', stars: '4★', price: '$150', rating: '4.7', img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400&q=70' },
+      { name: 'Wyndham Tashkent', stars: '5★', price: '$220', rating: '4.8', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=70' },
+    ],
+    practical: [
+      { i: 'fa-plane', title: 'Авиа', desc: 'Прямые рейсы из Москвы (2ч), Дубая (3ч), Стамбула (5ч), Пекина (5ч).' },
+      { i: 'fa-subway', title: 'Метро', desc: '3 линии, дешёвые билеты. Станции — настоящий музей советского искусства.' },
+      { i: 'fa-sim-card', title: 'Связь', desc: 'SIM-карты Ucell/Beeline у выхода из аэропорта. Быстрый 4G по всему городу.' },
+      { i: 'fa-star', title: 'Совет', desc: 'Начни утро с Чорсу-базара — самый яркий рынок. Вечером — ресторан в Ташкент-Сити.' },
+    ],
+    wa: 'Здравствуйте! Хочу узнать о туре в Ташкент.',
+  },
+};
+
+// ── Render page ────────────────────────────────────────────
+function renderPage() {
+  const slug = new URLSearchParams(location.search).get('slug') || 'samarkand';
+  const city = CITIES[slug] || CITIES.samarkand;
+
+  // Title / meta
+  document.title = `${city.name} — Bek Tour`;
+  document.getElementById('pageTitle').textContent = `${city.name} — Bek Tour`;
+  document.getElementById('breadcrumbCity').textContent = city.name;
+  document.getElementById('destTitle').textContent = city.name;
+  document.getElementById('destSub').textContent = city.sub;
+  document.getElementById('aboutTitle').innerHTML = `Открой <em>${city.name}</em>`;
+  document.getElementById('aboutText').textContent = city.about;
+  document.getElementById('toursCity').textContent = `в ${city.name}`;
+  document.getElementById('hotelsCity').textContent = city.name;
+  document.getElementById('ctaCity').textContent = `в ${city.name}`;
+
+  const waUrl = `https://wa.me/998901234567?text=${encodeURIComponent(city.wa)}`;
+  document.getElementById('destWaBtn').href = waUrl;
+  document.getElementById('finalWa').href = waUrl;
+
+  // BG
+  document.getElementById('destHeroBg').style.backgroundImage = `url('${city.bg}')`;
+
+  // Badges
+  document.getElementById('destBadges').innerHTML = city.badges
+    .map(b => `<div class="dest-hero-badge"><i class="fa fa-star" style="font-size:.55rem;"></i> ${b}</div>`).join('');
+
+  // Stats
+  document.getElementById('destStats').innerHTML = city.stats
+    .map(s => `<div><div class="dest-stat-n">${s.n}<em>${s.suf}</em></div><div class="dest-stat-l">${s.l}</div></div>`).join('');
+
+  // Gallery
+  document.getElementById('destGallery').innerHTML = city.gallery
+    .map(src => `<img src="${src}" alt="${city.name}" loading="lazy" onclick="openLightbox('${src}','${city.name}')">`).join('');
+
+  // Facts
+  document.getElementById('destFacts').innerHTML = city.facts
+    .map(f => `<div class="dest-fact"><i class="fa ${f.i}"></i><div><div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-500);margin-bottom:2px;">${f.t}</div><div style="font-size:.82rem;">${f.v}</div></div></div>`).join('');
+
+  // Attractions
+  document.getElementById('attractionsGrid').innerHTML = city.attractions
+    .map(a => `
+      <div class="attraction-card">
+        <div class="attraction-card-img">${a.emoji}</div>
+        <div class="attraction-card-body">
+          <div class="attraction-card-name">${a.name}</div>
+          <div class="attraction-card-desc">${a.desc}</div>
+          <span class="attraction-card-tag">${a.tag}</span>
+        </div>
+      </div>`).join('');
+
+  // Tours
+  document.getElementById('cityTours').innerHTML = city.tours.map(t => `
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img class="product-img" src="${t.img}" alt="${t.name}" loading="lazy">
+        <div class="product-badge badge-hot">${t.badge}</div>
+      </div>
+      <div class="product-body">
+        <div class="product-dest"><i class="fa fa-map-marker-alt"></i> ${t.dest}</div>
+        <div class="product-name">${t.name}</div>
+        <div class="product-meta">
+          <span><i class="fa fa-clock"></i> ${t.days}</span>
+          <span><i class="fa fa-users"></i> ${t.guests}</span>
+          <span><i class="fa fa-star" style="color:var(--gold)"></i> ${t.rating}</span>
+        </div>
+        <div class="product-foot">
+          <div><div class="price-label">от</div><div class="price-main">${t.price} <span class="price-per">/чел.</span></div></div>
+          <a href="${waUrl}" target="_blank" class="btn btn-dark btn-sm">Забронировать</a>
+        </div>
+      </div>
+    </div>`).join('');
+
+  // Hotels
+  document.getElementById('cityHotels').innerHTML = city.hotels.map(h => `
+    <div class="product-card">
+      <div class="product-img-wrap" style="${h.img ? '' : 'background:linear-gradient(135deg,var(--dark),var(--dark-2));'}">
+        ${h.img ? `<img class="product-img" src="${h.img}" alt="${h.name}" loading="lazy">` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3.5rem;">🏨</div>`}
+        <div class="product-badge badge-hot">${h.stars}</div>
+      </div>
+      <div class="product-body">
+        <div class="product-dest"><i class="fa fa-map-marker-alt"></i> ${city.name}</div>
+        <div class="product-name">${h.name}</div>
+        <div class="product-meta">
+          <span><i class="fa fa-star" style="color:var(--gold)"></i> ${h.rating}</span>
+          <span><i class="fa fa-wifi"></i> WiFi</span>
+        </div>
+        <div class="product-foot">
+          <div><div class="price-label">от</div><div class="price-main">${h.price} <span class="price-per">/ночь</span></div></div>
+          <a href="${waUrl}" target="_blank" class="btn btn-dark btn-sm">Забронировать</a>
+        </div>
+      </div>
+    </div>`).join('');
+
+  // Practical
+  document.getElementById('practicalGrid').innerHTML = city.practical
+    .map(p => `<div class="why-card reveal"><div class="why-card-icon"><i class="fa ${p.i}"></i></div><div class="why-card-title">${p.title}</div><div class="why-card-desc">${p.desc}</div></div>`).join('');
+}
+
+// ── Load components + render ───────────────────────────────
+async function loadComponent(url, id) {
+  try { const r = await fetch(url); document.getElementById(id).innerHTML = await r.text(); } catch(e) {}
+}
+Promise.all([
+  loadComponent('components/navbar.html', 'navbar-ph'),
+  loadComponent('components/footer.html', 'footer-ph'),
+]).then(() => renderPage());
+renderPage();
+</script>
+
+<script src="js/main.js"></script>
+</body>
+</html>
