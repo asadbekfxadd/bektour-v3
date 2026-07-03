@@ -30,7 +30,7 @@
 <div id="footer-ph"></div>
 <script>
 async function loadComponent(url,id){try{const r=await fetch(url);document.getElementById(id).innerHTML=await r.text();}catch(e){}}
-Promise.all([loadComponent('components/navbar.html','navbar-ph'),loadComponent('components/footer.html','footer-ph')]);
+Promise.all([loadComponent('components/navbar.html','navbar-ph'),loadComponent('components/footer.html','footer-ph')]).then(()=>{ if(window.onComponentsLoaded) onComponentsLoaded(); });
 function filterCat(btn,cat){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('[data-card]').forEach(card=>{card.style.display=(!cat||card.dataset.cat?.includes(cat))?'':'none';});}
 </script>
 <script src="js/main.js"></script>

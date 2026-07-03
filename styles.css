@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>B2B Регистрация — Bek Tour Partner Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body style="background:var(--cream);min-height:100vh;">
+
+<div style="min-height:100vh;display:grid;grid-template-columns:1fr 1fr;">
+
+  <!-- LEFT: Form -->
+  <div style="display:flex;flex-direction:column;justify-content:center;padding:3rem 2.5rem;background:#fff;min-height:100vh;">
+    <div style="max-width:420px;width:100%;margin:0 auto;">
+
+      <a href="../index.html" style="display:inline-flex;align-items:center;gap:.5rem;color:var(--gray-500);font-size:.78rem;margin-bottom:2.5rem;transition:color .2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray-500)'">
+        <i class="fa fa-arrow-left" style="font-size:.7rem;"></i> Вернуться на сайт
+      </a>
+
+      <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--gold);font-weight:700;margin-bottom:.25rem;">✈ BEK TOUR</div>
+      <div style="font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--gray-500);margin-bottom:2rem;">Partner Hub</div>
+
+      <h1 style="font-family:var(--font-display);font-size:2rem;font-weight:600;margin-bottom:.5rem;line-height:1.1;">Стать партнёром</h1>
+      <p style="color:var(--gray-500);font-size:.85rem;margin-bottom:2rem;line-height:1.7;">Добавляйте объекты, управляйте бронированиями и получайте клиентов через платформу Bek Tour.</p>
+
+      <!-- Tabs -->
+      <div style="display:flex;background:var(--gray-100);border-radius:10px;padding:3px;margin-bottom:1.8rem;">
+        <button id="tabReg" onclick="switchTab('reg')" style="flex:1;padding:.55rem;border:none;border-radius:8px;font-family:inherit;font-size:.8rem;font-weight:700;cursor:pointer;background:var(--dark);color:#fff;transition:all .2s;">Регистрация</button>
+        <button id="tabLogin" onclick="switchTab('login')" style="flex:1;padding:.55rem;border:none;border-radius:8px;font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;background:transparent;color:var(--gray-500);transition:all .2s;">Войти</button>
+      </div>
+
+      <!-- Register form -->
+      <div id="formReg">
+        <div class="form-group">
+          <div class="form-label">Имя и фамилия *</div>
+          <input type="text" class="form-input" id="regName" placeholder="Asadbek Yusupov" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <div class="form-label">Email *</div>
+            <input type="email" class="form-input" id="regEmail" placeholder="you@company.com" required>
+          </div>
+          <div class="form-group">
+            <div class="form-label">Телефон</div>
+            <input type="tel" class="form-input" id="regPhone" placeholder="+998 90 123 45 67">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Тип партнёра *</div>
+          <select class="form-select" id="regType">
+            <option value="">— Выберите —</option>
+            <option value="hotel">Отель / Гостевой дом</option>
+            <option value="agency">Турагентство</option>
+            <option value="guide">Гид / Экскурсовод</option>
+            <option value="transport">Транспортная компания</option>
+            <option value="other">Другое</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Компания (необязательно)</div>
+          <input type="text" class="form-input" id="regCompany" placeholder="Название компании">
+        </div>
+        <div class="form-group">
+          <div class="form-label">Пароль *</div>
+          <div style="position:relative;">
+            <input type="password" class="form-input" id="regPass" placeholder="Минимум 6 символов" required minlength="6" style="padding-right:2.8rem;">
+            <button type="button" onclick="togglePass('regPass',this)" style="position:absolute;right:.8rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray-500);cursor:pointer;font-size:.9rem;">
+              <i class="fa fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:.6rem;margin-bottom:1.5rem;font-size:.78rem;color:var(--gray-500);">
+          <input type="checkbox" id="regAgree" style="margin-top:2px;accent-color:var(--gold);flex-shrink:0;">
+          <label for="regAgree">Я согласен с <a href="#" style="color:var(--gold);">условиями использования</a> и <a href="#" style="color:var(--gold);">политикой конфиденциальности</a></label>
+        </div>
+        <button onclick="handleReg()" class="btn btn-primary btn-w100" style="padding:1rem;font-size:.88rem;">
+          <i class="fa fa-handshake"></i> Зарегистрироваться
+        </button>
+      </div>
+
+      <!-- Login form -->
+      <div id="formLogin" style="display:none;">
+        <div class="form-group">
+          <div class="form-label">Email</div>
+          <input type="email" class="form-input" id="loginEmail" placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <div class="form-label">Пароль</div>
+          <div style="position:relative;">
+            <input type="password" class="form-input" id="loginPass" placeholder="Ваш пароль" style="padding-right:2.8rem;">
+            <button type="button" onclick="togglePass('loginPass',this)" style="position:absolute;right:.8rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray-500);cursor:pointer;font-size:.9rem;">
+              <i class="fa fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <button onclick="handleLogin()" class="btn btn-primary btn-w100" style="padding:1rem;font-size:.88rem;">
+          <i class="fa fa-sign-in-alt"></i> Войти в кабинет
+        </button>
+        <p style="text-align:center;margin-top:1rem;font-size:.78rem;color:var(--gray-500);">
+          <a href="#" style="color:var(--gold);">Забыли пароль?</a>
+        </p>
+      </div>
+
+      <!-- Socials -->
+      <div style="display:flex;gap:.8rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--gray-100);">
+        <a href="https://wa.me/998901234567" target="_blank" class="btn btn-outline btn-sm" style="flex:1;justify-content:center;">
+          <i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp
+        </a>
+        <a href="https://t.me/bektop" target="_blank" class="btn btn-outline btn-sm" style="flex:1;justify-content:center;">
+          <i class="fab fa-telegram" style="color:#2CA5E0;"></i> Telegram
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Benefits -->
+  <div style="background:var(--dark);display:flex;align-items:center;justify-content:center;padding:3rem 2.5rem;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-10%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(200,164,93,.08) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-10%;left:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(200,164,93,.05) 0%,transparent 70%);pointer-events:none;"></div>
+
+    <div style="max-width:440px;width:100%;position:relative;z-index:1;">
+      <div style="font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;">
+        <span style="width:28px;height:1.5px;background:var(--gold);display:block;"></span>
+        Почему Bek Tour
+      </div>
+      <h2 style="font-family:var(--font-display);font-size:2.4rem;color:#fff;font-weight:600;line-height:1.05;margin-bottom:1rem;">
+        Ваш бизнес — <em style="color:var(--gold);">наша платформа</em>
+      </h2>
+      <p style="color:rgba(255,255,255,.4);font-size:.88rem;line-height:1.85;margin-bottom:2.5rem;">
+        Тысячи туристов ищут жильё и туры через Bek Tour каждый месяц. Станьте частью экосистемы и получайте прямые бронирования.
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:1.2rem;margin-bottom:2.5rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.9rem;"><i class="fa fa-cloud-upload-alt"></i></div>
+          <div>
+            <div style="font-size:.86rem;font-weight:700;color:#fff;margin-bottom:.25rem;">Загрузка фото через ImageKit</div>
+            <div style="font-size:.76rem;color:rgba(255,255,255,.35);line-height:1.6;">CDN по всему миру, автооптимизация, мгновенная загрузка</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.9rem;"><i class="fa fa-calendar-check"></i></div>
+          <div>
+            <div style="font-size:.86rem;font-weight:700;color:#fff;margin-bottom:.25rem;">Управление бронированиями</div>
+            <div style="font-size:.76rem;color:rgba(255,255,255,.35);line-height:1.6;">Принимайте заявки, подтверждайте бронирования в личном кабинете</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.9rem;"><i class="fa fa-chart-line"></i></div>
+          <div>
+            <div style="font-size:.86rem;font-weight:700;color:#fff;margin-bottom:.25rem;">Аналитика в реальном времени</div>
+            <div style="font-size:.76rem;color:rgba(255,255,255,.35);line-height:1.6;">Просмотры, конверсия, выручка — всё в одном дашборде</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.9rem;"><i class="fa fa-headset"></i></div>
+          <div>
+            <div style="font-size:.86rem;font-weight:700;color:#fff;margin-bottom:.25rem;">Поддержка 24/7</div>
+            <div style="font-size:.76rem;color:rgba(255,255,255,.35);line-height:1.6;">Персональный менеджер для каждого партнёра</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.2rem;text-align:center;">
+          <div style="font-family:var(--font-display);font-size:2rem;color:var(--gold);font-weight:700;">$0</div>
+          <div style="font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-top:.3rem;">Регистрация</div>
+        </div>
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.2rem;text-align:center;">
+          <div style="font-family:var(--font-display);font-size:2rem;color:var(--gold);font-weight:700;">24ч</div>
+          <div style="font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-top:.3rem;">Активация</div>
+        </div>
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.2rem;text-align:center;">
+          <div style="font-family:var(--font-display);font-size:2rem;color:var(--gold);font-weight:700;">∞</div>
+          <div style="font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-top:.3rem;">Объектов</div>
+        </div>
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.2rem;text-align:center;">
+          <div style="font-family:var(--font-display);font-size:2rem;color:var(--gold);font-weight:700;">20%</div>
+          <div style="font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-top:.3rem;">Комиссия</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap"></div>
+
+<script src="../js/main.js"></script>
+<script>
+function switchTab(tab) {
+  const isReg = tab === 'reg';
+  document.getElementById('formReg').style.display   = isReg ? '' : 'none';
+  document.getElementById('formLogin').style.display = isReg ? 'none' : '';
+  document.getElementById('tabReg').style.background   = isReg ? 'var(--dark)' : 'transparent';
+  document.getElementById('tabReg').style.color        = isReg ? '#fff' : 'var(--gray-500)';
+  document.getElementById('tabLogin').style.background = isReg ? 'transparent' : 'var(--dark)';
+  document.getElementById('tabLogin').style.color      = isReg ? 'var(--gray-500)' : '#fff';
+}
+
+function togglePass(id, btn) {
+  const input = document.getElementById(id);
+  const isPass = input.type === 'password';
+  input.type = isPass ? 'text' : 'password';
+  btn.innerHTML = `<i class="fa fa-eye${isPass ? '-slash' : ''}"></i>`;
+}
+
+function handleReg() {
+  const name  = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass  = document.getElementById('regPass').value;
+  const type  = document.getElementById('regType').value;
+  const agree = document.getElementById('regAgree').checked;
+
+  if (!name)  { showToast('Введите имя', 'error'); return; }
+  if (!email) { showToast('Введите email', 'error'); return; }
+  if (!type)  { showToast('Выберите тип партнёра', 'error'); return; }
+  if (pass.length < 6) { showToast('Пароль минимум 6 символов', 'error'); return; }
+  if (!agree) { showToast('Примите условия использования', 'error'); return; }
+
+  // Save to localStorage
+  const user = {
+    name, email, pass, type,
+    company: document.getElementById('regCompany').value.trim(),
+    phone: document.getElementById('regPhone').value.trim(),
+    created: new Date().toISOString(),
+  };
+  localStorage.setItem('bt_user', JSON.stringify(user));
+
+  showToast(`✅ Добро пожаловать, ${name.split(' ')[0]}!`, 'success');
+  setTimeout(() => window.location.href = 'dashboard.html', 1500);
+}
+
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+
+  if (!email || !pass) { showToast('Заполните все поля', 'error'); return; }
+
+  const user = JSON.parse(localStorage.getItem('bt_user') || '{}');
+  if (user.email === email && user.pass === pass) {
+    showToast(`✅ Добро пожаловать, ${user.name.split(' ')[0]}!`, 'success');
+    setTimeout(() => window.location.href = 'dashboard.html', 1200);
+  } else {
+    showToast('Неверный email или пароль', 'error');
+  }
+}
+
+// Check if already logged in
+const existingUser = JSON.parse(localStorage.getItem('bt_user') || '{}');
+if (existingUser.email && location.search !== '?logout') {
+  // show login tab by default if user exists
+  switchTab('login');
+  document.getElementById('loginEmail').value = existingUser.email;
+}
+</script>
+</body>
+</html>
