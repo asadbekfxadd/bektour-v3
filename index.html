@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/gallery.css">
 </head>
 <body>
 
@@ -199,19 +200,19 @@
   <div class="collections-grid">
     <a href="destinations.html" class="collections-side-label" style="text-decoration:none;"><span>Все</span><span>—</span><span>Места</span></a>
     <a href="destination.html?slug=samarkand" class="collection-card">
-      <div class="collection-img-wrap"><img src="https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=600&q=75" alt="Самарканд"></div>
+      <div class="collection-img-wrap"><img src="images/cities/samarkand/1.webp" alt="Самарканд"></div>
       <div class="collection-overlay"></div>
       <div class="collection-card-badge">UNESCO</div>
       <div class="collection-label" data-i18n="nav_samarkand">Самарканд</div>
     </a>
     <a href="destination.html?slug=bukhara" class="collection-card">
-      <div class="collection-img-wrap"><img src="https://images.unsplash.com/photo-1630591197025-84a01b2d3fc0?w=600&q=75" alt="Бухара"></div>
+      <div class="collection-img-wrap"><img src="images/cities/bukhara/1.webp" alt="Бухара"></div>
       <div class="collection-overlay"></div>
       <div class="collection-card-badge">UNESCO</div>
       <div class="collection-label" data-i18n="nav_bukhara">Бухара</div>
     </a>
     <a href="destination.html?slug=khiva" class="collection-card">
-      <div class="collection-img-wrap" style="background:linear-gradient(135deg,#5a2a0a,#2e1505);display:flex;align-items:center;justify-content:center;font-size:5rem;">🏰</div>
+      <div class="collection-img-wrap"><img src="images/cities/khiva/1.webp" alt="Хива"></div>
       <div class="collection-overlay"></div>
       <div class="collection-card-badge">UNESCO</div>
       <div class="collection-label" data-i18n="nav_khiva">Хива</div>
@@ -242,7 +243,7 @@
     <div class="products-grid">
       <div class="product-card reveal" data-card data-cat="silk" data-price="890">
         <div class="product-img-wrap">
-          <img class="product-img" src="https://images.unsplash.com/photo-1589646694432-53cb95e1de20?w=600&q=75" alt="">
+          <img class="product-img" src="images/cities/samarkand/1.webp" alt="">
           <div class="product-badge badge-hot" data-i18n="tour1_badge">Хит</div>
         </div>
         <div class="product-body">
@@ -544,6 +545,7 @@
 <div id="footer-ph"></div>
 
 <script src="bundle.js"></script>
+<script src="js/gallery.js"></script>
 <script>
 async function loadComponent(url, id) {
   try { const r = await fetch(url); document.getElementById(id).innerHTML = await r.text(); } catch(e) {}
