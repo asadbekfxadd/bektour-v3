@@ -1,0 +1,115 @@
+/* ============================================================
+   BEK TOUR — стили автогалереи
+   ============================================================ */
+
+/* Сетка фотографий */
+.auto-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.gallery-item {
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 4 / 3;
+  background: #f0f0f0;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+  display: block;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.06);
+}
+
+/* Лайтбокс — фото на весь экран */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: pointer;
+  animation: lbFadeIn 0.25s ease;
+}
+
+.lightbox-overlay img {
+  max-width: 92vw;
+  max-height: 92vh;
+  border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 28px;
+  color: #fff;
+  font-size: 42px;
+  line-height: 1;
+  user-select: none;
+}
+
+@keyframes lbFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Hero-слайдер: плавная смена фона */
+[data-hero-slider] {
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.8s ease-in-out;
+}
+
+/* Мобильные */
+@media (max-width: 600px) {
+  .auto-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+}
+
+/* ============================================================
+   Видео в галерее и видеофон hero
+   ============================================================ */
+
+.gallery-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  background: #000;
+}
+
+/* Фоновое видео баннера */
+.hero-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Контент hero поверх видео */
+[data-hero-slider] {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-hero-slider] > *:not(.hero-bg-video) {
+  position: relative;
+  z-index: 1;
+}
