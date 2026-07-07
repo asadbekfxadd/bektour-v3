@@ -1,0 +1,58 @@
+{
+  "properties": [
+    {
+      "id": "charvak-lakeview",
+      "type": "dacha",
+      "active": true,
+      "name": {
+        "ru": "Дача Lake View · Чарвак",
+        "en": "Lake View Dacha · Charvak",
+        "uz": "Lake View dala hovli · Chorvoq"
+      },
+      "location": {
+        "ru": "Чарвакское водохранилище, 5 мин до пляжа",
+        "en": "Charvak reservoir, 5 min to beach",
+        "uz": "Chorvoq suv ombori, plyajgacha 5 daqiqa"
+      },
+      "desc": {
+        "ru": "Просторная двухэтажная дача с панорамным видом на Чарвак. Большая терраса, мангальная зона, бассейн. Идеально для семейного отдыха и компаний до 10 человек.",
+        "en": "Spacious two-storey dacha with panoramic Charvak views. Large terrace, BBQ area, swimming pool. Perfect for families and groups up to 10.",
+        "uz": "Chorvoqning panoramali manzarasiga ega keng ikki qavatli dala hovli. Katta terassa, manqal zonasi, basseyn. Oilaviy dam olish uchun ideal."
+      },
+      "price": 150,
+      "per": "night",
+      "guests": 10,
+      "bedrooms": 4,
+      "bathrooms": 2,
+      "amenities": ["pool", "wifi", "bbq", "parking", "kitchen", "ac"],
+      "whatsapp": "998901234567"
+    },
+    {
+      "id": "chimgan-mountain",
+      "type": "villa",
+      "active": true,
+      "name": {
+        "ru": "Вилла Mountain · Чимган",
+        "en": "Mountain Villa · Chimgan",
+        "uz": "Mountain villa · Chimyon"
+      },
+      "location": {
+        "ru": "Чимганские горы, у подножия",
+        "en": "Chimgan mountains, foothill",
+        "uz": "Chimyon tog'lari etagida"
+      },
+      "desc": {
+        "ru": "Уютная вилла в горах с камином и сауной. Зимой — рядом горнолыжные склоны Amirsoy, летом — треккинг и прохлада. До 8 гостей.",
+        "en": "Cozy mountain villa with fireplace and sauna. Amirsoy ski slopes nearby in winter, trekking in summer. Up to 8 guests.",
+        "uz": "Kamin va saunali qulay tog' villasi. Qishda Amirsoy chang'i yonbag'irlari, yozda trekking. 8 mehmongacha."
+      },
+      "price": 200,
+      "per": "night",
+      "guests": 8,
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "amenities": ["sauna", "fireplace", "wifi", "parking", "kitchen", "heating"],
+      "whatsapp": "998901234567"
+    }
+  ]
+}

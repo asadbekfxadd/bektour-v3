@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BEK TOUR — Админка</title>
+<style>
+:root{--gold:#C8A45D;--dark:#061826;--dark2:#0a2236;--red:#e05555;--green:#3dba6f}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:var(--dark);color:#eee;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.4rem;color:var(--gold);letter-spacing:2px;margin-bottom:4px}
+.sub{font-size:.75rem;color:#8aa;margin-bottom:20px}
+.tabs{display:flex;gap:8px;margin-bottom:20px;align-items:center}
+.tab{padding:10px 22px;border-radius:9px;background:var(--dark2);border:1px solid rgba(255,255,255,.1);color:#9ab;cursor:pointer;font-size:.85rem;font-weight:600}
+.tab.on{background:var(--gold);color:#061826;border-color:var(--gold)}
+.panel{background:var(--dark2);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;margin-bottom:20px}
+label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:#9ab;margin-bottom:6px}
+input[type=password],input[type=text],input[type=number],select,textarea{width:100%;padding:11px 14px;border-radius:9px;border:1px solid rgba(255,255,255,.15);background:#04121f;color:#fff;font-size:.9rem;outline:none;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:9px;border:none;cursor:pointer;font-size:.85rem;font-weight:600;transition:.2s}
+.btn-gold{background:var(--gold);color:#061826}
+.btn-gold:hover{filter:brightness(1.1)}
+.btn-ghost{background:transparent;color:#9ab;border:1px solid rgba(255,255,255,.2)}
+.btn-red{background:var(--red);color:#fff;padding:6px 12px;font-size:.75rem}
+.btn-sm{padding:7px 14px;font-size:.78rem}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.row>div{flex:1;min-width:180px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-top:16px}
+.card{background:#04121f;border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden}
+.card img,.card video{width:100%;height:130px;object-fit:cover;display:block;background:#000}
+.card .meta{padding:8px 10px;display:flex;justify-content:space-between;align-items:center}
+.card .name{font-size:.78rem;color:#cde}
+.drop{border:2px dashed rgba(200,164,93,.4);border-radius:12px;padding:30px;text-align:center;color:#9ab;font-size:.9rem;cursor:pointer;transition:.2s;margin-top:14px}
+.drop:hover,.drop.over{border-color:var(--gold);background:rgba(200,164,93,.06)}
+.status{margin-top:12px;font-size:.82rem;line-height:1.6;max-height:180px;overflow-y:auto}
+.status .ok{color:var(--green)}
+.status .err{color:var(--red)}
+.status .inf{color:#9ab}
+.chk{display:flex;align-items:center;gap:8px;font-size:.8rem;color:#9ab;margin-top:10px;cursor:pointer}
+.chk input{width:auto}
+.hint{font-size:.72rem;color:#678;margin-top:8px;line-height:1.5}
+.hidden{display:none}
+a{color:var(--gold)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.2);border-top-color:var(--gold);border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle}
+@keyframes sp{to{transform:rotate(360deg)}}
+.prop-item{background:#04121f;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.prop-item .t{font-size:.92rem;font-weight:600}
+.prop-item .s{font-size:.72rem;color:#8aa;margin-top:2px}
+.prop-item .off{color:var(--red);font-size:.68rem;border:1px solid var(--red);border-radius:99px;padding:2px 8px;margin-left:8px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.form-grid{grid-template-columns:1fr}}
+.form-grid .full{grid-column:1/-1}
+.amenities{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.am{padding:7px 13px;border-radius:99px;border:1px solid rgba(255,255,255,.2);font-size:.75rem;color:#9ab;cursor:pointer;user-select:none}
+.am.on{background:var(--gold);color:#061826;border-color:var(--gold)}
+h3{font-size:.95rem;color:var(--gold);margin:0 0 14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>BEK TOUR · Админка</h1>
+  <div class="sub">Фото, видео и дачи</div>
+
+  <!-- LOGIN -->
+  <div class="panel" id="loginPanel">
+    <label>GitHub токен</label>
+    <input type="password" id="tokenInput" placeholder="github_pat_...">
+    <div style="margin-top:12px;">
+      <button class="btn btn-gold" onclick="saveToken()">Войти</button>
+    </div>
+    <div class="hint">Токен хранится только в этом браузере. Создать: github.com/settings/personal-access-tokens → Fine-grained → bektour-v3 → Contents: Read and write.</div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="mainPanel" class="hidden">
+    <div class="tabs">
+      <div class="tab on" data-tab="photos" onclick="switchTab('photos')">📸 Фото</div>
+      <div class="tab" data-tab="props" onclick="switchTab('props')">🏡 Дачи</div>
+      <div style="flex:1"></div>
+      <button class="btn btn-ghost btn-sm" onclick="logout()">Выйти</button>
+    </div>
+
+    <!-- PHOTOS TAB -->
+    <div id="tab-photos">
+      <div class="panel">
+        <div class="row">
+          <div>
+            <label>Раздел сайта</label>
+            <select id="folderSelect" onchange="loadFolder()">
+              <option value="images/hero">Главный баннер (hero)</option>
+              <option value="images/cities/samarkand">Самарканд</option>
+              <option value="images/cities/bukhara">Бухара</option>
+              <option value="images/cities/khiva">Хива</option>
+              <option value="images/cities/shakhrisabz">Шахрисабз</option>
+              <option value="images/cities/tashkent">Ташкент</option>
+              <option value="images/cities/fergana">Фергана</option>
+            </select>
+          </div>
+          <div style="flex:0;"><button class="btn btn-ghost" onclick="loadFolder()">Обновить</button></div>
+        </div>
+        <div class="drop" id="dropZone">📤 Перетащи фото/видео сюда или кликни<br><span style="font-size:.72rem;">Номер присвоится автоматически</span></div>
+        <input type="file" id="fileInput" multiple accept="image/*,video/mp4,video/webm" class="hidden">
+        <label class="chk"><input type="checkbox" id="compressChk" checked> Сжимать фото (до 1920px, webp)</label>
+        <div class="status" id="status"></div>
+      </div>
+      <div class="panel">
+        <label id="folderTitle">Файлы</label>
+        <div class="grid" id="fileGrid"></div>
+        <div class="hint">При удалении из середины файлы перенумеруются автоматически.</div>
+      </div>
+    </div>
+
+    <!-- PROPERTIES TAB -->
+    <div id="tab-props" class="hidden">
+      <div class="panel">
+        <div class="row">
+          <div><label>Объекты (data/properties.json)</label></div>
+          <div style="flex:0;"><button class="btn btn-gold btn-sm" onclick="openForm()">+ Добавить</button></div>
+          <div style="flex:0;"><button class="btn btn-ghost btn-sm" onclick="loadProps()">Обновить</button></div>
+        </div>
+        <div id="propList" style="margin-top:14px;"></div>
+        <div class="status" id="propStatus"></div>
+      </div>
+
+      <!-- FORM -->
+      <div class="panel hidden" id="propForm">
+        <h3 id="formTitle">Новый объект</h3>
+        <div class="form-grid">
+          <div><label>Тип</label>
+            <select id="f_type">
+              <option value="dacha">Дача</option>
+              <option value="villa">Вилла</option>
+              <option value="guesthouse">Гостевой дом</option>
+              <option value="hotel">Отель</option>
+            </select>
+          </div>
+          <div><label>ID (латиницей, без пробелов)</label><input type="text" id="f_id" placeholder="charvak-lakeview"></div>
+          <div class="full"><label>Название RU</label><input type="text" id="f_name_ru"></div>
+          <div><label>Название EN</label><input type="text" id="f_name_en"></div>
+          <div><label>Название UZ</label><input type="text" id="f_name_uz"></div>
+          <div class="full"><label>Локация RU</label><input type="text" id="f_loc_ru" placeholder="Чарвак, 5 мин до пляжа"></div>
+          <div><label>Локация EN</label><input type="text" id="f_loc_en"></div>
+          <div><label>Локация UZ</label><input type="text" id="f_loc_uz"></div>
+          <div class="full"><label>Описание RU</label><textarea id="f_desc_ru"></textarea></div>
+          <div><label>Описание EN</label><textarea id="f_desc_en"></textarea></div>
+          <div><label>Описание UZ</label><textarea id="f_desc_uz"></textarea></div>
+          <div><label>Цена $ / ночь</label><input type="number" id="f_price" value="100"></div>
+          <div><label>WhatsApp (без +)</label><input type="text" id="f_wa" value="998901234567"></div>
+          <div><label>Гостей</label><input type="number" id="f_guests" value="6"></div>
+          <div><label>Спален</label><input type="number" id="f_bedrooms" value="2"></div>
+          <div><label>Санузлов</label><input type="number" id="f_bathrooms" value="1"></div>
+          <div><label>Активен (виден на сайте)</label>
+            <select id="f_active"><option value="true">Да</option><option value="false">Нет (скрыт)</option></select>
+          </div>
+          <div class="full"><label>Удобства</label>
+            <div class="amenities" id="f_amenities">
+              <div class="am" data-a="pool">Бассейн</div>
+              <div class="am" data-a="wifi">Wi-Fi</div>
+              <div class="am" data-a="bbq">Мангал</div>
+              <div class="am" data-a="parking">Парковка</div>
+              <div class="am" data-a="kitchen">Кухня</div>
+              <div class="am" data-a="ac">Кондиционер</div>
+              <div class="am" data-a="sauna">Сауна</div>
+              <div class="am" data-a="fireplace">Камин</div>
+              <div class="am" data-a="heating">Отопление</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:10px;">
+          <button class="btn btn-gold" onclick="saveProp()">💾 Сохранить</button>
+          <button class="btn btn-ghost" onclick="closeForm()">Отмена</button>
+        </div>
+        <div class="hint">После сохранения нажми «📸 Фото» у объекта и загрузи его фотографии.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const OWNER = 'asadbekfxadd';
+const REPO = 'bektour-v3';
+const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+const IMG_EXT = ['webp','jpg','jpeg','png'];
+const VID_EXT = ['mp4','webm'];
+const PROPS_PATH = 'data/properties.json';
+
+let token = localStorage.getItem('bt_admin_token') || '';
+let currentFiles = [];
+let propsData = { properties: [] };
+let propsSha = null;
+let editingId = null;
+
+/* ---------- auth ---------- */
+function saveToken(){
+  const t = document.getElementById('tokenInput').value.trim();
+  if(!t){ alert('Вставь токен'); return; }
+  token = t; localStorage.setItem('bt_admin_token', t); showMain();
+}
+function logout(){
+  localStorage.removeItem('bt_admin_token'); token = '';
+  document.getElementById('mainPanel').classList.add('hidden');
+  document.getElementById('loginPanel').classList.remove('hidden');
+}
+function showMain(){
+  document.getElementById('loginPanel').classList.add('hidden');
+  document.getElementById('mainPanel').classList.remove('hidden');
+  loadFolder(); loadProps();
+}
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.tab === name));
+  document.getElementById('tab-photos').classList.toggle('hidden', name !== 'photos');
+  document.getElementById('tab-props').classList.toggle('hidden', name !== 'props');
+}
+
+/* ---------- github api ---------- */
+function gh(path, opts={}){
+  return fetch(`${API}/${path}`, {
+    ...opts,
+    headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json', ...(opts.headers||{}) }
+  });
+}
+async function listFolder(folder){
+  const r = await gh(folder + '?t=' + Date.now());
+  if(r.status === 404) return [];
+  if(!r.ok) throw new Error('GitHub: ' + r.status);
+  return (await r.json()).filter(f => f.type === 'file' && !f.name.startsWith('.'));
+}
+async function putFile(path, base64, msg, sha){
+  const r = await gh(path, { method:'PUT', body: JSON.stringify({ message: msg, content: base64, ...(sha?{sha}:{}) }) });
+  if(!r.ok) throw new Error('PUT ' + r.status);
+  return r.json();
+}
+async function uploadFile(path, base64, msg){
+  let sha;
+  const check = await gh(path);
+  if(check.ok){ sha = (await check.json()).sha; }
+  return putFile(path, base64, msg, sha);
+}
+async function deleteFile(path, sha, msg){
+  const r = await gh(path, { method:'DELETE', body: JSON.stringify({ message: msg, sha }) });
+  if(!r.ok) throw new Error('DELETE ' + r.status);
+}
+
+/* ---------- helpers ---------- */
+function log(text, cls='inf', target='status'){
+  const el = document.getElementById(target);
+  el.innerHTML += `<div class="${cls}">${text}</div>`;
+  el.scrollTop = el.scrollHeight;
+}
+const numOf = n => { const m = n.match(/^(\d+)\./); return m ? parseInt(m[1]) : null; };
+const extOf = n => n.split('.').pop().toLowerCase();
+const isMedia = n => IMG_EXT.includes(extOf(n)) || VID_EXT.includes(extOf(n));
+function utf8ToBase64(str){ return btoa(unescape(encodeURIComponent(str))); }
+function base64ToUtf8(b64){ return decodeURIComponent(escape(atob(b64))); }
+
+/* ---------- photos tab ---------- */
+async function loadFolder(){
+  const folder = document.getElementById('folderSelect').value;
+  const grid = document.getElementById('fileGrid');
+  grid.innerHTML = '<div class="spin"></div>';
+  try{
+    const files = (await listFolder(folder))
+      .filter(f => isMedia(f.name) && numOf(f.name) !== null)
+      .sort((a,b) => numOf(a.name) - numOf(b.name));
+    currentFiles = files;
+    document.getElementById('folderTitle').textContent = `Файлы: ${folder} (${files.length})`;
+    if(!files.length){ grid.innerHTML = '<div class="hint">Пока пусто. Загрузи первое фото!</div>'; return; }
+    grid.innerHTML = files.map(f => {
+      const isVid = VID_EXT.includes(extOf(f.name));
+      const media = isVid ? `<video src="${f.download_url}" muted></video>` : `<img src="${f.download_url}" loading="lazy">`;
+      return `<div class="card">${media}<div class="meta"><span class="name">${f.name}${isVid?' 🎬':''}</span>
+        <button class="btn btn-red" onclick="removeFile('${f.name}')">✕</button></div></div>`;
+    }).join('');
+  }catch(e){
+    grid.innerHTML = `<div class="err">Ошибка: ${e.message}. Проверь токен.</div>`;
+  }
+}
+
+const drop = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+drop.onclick = () => fileInput.click();
+fileInput.onchange = () => handleFiles(fileInput.files);
+drop.ondragover = e => { e.preventDefault(); drop.classList.add('over'); };
+drop.ondragleave = () => drop.classList.remove('over');
+drop.ondrop = e => { e.preventDefault(); drop.classList.remove('over'); handleFiles(e.dataTransfer.files); };
+
+async function handleFiles(fileList){
+  const folder = document.getElementById('folderSelect').value;
+  const files = [...fileList].filter(f => f.type.startsWith('image/') || f.type === 'video/mp4' || f.type === 'video/webm');
+  if(!files.length){ log('Нет подходящих файлов','err'); return; }
+  let next = currentFiles.length ? Math.max(...currentFiles.map(f => numOf(f.name))) + 1 : 1;
+  for(const file of files){
+    try{
+      log(`⏳ ${file.name}...`);
+      let blob = file, ext;
+      if(file.type.startsWith('image/')){
+        if(document.getElementById('compressChk').checked){ blob = await compressImage(file); ext = 'webp'; }
+        else { ext = extOf(file.name); if(!IMG_EXT.includes(ext)) ext = 'jpg'; }
+      } else {
+        ext = file.type === 'video/webm' ? 'webm' : 'mp4';
+        if(file.size > 30*1024*1024){ log(`⚠ ${file.name}: > 30 MB, пропущено`,'err'); continue; }
+      }
+      const base64 = await toBase64(blob);
+      await uploadFile(`${folder}/${next}.${ext}`, base64, `admin: add ${folder}/${next}.${ext}`);
+      log(`✅ ${next}.${ext} (${Math.round(blob.size/1024)} KB)`,'ok');
+      next++;
+    }catch(e){ log(`❌ ${file.name}: ${e.message}`,'err'); }
+  }
+  log('Готово! Сайт обновится через ~2 мин.','ok');
+  loadFolder();
+}
+
+function toBase64(blob){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = rej; r.readAsDataURL(blob);
+  });
+}
+function compressImage(file){
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => {
+      const MAX = 1920; let w = img.width, h = img.height;
+      if(w > MAX){ h = Math.round(h*MAX/w); w = MAX; }
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      c.toBlob(b => b ? res(b) : rej(new Error('compress fail')), 'image/webp', .85);
+    };
+    img.onerror = rej; img.src = URL.createObjectURL(file);
+  });
+}
+
+async function removeFile(name){
+  if(!confirm(`Удалить ${name}? Остальные перенумеруются.`)) return;
+  const folder = document.getElementById('folderSelect').value;
+  try{
+    const target = currentFiles.find(f => f.name === name);
+    log(`🗑 ${name}...`);
+    await deleteFile(`${folder}/${name}`, target.sha, `admin: delete ${name}`);
+    const after = currentFiles.filter(f => numOf(f.name) > numOf(name)).sort((a,b) => numOf(a.name)-numOf(b.name));
+    for(const f of after){
+      const newName = (numOf(f.name)-1) + '.' + extOf(f.name);
+      log(`↪ ${f.name} → ${newName}`);
+      const raw = await gh(`${folder}/${f.name}`, { headers:{'Accept':'application/vnd.github.raw'} });
+      const buf = await raw.arrayBuffer();
+      const b64 = btoa(new Uint8Array(buf).reduce((s,b)=>s+String.fromCharCode(b),''));
+      await uploadFile(`${folder}/${newName}`, b64, `admin: renumber ${newName}`);
+      const fresh = await (await gh(`${folder}/${f.name}`)).json();
+      await deleteFile(`${folder}/${f.name}`, fresh.sha, `admin: rm old ${f.name}`);
+    }
+    log('✅ Готово','ok');
+  }catch(e){ log(`❌ ${e.message}`,'err'); }
+  loadFolder();
+}
+
+/* ---------- properties tab ---------- */
+async function loadProps(){
+  const list = document.getElementById('propList');
+  list.innerHTML = '<div class="spin"></div>';
+  try{
+    const r = await gh(PROPS_PATH + '?t=' + Date.now());
+    if(r.status === 404){
+      propsData = { properties: [] }; propsSha = null;
+      list.innerHTML = '<div class="hint">Файла data/properties.json ещё нет — создастся при первом сохранении.</div>';
+      return;
+    }
+    const j = await r.json();
+    propsSha = j.sha;
+    propsData = JSON.parse(base64ToUtf8(j.content.replace(/\n/g,'')));
+    renderProps();
+  }catch(e){
+    list.innerHTML = `<div class="err">Ошибка: ${e.message}</div>`;
+  }
+}
+
+function renderProps(){
+  const list = document.getElementById('propList');
+  const props = propsData.properties || [];
+  if(!props.length){ list.innerHTML = '<div class="hint">Объектов пока нет</div>'; return; }
+  const typeLabel = {dacha:'Дача', villa:'Вилла', guesthouse:'Гостевой дом', hotel:'Отель'};
+  list.innerHTML = props.map(p => `
+    <div class="prop-item">
+      <div>
+        <div class="t">${p.name?.ru || p.id}${p.active===false?'<span class="off">скрыт</span>':''}</div>
+        <div class="s">${typeLabel[p.type]||p.type} · $${p.price}/ночь · ${p.guests} гостей · id: ${p.id}</div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-ghost btn-sm" onclick="photosOf('${p.id}')">📸 Фото</button>
+        <button class="btn btn-ghost btn-sm" onclick="openForm('${p.id}')">✏️</button>
+        <button class="btn btn-red" onclick="deleteProp('${p.id}')">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function photosOf(id){
+  const sel = document.getElementById('folderSelect');
+  const val = `images/properties/${id}`;
+  if(![...sel.options].some(o => o.value === val)){
+    const o = document.createElement('option');
+    o.value = val; o.textContent = `Объект: ${id}`;
+    sel.appendChild(o);
+  }
+  sel.value = val;
+  switchTab('photos');
+  loadFolder();
+}
+
+const getAm = () => [...document.querySelectorAll('#f_amenities .am.on')].map(a => a.dataset.a);
+document.getElementById('f_amenities').addEventListener('click', e => {
+  const am = e.target.closest('.am'); if(am) am.classList.toggle('on');
+});
+
+function openForm(id){
+  editingId = id || null;
+  document.getElementById('propForm').classList.remove('hidden');
+  document.getElementById('formTitle').textContent = id ? 'Редактирование' : 'Новый объект';
+  document.querySelectorAll('#f_amenities .am').forEach(a => a.classList.remove('on'));
+  const p = id ? propsData.properties.find(x => x.id === id) : null;
+  const v = (fid, val) => document.getElementById(fid).value = val ?? '';
+  v('f_type', p?.type || 'dacha');
+  v('f_id', p?.id || '');
+  document.getElementById('f_id').disabled = !!id;
+  v('f_name_ru', p?.name?.ru); v('f_name_en', p?.name?.en); v('f_name_uz', p?.name?.uz);
+  v('f_loc_ru', p?.location?.ru); v('f_loc_en', p?.location?.en); v('f_loc_uz', p?.location?.uz);
+  v('f_desc_ru', p?.desc?.ru); v('f_desc_en', p?.desc?.en); v('f_desc_uz', p?.desc?.uz);
+  v('f_price', p?.price ?? 100); v('f_wa', p?.whatsapp || '998901234567');
+  v('f_guests', p?.guests ?? 6); v('f_bedrooms', p?.bedrooms ?? 2); v('f_bathrooms', p?.bathrooms ?? 1);
+  v('f_active', String(p?.active !== false));
+  (p?.amenities || []).forEach(a => {
+    const el = document.querySelector(`#f_amenities .am[data-a="${a}"]`);
+    if(el) el.classList.add('on');
+  });
+  document.getElementById('propForm').scrollIntoView({behavior:'smooth'});
+}
+function closeForm(){ document.getElementById('propForm').classList.add('hidden'); editingId = null; }
+
+async function saveProp(){
+  const g = fid => document.getElementById(fid).value.trim();
+  const id = editingId || g('f_id').toLowerCase().replace(/[^a-z0-9-]/g,'-');
+  if(!id){ alert('Укажи ID латиницей'); return; }
+  if(!g('f_name_ru')){ alert('Укажи название RU'); return; }
+  const prop = {
+    id, type: g('f_type'), active: g('f_active') === 'true',
+    name: { ru: g('f_name_ru'), en: g('f_name_en') || g('f_name_ru'), uz: g('f_name_uz') || g('f_name_ru') },
+    location: { ru: g('f_loc_ru'), en: g('f_loc_en') || g('f_loc_ru'), uz: g('f_loc_uz') || g('f_loc_ru') },
+    desc: { ru: g('f_desc_ru'), en: g('f_desc_en') || g('f_desc_ru'), uz: g('f_desc_uz') || g('f_desc_ru') },
+    price: parseInt(g('f_price')) || 0, per: 'night',
+    guests: parseInt(g('f_guests')) || 1,
+    bedrooms: parseInt(g('f_bedrooms')) || 1,
+    bathrooms: parseInt(g('f_bathrooms')) || 1,
+    amenities: getAm(), whatsapp: g('f_wa')
+  };
+  const props = propsData.properties || [];
+  const idx = props.findIndex(x => x.id === id);
+  if(idx >= 0) props[idx] = prop; else props.push(prop);
+  propsData.properties = props;
+  await pushProps(`admin: save property ${id}`);
+  closeForm();
+}
+
+async function deleteProp(id){
+  if(!confirm(`Удалить объект ${id} из каталога? (Фото в папке останутся)`)) return;
+  propsData.properties = propsData.properties.filter(x => x.id !== id);
+  await pushProps(`admin: delete property ${id}`);
+}
+
+async function pushProps(msg){
+  try{
+    log('💾 Сохраняю каталог...', 'inf', 'propStatus');
+    const b64 = utf8ToBase64(JSON.stringify(propsData, null, 2));
+    const res = await putFile(PROPS_PATH, b64, msg, propsSha);
+    propsSha = res.content.sha;
+    log('✅ Сохранено! Сайт обновится через ~2 мин.', 'ok', 'propStatus');
+    renderProps();
+  }catch(e){
+    log(`❌ ${e.message} — нажми «Обновить» и повтори`, 'err', 'propStatus');
+  }
+}
+
+/* ---------- init ---------- */
+if(token) showMain();
+</script>
+</body>
+</html>
