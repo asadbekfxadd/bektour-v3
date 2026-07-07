@@ -932,3 +932,35 @@ window.bookWhatsApp=function(name,price){
 };
 
 console.log('✈ Bek Tour JS v3 · lang:',LANG);
+
+/* ============================================================
+   IMG FALLBACK LAYER · v2
+   Any broken image (dead Unsplash, missing file) gets replaced
+   with a branded gradient placeholder instead of a broken icon.
+   ============================================================ */
+(function(){
+  const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">' +
+    '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+    '<stop offset="0" stop-color="#0d2640"/><stop offset="1" stop-color="#061826"/>' +
+    '</linearGradient></defs>' +
+    '<rect width="800" height="600" fill="url(#g)"/>' +
+    '<text x="400" y="310" font-family="Georgia,serif" font-size="44" fill="#C8A45D" text-anchor="middle" opacity=".85">BEK TOUR</text>' +
+    '</svg>'
+  );
+  function fixImg(img){
+    if(img.dataset.btFallback) return;
+    img.dataset.btFallback = '1';
+    img.src = PLACEHOLDER;
+    img.style.objectFit = 'cover';
+  }
+  document.addEventListener('error', function(e){
+    if(e.target && e.target.tagName === 'IMG') fixImg(e.target);
+  }, true);
+  // catch images that broke before this script attached
+  window.addEventListener('load', function(){
+    document.querySelectorAll('img').forEach(function(img){
+      if(img.complete && img.naturalWidth === 0 && img.src && !img.src.startsWith('data:')) fixImg(img);
+    });
+  });
+})();

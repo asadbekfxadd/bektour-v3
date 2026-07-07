@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 /* ============================================================
    BEK TOUR — COMPLETE DESIGN SYSTEM
    Based on Li-Ning architecture · Silk Road Tourism
@@ -787,4 +788,115 @@ footer { background:var(--dark); border-top:1px solid rgba(255,255,255,.05); }
 @media(max-width:640px){
   .section { padding:3.5rem 1rem; }
   .section-sm { padding:2.5rem 1rem; }
+}
+
+
+/* ============================================================
+   DESIGN REFINEMENT LAYER · v2 "Quiet Luxury"
+   Apple-inspired polish: Inter, frosted nav, softer shadows,
+   pill buttons, smoother motion. Appended after base styles —
+   safe to remove this block to roll back.
+   ============================================================ */
+
+:root {
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --ease-out: cubic-bezier(.22,.61,.36,1);
+  --shadow-sm: 0 1px 2px rgba(6,24,38,.06), 0 4px 12px rgba(6,24,38,.05);
+  --shadow-md: 0 2px 4px rgba(6,24,38,.05), 0 12px 32px rgba(6,24,38,.10);
+  --shadow-lg: 0 4px 8px rgba(6,24,38,.06), 0 24px 56px rgba(6,24,38,.16);
+}
+
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: var(--font-body); letter-spacing: -0.011em; }
+
+/* --- Frosted glass navbar (Apple style) --- */
+.navbar {
+  background: rgba(6,24,38,.72) !important;
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.nav-link { font-weight: 500; letter-spacing: -0.005em; transition: color .25s var(--ease-out); }
+.nav-mega-menu {
+  background: rgba(10,30,48,.9);
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+}
+
+/* --- Buttons: pill, calm, tactile --- */
+.btn {
+  border-radius: 980px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out),
+              background .25s var(--ease-out), filter .25s var(--ease-out);
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0) scale(.98); }
+.btn-primary { box-shadow: 0 6px 18px rgba(200,164,93,.28); }
+.btn-primary:hover { box-shadow: 0 10px 26px rgba(200,164,93,.38); }
+.btn-dark { box-shadow: none; }
+.btn-ghost { border-width: 1px; }
+
+/* --- Cards: airy, soft depth, gentle lift --- */
+.product-card, .review-card, .why-card, .faq-item, .dacha-card {
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .4s var(--ease-out), box-shadow .4s var(--ease-out);
+  border: 1px solid rgba(6,24,38,.05);
+}
+.product-card:hover, .dacha-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+.product-img-wrap { border-radius: 20px 20px 0 0; }
+.collection-card { border-radius: 20px; overflow: hidden; }
+.collection-card, .collection-img-wrap img { transition: transform .5s var(--ease-out); }
+
+/* --- Typography rhythm --- */
+.section { padding-top: clamp(4rem, 8vw, 7rem); padding-bottom: clamp(4rem, 8vw, 7rem); }
+.section-title { letter-spacing: -0.02em; }
+.section-desc, .hero-desc, .product-dest, p { line-height: 1.7; }
+.hero-h1 { letter-spacing: -0.015em; }
+.price-main { letter-spacing: -0.02em; }
+
+/* --- Inputs: focus rings like macOS --- */
+input, select, textarea { transition: border-color .2s, box-shadow .2s; }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 4px rgba(200,164,93,.18);
+}
+
+/* --- FAQ: cleaner accordion --- */
+.faq-item { background: #fff; }
+.faq-q { font-weight: 600; letter-spacing: -0.01em; }
+
+/* --- Hero right card: frosted --- */
+.hero-right-card {
+  background: rgba(255,255,255,.06) !important;
+  backdrop-filter: saturate(160%) blur(18px);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.12);
+}
+.hero-card-item { border-radius: 14px; transition: background .25s var(--ease-out); }
+
+/* --- Ticker: quieter --- */
+.ticker { opacity: .92; }
+
+/* --- Scrollbar (desktop) --- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(122,138,154,.35); border-radius: 99px; border: 2px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background-color: rgba(122,138,154,.55); }
+
+/* --- Selection --- */
+::selection { background: rgba(200,164,93,.3); }
+
+/* --- Reduced motion respect --- */
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
