@@ -129,6 +129,8 @@ h3.formtitle{font-size:.95rem;color:var(--gold);margin-bottom:14px}
         <button class="btn btn-ghost btn-sm" onclick="openDetail(currentFolder,currentTitle)">Обновить</button>
       </div>
       <div class="panel">
+        <div id="coverBox" style="margin-bottom:16px;"></div>
+        <input type="file" id="coverInput" accept="image/*" class="hidden">
         <div class="drop" id="dropZone">📤 Перетащи фото/видео или кликни<br><span style="font-size:.7rem;">Фото сжимаются · номер присвоится сам</span></div>
         <input type="file" id="fileInput" multiple accept="image/*,video/mp4,video/webm" class="hidden">
         <label class="chk"><input type="checkbox" id="compressChk" checked> Сжимать фото (1920px, webp)</label>
@@ -298,10 +300,13 @@ async function loadSections(){
   for(const s of all){
     let count=0,cover=null;
     try{
-      const fl=(await listFolder(s.folder)).filter(f=>isMedia(f.name)&&numOf(f.name)!==null);
+      const raw=await listFolder(s.folder);
+      const fl=raw.filter(f=>isMedia(f.name)&&numOf(f.name)!==null);
       count=fl.length;
+      const cov=raw.find(f=>/^cover\./i.test(f.name)&&IMG_EXT.includes(extOf(f.name)));
       const first=fl.sort((a,b)=>numOf(a.name)-numOf(b.name))[0];
-      if(first&&IMG_EXT.includes(extOf(first.name)))cover=first.download_url;
+      if(cov)cover=cov.download_url;
+      else if(first&&IMG_EXT.includes(extOf(first.name)))cover=first.download_url;
     }catch(e){}
     sections.push({...s,count,cover});
   }
@@ -334,7 +339,10 @@ async function openDetail(folder,title){
   const grid=document.getElementById('photoGrid');
   grid.innerHTML='<div class="spin"></div>';
   try{
-    files=(await listFolder(folder)).filter(f=>isMedia(f.name)&&numOf(f.name)!==null).sort((a,b)=>numOf(a.name)-numOf(b.name));
+    const rawList=await listFolder(folder);
+    files=rawList.filter(f=>isMedia(f.name)&&numOf(f.name)!==null).sort((a,b)=>numOf(a.name)-numOf(b.name));
+    coverFile=rawList.find(f=>/^cover\./i.test(f.name)&&IMG_EXT.includes(extOf(f.name)))||null;
+    renderCover();
     renderGrid();
   }catch(e){grid.innerHTML=`<div class="err" style="color:var(--red)">Ошибка: ${e.message}</div>`;}
 }
@@ -358,6 +366,56 @@ function renderGrid(){
   attachDrag();
 }
 function markDirty(){orderDirty=true;document.getElementById('orderBar').classList.remove('hidden');}
+
+/* ---------- cover (главное фото) ---------- */
+let coverFile=null;
+function renderCover(){
+  const box=document.getElementById('coverBox');
+  if(coverFile){
+    box.innerHTML=`
+      <label>Главное фото (карточка на главной странице)</label>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
+        <img src="${coverFile.download_url}" style="width:150px;height:100px;object-fit:cover;border-radius:12px;border:2px solid var(--gold);">
+        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('coverInput').click()">🔄 Заменить</button>
+        <button class="btn btn-red btn-sm" onclick="deleteCover()">✕ Убрать</button>
+        <span class="hint" style="margin:0;">Показывается только в карточке на главной. Внутри страницы — фото из сетки ниже.</span>
+      </div>`;
+  }else{
+    box.innerHTML=`
+      <label>Главное фото (карточка на главной странице)</label>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
+        <div style="width:150px;height:100px;border-radius:12px;border:2px dashed rgba(200,164,93,.4);display:flex;align-items:center;justify-content:center;color:#678;font-size:.7rem;text-align:center;padding:8px;">не задано<br>используется №1</div>
+        <button class="btn btn-gold btn-sm" onclick="document.getElementById('coverInput').click()">⭐ Задать главное фото</button>
+      </div>`;
+  }
+}
+document.getElementById('coverInput').addEventListener('change',async function(){
+  const f=this.files[0]; this.value='';
+  if(!f||!f.type.startsWith('image/'))return;
+  try{
+    log('⏳ Главное фото: обработка...');
+    const blob=await compressImage(f);
+    const b64=await toBase64(blob);
+    await uploadFile(`${currentFolder}/cover.webp`,b64,'admin: cover');
+    // если старая обложка была другого формата — удаляем
+    if(coverFile&&coverFile.name!=='cover.webp'){
+      const s=await freshSha(`${currentFolder}/${coverFile.name}`);
+      if(s)await deleteFile(`${currentFolder}/${coverFile.name}`,s,'admin: rm old cover');
+    }
+    log('✅ Главное фото обновлено! Сайт через ~2 мин.','ok');
+    openDetail(currentFolder,currentTitle);
+  }catch(e){log('❌ '+e.message,'err');}
+});
+async function deleteCover(){
+  if(!coverFile)return;
+  if(!confirm('Убрать главное фото? На главной снова будет использоваться фото №1.'))return;
+  try{
+    const s=await freshSha(`${currentFolder}/${coverFile.name}`);
+    await deleteFile(`${currentFolder}/${coverFile.name}`,s,'admin: rm cover');
+    log('✅ Убрано','ok');
+    openDetail(currentFolder,currentTitle);
+  }catch(e){log('❌ '+e.message,'err');}
+}
 
 /* ---------- drag & drop reorder ---------- */
 let dragIdx=null;
