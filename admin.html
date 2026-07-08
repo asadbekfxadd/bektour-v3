@@ -314,6 +314,7 @@ async function loadSections(){
     </div>`).join('');
 }
 function showSections(){
+  closeMove();
   currentFolder='';
   document.getElementById('viewDetail').classList.add('hidden');
   document.getElementById('viewSections').classList.remove('hidden');
@@ -322,6 +323,7 @@ function showSections(){
 
 /* ---------- detail view ---------- */
 async function openDetail(folder,title){
+  closeMove();
   currentFolder=folder;currentTitle=title;orderDirty=false;
   document.getElementById('viewSections').classList.add('hidden');
   document.getElementById('viewDetail').classList.remove('hidden');
@@ -473,7 +475,9 @@ function openMove(i){
   moveIdx=i;
   const sel=document.getElementById('moveTarget');
   const all=[...BASE_SECTIONS,...propSections()].filter(s=>s.folder!==currentFolder);
+  if(!all.length){alert('Нет других разделов');return;}
   sel.innerHTML=all.map(s=>`<option value="${s.folder}">${s.name}</option>`).join('');
+  sel.selectedIndex=0;
   document.getElementById('moveModal').classList.remove('hidden');
 }
 function closeMove(){document.getElementById('moveModal').classList.add('hidden');moveIdx=-1;}
@@ -481,6 +485,7 @@ async function confirmMove(){
   const target=document.getElementById('moveTarget').value;
   const f=files[moveIdx];
   closeMove();
+  if(!f||!target){log('⚠ Фото не выбрано — открой раздел и нажми ⇄ на фото','err');return;}
   try{
     log(`⇄ ${f.name} → ${target}...`);
     const tl=(await listFolder(target)).filter(x=>isMedia(x.name)&&numOf(x.name)!==null);
@@ -590,6 +595,14 @@ async function pushProps(msg){
     renderProps();
   }catch(e){log('❌ '+e.message,'err','propStatus');}
 }
+
+/* ---------- modal UX ---------- */
+document.getElementById('moveModal').addEventListener('click',e=>{
+  if(e.target.id==='moveModal')closeMove();
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeMove();
+});
 
 /* ---------- init ---------- */
 if(token)showMain();
