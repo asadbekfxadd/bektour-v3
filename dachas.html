@@ -69,12 +69,16 @@ const AMENITY_ICONS = {
 let allProps = [];
 
 function firstPhoto(id){
-  // returns a promise resolving to url of images/properties/{id}/1.*
+  // сначала cover.*, потом 1.* — по всем расширениям
+  const candidates = [];
+  for(const base of ['cover','1']){
+    for(const ext of IMG_EXT) candidates.push(`images/properties/${id}/${base}.${ext}`);
+  }
   return new Promise(resolve => {
     let i = 0;
     const tryNext = () => {
-      if(i >= IMG_EXT.length) return resolve(null);
-      const url = `images/properties/${id}/1.${IMG_EXT[i++]}`;
+      if(i >= candidates.length) return resolve(null);
+      const url = candidates[i++];
       const img = new Image();
       img.onload = () => resolve(url);
       img.onerror = tryNext;
