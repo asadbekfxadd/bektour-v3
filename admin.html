@@ -229,18 +229,39 @@ async function listFolder(folder){
 }
 async function putFile(path, base64, msg, sha){
   const r = await gh(path, { method:'PUT', body: JSON.stringify({ message: msg, content: base64, ...(sha?{sha}:{}) }) });
-  if(!r.ok) throw new Error('PUT ' + r.status);
+  if(!r.ok){
+    let detail = '';
+    try{ detail = (await r.json()).message || ''; }catch(e){}
+    throw new Error('PUT ' + r.status + (detail ? ' — ' + detail : ''));
+  }
   return r.json();
 }
+async function freshSha(path){
+  const check = await gh(path + '?t=' + Date.now());
+  if(check.ok){ try{ return (await check.json()).sha; }catch(e){} }
+  return undefined;
+}
 async function uploadFile(path, base64, msg){
-  let sha;
-  const check = await gh(path);
-  if(check.ok){ sha = (await check.json()).sha; }
-  return putFile(path, base64, msg, sha);
+  let sha = await freshSha(path);
+  try{
+    return await putFile(path, base64, msg, sha);
+  }catch(e){
+    // конфликт версий (409/422) — берём свежую sha и пробуем ещё раз
+    if(/409|422/.test(e.message)){
+      await new Promise(r => setTimeout(r, 800));
+      sha = await freshSha(path);
+      return await putFile(path, base64, msg, sha);
+    }
+    throw e;
+  }
 }
 async function deleteFile(path, sha, msg){
   const r = await gh(path, { method:'DELETE', body: JSON.stringify({ message: msg, sha }) });
-  if(!r.ok) throw new Error('DELETE ' + r.status);
+  if(!r.ok){
+    let detail = '';
+    try{ detail = (await r.json()).message || ''; }catch(e){}
+    throw new Error('DELETE ' + r.status + (detail ? ' — ' + detail : ''));
+  }
 }
 
 /* ---------- helpers ---------- */

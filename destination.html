@@ -537,6 +537,56 @@ Promise.all([
   loadComponent('footer.html', 'footer-ph'),
 ]).then(() => { renderPage(); if(window.onComponentsLoaded) onComponentsLoaded(); });
 renderPage();
+
+/* ============================================================
+   LOCAL PHOTOS OVERRIDE
+   Если в images/cities/{slug}/ есть фото (1.webp, 2.jpg...),
+   они заменяют Unsplash в фоне и галерее автоматически.
+============================================================ */
+(function(){
+  const EXT = ['webp','jpg','jpeg','png'];
+  function probe(url){
+    return new Promise(res => {
+      const im = new Image();
+      im.onload = () => res(true);
+      im.onerror = () => res(false);
+      im.src = url;
+    });
+  }
+  async function byNum(folder, n){
+    for(const e of EXT){
+      const u = `${folder}/${n}.${e}`;
+      if(await probe(u)) return u;
+    }
+    return null;
+  }
+  async function run(){
+    const folder = 'images/cities/' + slug;
+    const photos = [];
+    for(let i = 1; i <= 30; i++){
+      const u = await byNum(folder, i);
+      if(!u) break;
+      photos.push(u);
+    }
+    if(!photos.length) return; // локальных фото нет — оставляем как было
+
+    // Фон hero — первое фото
+    const bg = document.getElementById('destHeroBg');
+    if(bg) bg.style.backgroundImage = `url('${photos[0]}')`;
+
+    // Галерея — все локальные фото
+    const gal = document.getElementById('destGallery');
+    if(gal){
+      const cityName = document.getElementById('destTitle')?.textContent || '';
+      gal.innerHTML = photos
+        .map(src => `<img src="${src}" alt="${cityName}" loading="lazy" onclick="openLightbox('${src}','${cityName}')">`)
+        .join('');
+    }
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', run);
+  } else { run(); }
+})();
 </script>
 
 <script src="bundle.js"></script>
