@@ -964,3 +964,38 @@ console.log('✈ Bek Tour JS v3 · lang:',LANG);
     });
   });
 })();
+
+/* ============================================================
+   SMART NAVBAR · v2
+   Scroll down -> navbar slides away. Scroll up -> comes back.
+   Always visible near the top of the page.
+   ============================================================ */
+(function(){
+  const nav = document.getElementById('navbar') || document.querySelector('.navbar');
+  if(!nav) return;
+  let lastY = window.scrollY;
+  let ticking = false;
+  const THRESHOLD = 12;   // ignore micro-scrolls
+  const SHOW_ZONE = 140;  // always visible in first 140px
+
+  function update(){
+    const y = window.scrollY;
+    const diff = y - lastY;
+    const mobileOpen = document.body.classList.contains('menu-open') ||
+                       document.querySelector('.mobile-nav.open, .mobile-nav.active');
+    if(mobileOpen){ nav.classList.remove('nav-hidden'); lastY = y; ticking = false; return; }
+
+    if(y <= SHOW_ZONE){
+      nav.classList.remove('nav-hidden');
+    } else if(diff > THRESHOLD){
+      nav.classList.add('nav-hidden');      // scrolling down
+    } else if(diff < -THRESHOLD){
+      nav.classList.remove('nav-hidden');   // scrolling up
+    }
+    if(Math.abs(diff) > THRESHOLD) lastY = y;
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, {passive:true});
+})();
