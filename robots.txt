@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /dashboard.html
+
+Sitemap: https://bektour-v3-production.up.railway.app/sitemap.xml

@@ -971,29 +971,30 @@ console.log('✈ Bek Tour JS v3 · lang:',LANG);
    Always visible near the top of the page.
    ============================================================ */
 (function(){
-  const nav = document.getElementById('navbar') || document.querySelector('.navbar');
-  if(!nav) return;
+  // навбар подгружается динамически (navbar.html), поэтому ищем его каждый раз
   let lastY = window.scrollY;
   let ticking = false;
-  const THRESHOLD = 12;   // ignore micro-scrolls
-  const SHOW_ZONE = 140;  // always visible in first 140px
+  const THRESHOLD = 10;   // игнорируем микроскроллы
+  const SHOW_ZONE = 120;  // в первых 120px всегда видим
 
   function update(){
+    ticking = false;
+    const nav = document.getElementById('navbar') || document.querySelector('.navbar');
+    if(!nav) return;
     const y = window.scrollY;
     const diff = y - lastY;
     const mobileOpen = document.body.classList.contains('menu-open') ||
                        document.querySelector('.mobile-nav.open, .mobile-nav.active');
-    if(mobileOpen){ nav.classList.remove('nav-hidden'); lastY = y; ticking = false; return; }
+    if(mobileOpen){ nav.classList.remove('nav-hidden'); lastY = y; return; }
 
     if(y <= SHOW_ZONE){
       nav.classList.remove('nav-hidden');
     } else if(diff > THRESHOLD){
-      nav.classList.add('nav-hidden');      // scrolling down
+      nav.classList.add('nav-hidden');      // скролл вниз — прячем
     } else if(diff < -THRESHOLD){
-      nav.classList.remove('nav-hidden');   // scrolling up
+      nav.classList.remove('nav-hidden');   // скролл вверх — показываем
     }
     if(Math.abs(diff) > THRESHOLD) lastY = y;
-    ticking = false;
   }
   window.addEventListener('scroll', function(){
     if(!ticking){ requestAnimationFrame(update); ticking = true; }

@@ -914,3 +914,89 @@ input:focus, select:focus, textarea:focus {
 }
 .navbar.nav-hidden { transform: translateY(-100%); }
 .navbar.nav-hidden .nav-mega-menu { opacity: 0; pointer-events: none; }
+
+/* ============================================================
+   AUDIT PASS v3 · Awwwards polish
+   Composition, a11y, responsive, performance.
+   ============================================================ */
+
+/* --- HERO: композиция без обрезания заголовка --- */
+.hero-content{
+  padding-top: calc(var(--nav-h, 72px) + 4.5rem); /* контент никогда не уходит под навбар */
+}
+.hero-h1{
+  font-size: clamp(2.6rem, 6.4vw, 6.2rem); /* было до 7.5rem — строка резалась */
+  line-height: 1.02;
+  text-wrap: balance;             /* красивые переносы без «висячих» слов */
+}
+.hero-h1 .sub{
+  letter-spacing: clamp(2px, .5vw, 6px);
+  line-height: 1.5;
+  max-width: 34ch;                /* строка не растягивается на весь экран */
+}
+.hero-desc{ max-width: 52ch; }    /* оптимальная длина строки для чтения */
+.hero-slide-overlay{
+  background: linear-gradient(115deg,
+    rgba(6,24,38,.96) 0%, rgba(6,24,38,.72) 42%,
+    rgba(6,24,38,.30) 72%, rgba(6,24,38,.12) 100%);
+}
+/* лёгкий кинематографический parallax фона */
+@media (prefers-reduced-motion: no-preference){
+  .hero-slide.active .hero-slide-bg{
+    animation: heroKenBurns 14s ease-out both;
+  }
+  @keyframes heroKenBurns{
+    from{ transform: scale(1.07); }
+    to  { transform: scale(1.0); }
+  }
+}
+
+/* --- Responsive страховки (320–3840) --- */
+html{ scroll-behavior: smooth; }
+img, video{ max-width: 100%; height: auto; }
+.hero-stats{ flex-wrap: wrap; row-gap: 1.2rem; }
+@media (max-width: 640px){
+  .hero-content{ padding-top: calc(var(--nav-h, 64px) + 3rem); gap: 1.6rem; }
+  .hero-cta{ flex-direction: column; align-items: stretch; }
+  .hero-cta .btn{ justify-content: center; }
+  .section-head{ flex-direction: column; align-items: flex-start; gap: .8rem; }
+}
+@media (min-width: 2200px){
+  .hero-content, .section-inner{ max-width: 1560px; }
+  body{ font-size: 1.06rem; }
+}
+
+/* --- Доступность (WCAG AA) --- */
+:focus-visible{
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.skip-link{
+  position: fixed; top: -48px; left: 16px; z-index: 9999;
+  background: var(--gold); color: #061826;
+  padding: .7rem 1.2rem; border-radius: 0 0 12px 12px;
+  font-weight: 700; font-size: .85rem; text-decoration: none;
+  transition: top .25s var(--ease-out);
+}
+.skip-link:focus{ top: 0; }
+.hero-desc{ color: rgba(255,255,255,.78); }       /* было ~.55 — не проходило контраст */
+.hero-h1 .sub{ color: rgba(255,255,255,.62); }    /* было .35 — почти нечитаемо */
+.hs-l{ color: rgba(255,255,255,.6) !important; }
+.btn{ min-height: 44px; }                          /* тач-таргет ≥44px (Apple HIG) */
+.nav-icon-btn, .slider-arrow{ min-width: 44px; min-height: 44px; }
+
+/* --- Performance: ленивый рендер тяжёлых секций ниже фолда --- */
+.section, .collections-section{
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
+/* --- Микровзаимодействия --- */
+.product-img, .collection-img-wrap img{ transition: transform .6s var(--ease-out); }
+.product-card:hover .product-img,
+.collection-card:hover .collection-img-wrap img{ transform: scale(1.05); }
+.faq-q{ transition: color .2s; }
+.faq-item:hover .faq-q{ color: var(--gold-dark, #a8823d); }
+.nav-cta{ transition: transform .25s var(--ease-out), box-shadow .25s; }
+.nav-cta:hover{ transform: translateY(-1px); box-shadow: 0 6px 16px rgba(200,164,93,.35); }

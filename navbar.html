@@ -27,7 +27,7 @@
 </div>
 
 <!-- NAVBAR -->
-<nav class="navbar" id="navbar">
+<nav class="navbar" id="navbar" aria-label="Главная навигация">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
       <div class="nav-logo-mark">✈</div>
@@ -68,16 +68,16 @@
     </ul>
 
     <div class="nav-actions">
-      <button class="nav-icon-btn" id="searchToggle" title="Поиск">
+      <button class="nav-icon-btn" id="searchToggle" title="Поиск" aria-label="Открыть поиск">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>
-      <div class="nav-lang">
+      <div class="nav-lang" role="group" aria-label="Выбор языка">
         <a href="#" onclick="setLang('ru');return false;">RU</a>
         <a href="#" onclick="setLang('en');return false;">EN</a>
         <a href="#" onclick="setLang('uz');return false;">UZ</a>
       </div>
       <a href="register.html" class="nav-cta">B2B</a>
-      <button class="nav-burger" aria-label="Меню">
+      <button class="nav-burger" aria-label="Открыть меню" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -102,7 +102,7 @@
 <div class="mobile-nav">
   <div class="mobile-nav-head">
     <div class="mobile-nav-logo">BEK<em>TOUR</em></div>
-    <button class="mobile-nav-close"><i class="fa fa-times"></i></button>
+    <button class="mobile-nav-close" aria-label="Закрыть меню"><i class="fa fa-times"></i></button>
   </div>
   <div class="mobile-nav-links">
     <a href="index.html"        class="mobile-nav-link">Главная            <i class="fa fa-chevron-right"></i></a>

@@ -7,10 +7,43 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="canonical" href="https://bektour-v3-production.up.railway.app/">
+  <meta name="theme-color" content="#061826">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Bek Tour Uzbekistan">
+  <meta property="og:title" content="Bek Tour — Откройте Узбекистан">
+  <meta property="og:description" content="Премиальный туризм в Узбекистане: Самарканд, Бухара, Хива, дачи и виллы. Лицензированный туроператор с 1999 года.">
+  <meta property="og:url" content="https://bektour-v3-production.up.railway.app/">
+  <meta property="og:image" content="https://bektour-v3-production.up.railway.app/images/hero/1.webp">
+  <meta property="og:locale" content="ru_RU">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bek Tour — Откройте Узбекистан">
+  <meta name="twitter:description" content="Премиальный туризм в Узбекистане: Самарканд, Бухара, Хива. С 1999 года.">
+  <meta name="twitter:image" content="https://bektour-v3-production.up.railway.app/images/hero/1.webp">
+  <!-- Performance -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preload" as="image" href="images/hero/1.webp" fetchpriority="high">
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Bek Tour Uzbekistan",
+    "url": "https://bektour-v3-production.up.railway.app/",
+    "logo": "https://bektour-v3-production.up.railway.app/images/hero/1.webp",
+    "description": "Лицензированный туроператор Узбекистана с 1999 года. Туры в Самарканд, Бухару, Хиву, аренда дач и вилл.",
+    "address": {"@type": "PostalAddress", "addressCountry": "UZ", "addressLocality": "Tashkent"},
+    "areaServed": "Uzbekistan",
+    "priceRange": "$$"
+  }
+  </script>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="css/gallery.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Перейти к содержимому</a>
 
 <!-- LOADER -->
 <div id="bt-loader" aria-hidden="true">
@@ -189,7 +222,7 @@
 </div>
 
 <!-- DESTINATIONS STRIP -->
-<div class="collections-section">
+<div class="collections-section" id="main-content">
   <div class="collections-header">
     <div>
       <div class="section-label" data-i18n="sec_dest_label">Направления</div>
@@ -200,19 +233,19 @@
   <div class="collections-grid">
     <a href="destinations.html" class="collections-side-label" style="text-decoration:none;"><span>Все</span><span>—</span><span>Места</span></a>
     <a href="destination.html?slug=samarkand" class="collection-card">
-      <div class="collection-img-wrap"><img src="images/cities/samarkand/cover.webp" onerror="this.onerror=null;this.src='images/cities/samarkand/1.webp'" alt="Самарканд"></div>
+      <div class="collection-img-wrap"><img loading="lazy" decoding="async" src="images/cities/samarkand/cover.webp" onerror="this.onerror=null;this.src='images/cities/samarkand/1.webp'" alt="Самарканд"></div>
       <div class="collection-overlay"></div>
       <div class="collection-card-badge">UNESCO</div>
       <div class="collection-label" data-i18n="nav_samarkand">Самарканд</div>
     </a>
     <a href="destination.html?slug=bukhara" class="collection-card">
-      <div class="collection-img-wrap"><img src="images/cities/bukhara/cover.webp" onerror="this.onerror=null;this.src='images/cities/bukhara/1.webp'" alt="Бухара"></div>
+      <div class="collection-img-wrap"><img loading="lazy" decoding="async" src="images/cities/bukhara/cover.webp" onerror="this.onerror=null;this.src='images/cities/bukhara/1.webp'" alt="Бухара"></div>
       <div class="collection-overlay"></div>
       <div class="collection-card-badge">UNESCO</div>
       <div class="collection-label" data-i18n="nav_bukhara">Бухара</div>
     </a>
     <a href="destination.html?slug=khiva" class="collection-card">
-      <div class="collection-img-wrap"><img src="images/cities/khiva/cover.webp" onerror="this.onerror=null;this.src='images/cities/khiva/1.webp'" alt="Хива"></div>
+      <div class="collection-img-wrap"><img loading="lazy" decoding="async" src="images/cities/khiva/cover.webp" onerror="this.onerror=null;this.src='images/cities/khiva/1.webp'" alt="Хива"></div>
       <div class="collection-overlay"></div>
       <div class="collection-card-badge">UNESCO</div>
       <div class="collection-label" data-i18n="nav_khiva">Хива</div>
@@ -243,7 +276,7 @@
     <div class="products-grid">
       <div class="product-card reveal" data-card data-cat="silk" data-price="890">
         <div class="product-img-wrap">
-          <img class="product-img" src="images/cities/samarkand/1.webp" alt="">
+          <img loading="lazy" decoding="async" class="product-img" src="images/cities/samarkand/1.webp" alt="">
           <div class="product-badge badge-hot" data-i18n="tour1_badge">Хит</div>
         </div>
         <div class="product-body">
@@ -263,7 +296,7 @@
 
       <div class="product-card reveal d1" data-card data-cat="luxury" data-price="1890">
         <div class="product-img-wrap">
-          <img class="product-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=75" alt="">
+          <img loading="lazy" decoding="async" class="product-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=75" alt="">
           <div class="product-badge" style="background:var(--gold-dark);" data-i18n="tour2_badge">Эксклюзив</div>
         </div>
         <div class="product-body">
@@ -350,7 +383,7 @@
     </div>
     <div class="products-grid">
       <div class="product-card reveal">
-        <div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=75" alt=""><div class="product-badge badge-hot">★ 4.9</div></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" class="product-img" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=75" alt=""><div class="product-badge badge-hot">★ 4.9</div></div>
         <div class="product-body">
           <div class="product-dest"><i class="fa fa-map-marker-alt"></i> <span data-i18n="nav_samarkand">Самарканд</span></div>
           <div class="product-name">Registan View Boutique</div>
@@ -359,7 +392,7 @@
         </div>
       </div>
       <div class="product-card reveal d1">
-        <div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1455587734955-081b22074882?w=600&q=75" alt=""><div class="product-badge badge-new">UNESCO вид</div></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" class="product-img" src="https://images.unsplash.com/photo-1455587734955-081b22074882?w=600&q=75" alt=""><div class="product-badge badge-new">UNESCO вид</div></div>
         <div class="product-body">
           <div class="product-dest"><i class="fa fa-map-marker-alt"></i> <span data-i18n="nav_bukhara">Бухара</span></div>
           <div class="product-name">Kalon Minaret Hotel</div>
@@ -377,7 +410,7 @@
         </div>
       </div>
       <div class="product-card reveal d3">
-        <div class="product-img-wrap"><img class="product-img" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=75" alt=""><div class="product-badge badge-promo">4★</div></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" class="product-img" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=75" alt=""><div class="product-badge badge-promo">4★</div></div>
         <div class="product-body">
           <div class="product-dest"><i class="fa fa-map-marker-alt"></i> <span data-i18n="nav_tashkent">Ташкент</span></div>
           <div class="product-name">Tashkent Grand Hotel</div>
