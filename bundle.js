@@ -965,38 +965,69 @@ console.log('✈ Bek Tour JS v3 · lang:',LANG);
   });
 })();
 
+
+
 /* ============================================================
-   SMART NAVBAR · v2
-   Scroll down -> navbar slides away. Scroll up -> comes back.
-   Always visible near the top of the page.
+   SMART TOP BAR · v4
+   Верх страницы: тикер + навбар видны.
+   Скролл вниз > 90px: тикер плавно уезжает, навбар встаёт на его место.
+   Скролл вверх >= 24px: тикер сразу возвращается.
+   Навбар закреплён всегда. rAF-троттлинг, без мерцаний.
    ============================================================ */
 (function(){
-  // навбар подгружается динамически (navbar.html), поэтому ищем его каждый раз
   let lastY = window.scrollY;
+  let upAcc = 0;            // накопленный скролл вверх
   let ticking = false;
-  const THRESHOLD = 10;   // игнорируем микроскроллы
-  const SHOW_ZONE = 120;  // в первых 120px всегда видим
+
+  const header = () => document.getElementById('siteHeader');
+
+  function measure(){
+    const h = header(); if(!h) return;
+    const t = h.querySelector('.ticker');
+    h.style.setProperty('--ticker-h', (t ? t.offsetHeight : 0) + 'px');
+    h.dataset.measured = '1';
+  }
 
   function update(){
     ticking = false;
-    const nav = document.getElementById('navbar') || document.querySelector('.navbar');
-    if(!nav) return;
-    const y = window.scrollY;
-    const diff = y - lastY;
-    const mobileOpen = document.body.classList.contains('menu-open') ||
-                       document.querySelector('.mobile-nav.open, .mobile-nav.active');
-    if(mobileOpen){ nav.classList.remove('nav-hidden'); lastY = y; return; }
+    const h = header(); if(!h) return;                 // навбар грузится динамически
+    if(!h.dataset.measured) measure();
 
-    if(y <= SHOW_ZONE){
-      nav.classList.remove('nav-hidden');
-    } else if(diff > THRESHOLD){
-      nav.classList.add('nav-hidden');      // скролл вниз — прячем
-    } else if(diff < -THRESHOLD){
-      nav.classList.remove('nav-hidden');   // скролл вверх — показываем
+    const y = Math.max(0, window.scrollY);
+    const diff = y - lastY;
+    lastY = y;
+
+    // стекло + тень после начала прокрутки
+    const nav = h.querySelector('.navbar');
+    if(nav) nav.classList.toggle('scrolled', y > 8);
+
+    if(y <= 10){                                        // самый верх — всё видно
+      h.classList.remove('tb-hidden');
+      upAcc = 0;
+      return;
     }
-    if(Math.abs(diff) > THRESHOLD) lastY = y;
+    if(diff > 0){                                       // вниз
+      upAcc = 0;
+      if(y > 90) h.classList.add('tb-hidden');
+    } else if(diff < 0){                                // вверх
+      upAcc += -diff;
+      if(upAcc >= 24) h.classList.remove('tb-hidden');
+    }
   }
+
   window.addEventListener('scroll', function(){
     if(!ticking){ requestAnimationFrame(update); ticking = true; }
   }, {passive:true});
+
+  window.addEventListener('resize', function(){
+    const h = header();
+    if(h){ h.dataset.measured = ''; }
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, {passive:true});
+
+  // ждём динамической загрузки navbar.html
+  const iv = setInterval(function(){
+    if(header()){ measure(); update(); clearInterval(iv); }
+  }, 150);
+  setTimeout(function(){ clearInterval(iv); }, 8000);
 })();

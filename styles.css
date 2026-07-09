@@ -1000,3 +1000,41 @@ img, video{ max-width: 100%; height: auto; }
 .faq-item:hover .faq-q{ color: var(--gold-dark, #a8823d); }
 .nav-cta{ transition: transform .25s var(--ease-out), box-shadow .25s; }
 .nav-cta:hover{ transform: translateY(-1px); box-shadow: 0 6px 16px rgba(200,164,93,.35); }
+
+
+/* ============================================================
+   SMART TOP BAR · v4
+   Тикер прячется при скролле вниз, навбар занимает его место.
+   Только transform/opacity — GPU, ноль layout shift.
+   ============================================================ */
+.site-header{
+  position: sticky; top: 0; z-index: 600;
+  transform: translateY(0);
+  transition: transform .42s cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+  --ticker-h: 34px; /* уточняется JS по факту */
+}
+.site-header.tb-hidden{
+  transform: translateY(calc(-1 * var(--ticker-h)));
+}
+.site-header .ticker{
+  transition: opacity .35s ease-in-out;
+}
+.site-header.tb-hidden .ticker{ opacity: 0; }
+
+/* Навбар больше не sticky сам по себе — липнет обёртка */
+.site-header .navbar{ position: relative; top: auto; }
+
+/* Стекло и тень появляются после начала прокрутки */
+.navbar{ box-shadow: 0 0 0 rgba(0,0,0,0); }
+.navbar.scrolled{
+  background: rgba(6,24,38,.78) !important;
+  backdrop-filter: saturate(180%) blur(22px);
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  box-shadow: 0 10px 34px rgba(0,0,0,.38);
+  border-bottom-color: rgba(255,255,255,.09);
+}
+@media (prefers-reduced-motion: reduce){
+  .site-header{ transition: none; }
+  .site-header .ticker{ transition: none; }
+}

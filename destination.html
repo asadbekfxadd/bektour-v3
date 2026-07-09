@@ -568,11 +568,18 @@ renderPage();
       if(!u) break;
       photos.push(u);
     }
-    if(!photos.length) return; // локальных фото нет — оставляем как было
+    // Отдельный слот фона: hero.webp/jpg — приоритетнее галереи
+    let bgUrl = null;
+    for(const e of EXT){
+      const u = `${folder}/hero.${e}`;
+      if(await probe(u)){ bgUrl = u; break; }
+    }
+    if(!bgUrl && photos.length) bgUrl = photos[0];
+    if(!bgUrl && !photos.length) return; // ничего локального нет
 
-    // Фон hero — первое фото
     const bg = document.getElementById('destHeroBg');
-    if(bg) bg.style.backgroundImage = `url('${photos[0]}')`;
+    if(bg && bgUrl) bg.style.backgroundImage = `url('${bgUrl}')`;
+    if(!photos.length) return; // фон есть, галереи нет
 
     // Галерея — все локальные фото
     const gal = document.getElementById('destGallery');
