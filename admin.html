@@ -331,8 +331,8 @@ async function loadSections(){
       count=fl.length;
       const cov=raw.find(f=>/^cover\./i.test(f.name)&&IMG_EXT.includes(extOf(f.name)));
       const first=fl.sort((a,b)=>numOf(a.name)-numOf(b.name))[0];
-      if(cov)cover=cov.download_url;
-      else if(first&&IMG_EXT.includes(extOf(first.name)))cover=first.download_url;
+      if(cov)cover=bust(cov.download_url);
+      else if(first&&IMG_EXT.includes(extOf(first.name)))cover=bust(first.download_url);
     }catch(e){}
     sections.push({...s,count,cover});
   }
@@ -378,7 +378,7 @@ function renderGrid(){
   if(!files.length){grid.innerHTML='<div class="hint">Пока пусто — загрузи первое фото!</div>';return;}
   grid.innerHTML=files.map((f,i)=>{
     const isVid=VID_EXT.includes(extOf(f.name));
-    const media=isVid?`<video src="${f.download_url}" muted></video>`:`<img src="${f.download_url}" loading="lazy">`;
+    const media=isVid?`<video src="${bust(f.download_url)}" muted></video>`:`<img src="${bust(f.download_url)}" loading="lazy">`;
     return `<div class="ph" draggable="true" data-i="${i}">
       ${media}
       <div class="num">${i+1}</div>
@@ -400,7 +400,8 @@ let coverFile=null, heroFile=null, pendingSlot=null;
 function cityNameOf(){
   return currentTitle.replace(/^🏡\s*/,'');
 }
-function slotBg(url){ return url ? `background-image:url('${url}')` : ''; }
+function bust(u){ return u ? u + (u.includes('?') ? '&' : '?') + 'cb=' + Date.now() : u; }
+function slotBg(url){ return url ? `background-image:url('${bust(url)}')` : ''; }
 
 function renderConstructor(){
   const box=document.getElementById('ctorBox');

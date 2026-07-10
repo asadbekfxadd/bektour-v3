@@ -142,7 +142,10 @@
 @keyframes kenburns { from{transform:scale(1.12) translate(1%,.5%)} to{transform:scale(1.02) translate(-1%,-.5%)} }
 .dest-hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(160deg, rgba(6,24,38,.98) 0%, rgba(6,24,38,.55) 60%, rgba(6,24,38,.1) 100%);
+  /* мягкое затемнение: текст читается, фото видно */
+  background:
+    linear-gradient(to top, rgba(6,24,38,.55) 0%, transparent 45%),
+    linear-gradient(115deg, rgba(6,24,38,.72) 0%, rgba(6,24,38,.28) 45%, rgba(6,24,38,0) 75%);
 }
 .dest-hero-inner {
   position: relative; z-index: 2;
