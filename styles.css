@@ -1038,3 +1038,15 @@ img, video{ max-width: 100%; height: auto; }
   .site-header{ transition: none; }
   .site-header .ticker{ transition: none; }
 }
+
+
+/* --- Живой поиск --- */
+.search-results{display:flex;flex-direction:column;gap:4px;padding-top:6px}
+.search-results:empty{display:none}
+.sr-item{display:flex;align-items:center;gap:12px;padding:.7rem 1rem;border-radius:10px;background:rgba(255,255,255,.05);color:#fff;text-decoration:none;transition:background .2s;border:1px solid rgba(255,255,255,.06)}
+.sr-item:hover,.sr-item.active{background:rgba(200,164,93,.16);border-color:rgba(200,164,93,.4)}
+.sr-item .sr-ico{width:34px;height:34px;border-radius:9px;background:rgba(200,164,93,.14);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.sr-item .sr-name{font-size:.87rem;font-weight:600}
+.sr-item .sr-sub{font-size:.68rem;color:rgba(255,255,255,.45);margin-top:1px}
+.sr-item .sr-type{margin-left:auto;font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);border:1px solid rgba(200,164,93,.35);border-radius:99px;padding:3px 9px;flex-shrink:0}
+.sr-empty{padding:.9rem 1rem;font-size:.8rem;color:rgba(255,255,255,.45)}

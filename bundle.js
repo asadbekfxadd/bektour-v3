@@ -1031,3 +1031,93 @@ console.log('✈ Bek Tour JS v3 · lang:',LANG);
   }, 150);
   setTimeout(function(){ clearInterval(iv); }, 8000);
 })();
+
+/* ============================================================
+   LIVE SEARCH · v1
+   Мгновенный поиск по турам, городам, отелям, дачам и страницам.
+   Работает через делегирование — навбар грузится динамически.
+   ============================================================ */
+(function(){
+  const STATIC_INDEX = [
+    {n:'Самарканд', s:'Регистан · Гур-Эмир · Биби-Ханым', t:'Город', i:'🏛', u:'destination.html?slug=samarkand', k:'самарканд регистан samarkand registan'},
+    {n:'Бухара', s:'Минарет Калян · Арк · Ляби-Хауз', t:'Город', i:'🕌', u:'destination.html?slug=bukhara', k:'бухара калян bukhara kalyan'},
+    {n:'Хива', s:'Ичан-Кала · Кальта-Минор', t:'Город', i:'🏰', u:'destination.html?slug=khiva', k:'хива ичан кала khiva itchan'},
+    {n:'Ташкент', s:'Столица Узбекистана', t:'Город', i:'🏙', u:'destination.html?slug=tashkent', k:'ташкент tashkent столица'},
+    {n:'Ферганская долина', s:'Сады · ремёсла · шёлк', t:'Город', i:'🌿', u:'destination.html?slug=fergana', k:'фергана fergana маргилан риштан'},
+    {n:'Золотое кольцо Узбекистана', s:'Самарканд · Бухара · Хива · 10 дней · от $890', t:'Тур', i:'🧭', u:'tours.html?cat=silk', k:'тур золотое кольцо шелковый путь silk'},
+    {n:'Luxury Silk Road', s:'Весь Узбекистан · 5★ · 14 дней · от $1890', t:'Тур', i:'💎', u:'tours.html?cat=luxury', k:'люкс luxury премиум тур'},
+    {n:'Природа Узбекистана', s:'Чарвак · Чимган · Арал · 7 дней · от $590', t:'Тур', i:'🏔', u:'tours.html?cat=nature', k:'природа горы чарвак чимган nature'},
+    {n:'Ташкент + Самарканд за выходные', s:'3 дня · от $390', t:'Тур', i:'🚄', u:'tours.html?cat=city', k:'выходные уикенд короткий тур'},
+    {n:'Отели Узбекистана', s:'Проверенные отели 3–5★', t:'Раздел', i:'🏨', u:'hotels.html', k:'отель отели гостиница hotel'},
+    {n:'Дачи и виллы', s:'Чарвак · Чимган · аренда', t:'Раздел', i:'🏡', u:'dachas.html', k:'дача вилла аренда dacha villa коттедж'},
+    {n:'Контакты', s:'WhatsApp · Telegram · заявка', t:'Страница', i:'✉️', u:'contacts.html', k:'контакты связаться телефон'},
+    {n:'B2B партнёрам', s:'Регистрация партнёра', t:'Страница', i:'🤝', u:'register.html', k:'b2b партнер агентство'},
+    {n:'О компании', s:'Bek Tour — с 1999 года', t:'Страница', i:'ℹ️', u:'about.html', k:'о нас компания лицензия'},
+  ];
+  let dachasLoaded = false;
+  let INDEX = STATIC_INDEX.slice();
+
+  function loadDachas(){
+    if(dachasLoaded) return;
+    dachasLoaded = true;
+    fetch('data/properties.json').then(r => r.json()).then(d => {
+      (d.properties || []).filter(p => p.active !== false).forEach(p => {
+        INDEX.push({
+          n: p.name.ru, s: (p.location?.ru || '') + ' · $' + p.price + '/ночь',
+          t: 'Дача', i: '🏡', u: 'property.html?id=' + p.id,
+          k: (p.name.ru + ' ' + (p.location?.ru || '') + ' дача вилла').toLowerCase()
+        });
+      });
+    }).catch(() => {});
+  }
+
+  function search(q){
+    q = q.trim().toLowerCase();
+    if(q.length < 2) return [];
+    return INDEX.filter(x =>
+      x.n.toLowerCase().includes(q) || x.k.includes(q) || x.s.toLowerCase().includes(q)
+    ).slice(0, 8);
+  }
+
+  function render(results, box){
+    if(!results.length){
+      box.innerHTML = '<div class="sr-empty">Ничего не нашлось — попробуй «Самарканд», «тур» или «дача»</div>';
+      return;
+    }
+    box.innerHTML = results.map((r, i) => `
+      <a class="sr-item${i === 0 ? ' active' : ''}" href="${r.u}">
+        <div class="sr-ico">${r.i}</div>
+        <div><div class="sr-name">${r.n}</div><div class="sr-sub">${r.s}</div></div>
+        <div class="sr-type">${r.t}</div>
+      </a>`).join('');
+  }
+
+  function currentBox(){ return document.getElementById('searchResults'); }
+  function currentInput(){ return document.getElementById('searchInput'); }
+
+  document.addEventListener('input', function(e){
+    if(e.target && e.target.id === 'searchInput'){
+      loadDachas();
+      const box = currentBox();
+      if(!box) return;
+      const q = e.target.value;
+      if(q.trim().length < 2){ box.innerHTML = ''; return; }
+      render(search(q), box);
+    }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.target && e.target.id === 'searchInput' && e.key === 'Enter'){
+      const first = currentBox()?.querySelector('.sr-item');
+      if(first) location.href = first.getAttribute('href');
+    }
+  });
+
+  window.btSearchGo = function(){
+    const inp = currentInput();
+    if(!inp) return;
+    const first = currentBox()?.querySelector('.sr-item');
+    if(first){ location.href = first.getAttribute('href'); }
+    else { inp.focus(); }
+  };
+})();
