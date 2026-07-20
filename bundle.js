@@ -1121,3 +1121,125 @@ console.log('✈ Bek Tour JS v3 · lang:',LANG);
     else { inp.focus(); }
   };
 })();
+
+/* ============================================================
+   WAVE 2 · Карта, Wishlist, Погода городов
+   ============================================================ */
+
+/* --- Клики по карте --- */
+document.addEventListener('click', function(e){
+  const city = e.target.closest && e.target.closest('.uzmap-city');
+  if(city && city.dataset.url) location.href = city.dataset.url;
+});
+
+/* --- Wishlist (избранное) --- */
+(function(){
+  const KEY = 'bt_wishlist';
+  const load = () => { try{ return JSON.parse(localStorage.getItem(KEY)) || []; }catch(e){ return []; } };
+  const save = (list) => localStorage.setItem(KEY, JSON.stringify(list));
+  const inList = (id) => load().some(x => x.id === id);
+
+  function ensureFab(){
+    let fab = document.getElementById('wlFab');
+    if(fab) return fab;
+    fab = document.createElement('button');
+    fab.id = 'wlFab'; fab.className = 'wl-fab';
+    fab.innerHTML = '❤ Избранное <span class="n">0</span>';
+    fab.onclick = togglePanel;
+    document.body.appendChild(fab);
+    const panel = document.createElement('div');
+    panel.id = 'wlPanel'; panel.className = 'wl-panel';
+    document.body.appendChild(panel);
+    return fab;
+  }
+  function refreshFab(){
+    const list = load();
+    const fab = ensureFab();
+    fab.querySelector('.n').textContent = list.length;
+    fab.classList.toggle('show', list.length > 0);
+    if(!list.length) document.getElementById('wlPanel')?.classList.remove('show');
+  }
+  function togglePanel(){
+    const panel = document.getElementById('wlPanel');
+    const list = load();
+    panel.innerHTML = '<h4>Избранное</h4>' + (list.length
+      ? list.map(x => `<a class="wl-row" href="${x.url}">❤ ${x.name}<button class="rm" data-id="${x.id}" title="Убрать">✕</button></a>`).join('')
+      : '<div class="wl-empty">Пусто</div>');
+    panel.classList.toggle('show');
+  }
+  document.addEventListener('click', function(e){
+    if(e.target.classList && e.target.classList.contains('rm') && e.target.dataset.id){
+      e.preventDefault(); e.stopPropagation();
+      save(load().filter(x => x.id !== e.target.dataset.id));
+      refreshFab();
+      document.getElementById('wlPanel').classList.remove('show');
+      syncHearts();
+      return;
+    }
+    const btn = e.target.closest && e.target.closest('.wl-btn');
+    if(btn){
+      e.preventDefault(); e.stopPropagation();
+      const {id, name, url} = btn.dataset;
+      let list = load();
+      if(list.some(x => x.id === id)) list = list.filter(x => x.id !== id);
+      else list.push({id, name, url});
+      save(list); refreshFab(); syncHearts();
+    }
+  });
+  function syncHearts(){
+    document.querySelectorAll('.wl-btn').forEach(b => {
+      b.classList.toggle('on', inList(b.dataset.id));
+      b.textContent = inList(b.dataset.id) ? '♥' : '♡';
+    });
+  }
+  function inject(){
+    // сердечки на карточки туров и городов
+    document.querySelectorAll('.product-card, .collection-card').forEach((card, i) => {
+      if(card.querySelector('.wl-btn')) return;
+      const nameEl = card.querySelector('.product-name, .collection-name, h3, .product-title');
+      const name = nameEl ? nameEl.textContent.trim() : 'Тур ' + (i+1);
+      const link = card.querySelector('a[href]');
+      const url = card.getAttribute('onclick')?.match(/'([^']+)'/)?.[1] || (link ? link.getAttribute('href') : location.pathname);
+      const id = name.toLowerCase().replace(/[^a-zа-я0-9]+/g, '-');
+      const wrap = card.querySelector('.product-img-wrap, .collection-img-wrap') || card;
+      if(getComputedStyle(wrap).position === 'static') wrap.style.position = 'relative';
+      const b = document.createElement('button');
+      b.className = 'wl-btn'; b.title = 'В избранное';
+      b.dataset.id = id; b.dataset.name = name; b.dataset.url = url;
+      wrap.appendChild(b);
+    });
+    syncHearts(); refreshFab();
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setTimeout(inject, 400));
+  else setTimeout(inject, 400);
+})();
+
+/* --- Погода и лучший сезон на страницах городов --- */
+(function(){
+  if(!location.pathname.includes('destination')) return;
+  const CITY_META = {
+    samarkand: {lat:39.65, lon:66.96, best:'апрель–июнь · сентябрь–октябрь'},
+    bukhara:   {lat:39.77, lon:64.42, best:'апрель–июнь · сентябрь–октябрь'},
+    khiva:     {lat:41.38, lon:60.36, best:'апрель–май · сентябрь–октябрь'},
+    tashkent:  {lat:41.31, lon:69.24, best:'апрель–июнь · сентябрь–ноябрь'},
+    fergana:   {lat:40.39, lon:71.78, best:'май–июнь · сентябрь'},
+    shakhrisabz:{lat:39.05, lon:66.83, best:'апрель–июнь · сентябрь–октябрь'}
+  };
+  const slug = new URLSearchParams(location.search).get('slug') || 'samarkand';
+  const meta = CITY_META[slug];
+  if(!meta) return;
+  function insert(tempStr){
+    const host = document.querySelector('.dest-hero-inner');
+    if(!host || document.getElementById('destChips')) return;
+    const div = document.createElement('div');
+    div.id = 'destChips';
+    div.className = 'dest-meta-chips';
+    div.innerHTML = (tempStr ? `<span class="meta-chip">🌤 Сейчас <b>${tempStr}</b></span>` : '') +
+                    `<span class="meta-chip">📅 Лучшее время: <b>${meta.best}</b></span>`;
+    host.appendChild(div);
+  }
+  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${meta.lat}&longitude=${meta.lon}&current=temperature_2m`)
+    .then(r => r.json())
+    .then(d => insert(Math.round(d.current.temperature_2m) + '°C'))
+    .catch(() => insert(null));
+})();

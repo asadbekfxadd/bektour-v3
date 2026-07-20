@@ -1050,3 +1050,52 @@ img, video{ max-width: 100%; height: auto; }
 .sr-item .sr-sub{font-size:.68rem;color:rgba(255,255,255,.45);margin-top:1px}
 .sr-item .sr-type{margin-left:auto;font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);border:1px solid rgba(200,164,93,.35);border-radius:99px;padding:3px 9px;flex-shrink:0}
 .sr-empty{padding:.9rem 1rem;font-size:.8rem;color:rgba(255,255,255,.45)}
+
+/* ============================================================
+   WAVE 2 · Карта, Trust, Wishlist, Погода
+   ============================================================ */
+
+/* --- Карта Узбекистана --- */
+.uzmap-wrap{max-width:860px;margin:0 auto;position:relative}
+.uzmap-svg{width:100%;height:auto;display:block}
+.uzmap-country{fill:#f4efe6;stroke:var(--gold);stroke-width:2;stroke-linejoin:round;filter:drop-shadow(0 10px 24px rgba(6,24,38,.10))}
+.uzmap-route{fill:none;stroke:var(--gold);stroke-width:2;stroke-dasharray:6 8;opacity:.55;animation:routeDash 30s linear infinite}
+@keyframes routeDash{to{stroke-dashoffset:-560}}
+.uzmap-city{cursor:pointer}
+.uzmap-city .dot{fill:var(--gold);stroke:#fff;stroke-width:2.5;transition:r .2s}
+.uzmap-city .pulse{fill:none;stroke:var(--gold);stroke-width:2;opacity:0;animation:cityPulse 2.4s ease-out infinite}
+.uzmap-city:nth-child(odd) .pulse{animation-delay:1.2s}
+@keyframes cityPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.6);opacity:0}}
+.uzmap-city text{font-family:var(--font-body);font-size:15px;font-weight:700;fill:#0d2640;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+.uzmap-city:hover .dot{r:12}
+.uzmap-city:hover text{fill:var(--gold-dark,#a8823d)}
+.uzmap-hint{text-align:center;font-size:.76rem;color:#8a8378;margin-top:1rem}
+@media(max-width:640px){.uzmap-city text{font-size:19px}}
+
+/* --- Trust --- */
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.trust-item{background:#fbf8f2;border:1px solid rgba(200,164,93,.22);border-radius:18px;padding:1.6rem 1.4rem;text-align:center;transition:transform .3s var(--ease-out),box-shadow .3s}
+.trust-item:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.trust-ico{font-size:1.9rem;margin-bottom:.7rem}
+.trust-t{font-weight:700;font-size:.95rem;color:#0d2640;letter-spacing:-.01em}
+.trust-s{font-size:.76rem;color:#7a7466;margin-top:.4rem;line-height:1.55}
+
+/* --- Wishlist --- */
+.wl-btn{position:absolute;top:12px;right:12px;z-index:5;width:38px;height:38px;border-radius:99px;border:none;cursor:pointer;background:rgba(6,24,38,.55);backdrop-filter:blur(8px);color:#fff;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s}
+.wl-btn:hover{transform:scale(1.12)}
+.wl-btn.on{background:var(--gold);color:#061826}
+.wl-fab{position:fixed;left:22px;bottom:22px;z-index:800;background:#0d2640;color:#fff;border:1px solid rgba(200,164,93,.5);border-radius:99px;padding:.7rem 1.15rem;font-size:.82rem;font-weight:700;cursor:pointer;display:none;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.wl-fab.show{display:flex}
+.wl-fab .n{background:var(--gold);color:#061826;border-radius:99px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.72rem}
+.wl-panel{position:fixed;left:22px;bottom:78px;z-index:801;width:min(340px,90vw);background:#0d2640;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px;box-shadow:0 22px 60px rgba(0,0,0,.5);display:none}
+.wl-panel.show{display:block}
+.wl-panel h4{color:var(--gold);font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;margin:0 0 10px}
+.wl-row{display:flex;align-items:center;gap:10px;padding:.55rem .6rem;border-radius:10px;color:#fff;text-decoration:none;font-size:.84rem}
+.wl-row:hover{background:rgba(255,255,255,.07)}
+.wl-row .rm{margin-left:auto;background:none;border:none;color:#e05555;cursor:pointer;font-size:.9rem}
+.wl-empty{color:rgba(255,255,255,.4);font-size:.78rem;padding:.4rem}
+
+/* --- Погода на странице города --- */
+.dest-meta-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.1rem}
+.meta-chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.09);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.16);border-radius:99px;padding:.5rem 1rem;font-size:.78rem;color:#fff}
+.meta-chip b{color:var(--gold)}
