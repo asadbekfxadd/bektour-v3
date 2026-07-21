@@ -7,13 +7,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
+<style>
+/* мобильная адаптация B2B */
+@media(max-width:860px){
+  .auth-split{ grid-template-columns:1fr !important; }
+  .auth-left{ min-height:auto !important; padding:2.2rem 1.15rem 2.6rem !important; }
+  .auth-right{ min-height:auto !important; padding:2.6rem 1.15rem !important; }
+  .auth-left h1, .auth-left .h1{ font-size:1.8rem !important; }
+  input, select, textarea{ font-size:16px !important; }
+}
+html, body{ overflow-x:hidden; }
+</style>
 </head>
 <body style="background:var(--cream);min-height:100vh;">
 
-<div style="min-height:100vh;display:grid;grid-template-columns:1fr 1fr;">
+<div class="auth-split" style="min-height:100vh;display:grid;grid-template-columns:1fr 1fr;">
 
   <!-- LEFT: Form -->
-  <div style="display:flex;flex-direction:column;justify-content:center;padding:3rem 2.5rem;background:#fff;min-height:100vh;">
+  <div class="auth-left" style="display:flex;flex-direction:column;justify-content:center;padding:3rem 2.5rem;background:#fff;min-height:100vh;">
     <div style="max-width:420px;width:100%;margin:0 auto;">
 
       <a href="index.html" style="display:inline-flex;align-items:center;gap:.5rem;color:var(--gray-500);font-size:.78rem;margin-bottom:2.5rem;transition:color .2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray-500)'">
@@ -117,7 +128,7 @@
   </div>
 
   <!-- RIGHT: Benefits -->
-  <div style="background:var(--dark);display:flex;align-items:center;justify-content:center;padding:3rem 2.5rem;position:relative;overflow:hidden;">
+  <div class="auth-right" style="background:var(--dark);display:flex;align-items:center;justify-content:center;padding:3rem 2.5rem;position:relative;overflow:hidden;">
     <div style="position:absolute;top:-10%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(200,164,93,.08) 0%,transparent 70%);pointer-events:none;"></div>
     <div style="position:absolute;bottom:-10%;left:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(200,164,93,.05) 0%,transparent 70%);pointer-events:none;"></div>
 

@@ -1267,3 +1267,127 @@ html, body{ overflow-x: hidden; }
   .trust-item:hover, .food-card:hover{ transform: none; }
   .wl-btn{ opacity: 1; }
 }
+
+/* ============================================================
+   MOBILE PASS v1 · полный проход по телефонной версии
+   ============================================================ */
+
+/* --- iOS: инпуты <16px вызывают авто-зум при фокусе --- */
+#searchInput{ font-size:16px !important; }
+input, select, textarea{ font-size:max(16px, 1em); }
+@media(min-width:900px){ input, select, textarea{ font-size:.9rem; } #searchInput{ font-size:.9rem !important; } }
+
+/* --- Тикер: компактнее, не съедает экран --- */
+@media(max-width:640px){
+  .ticker{ font-size:.56rem; }
+  .ticker-item{ letter-spacing:1.5px; }
+}
+
+/* --- Навбар и мобильное меню --- */
+@media(max-width:640px){
+  .nav-inner{ padding:.65rem 1rem; }
+  .nav-logo-name{ font-size:1.05rem; }
+  .nav-cta{ padding:.5rem .9rem; font-size:.72rem; }
+  .mobile-nav-link{ padding:1.05rem 1.2rem; font-size:1rem; }   /* удобные тач-цели */
+}
+
+/* --- Hero: телефонная композиция --- */
+@media(max-width:640px){
+  .hero-h1{ font-size:clamp(2.2rem, 11vw, 3rem); }
+  .hero-h1 .sub{ font-size:.72rem; letter-spacing:2px; }
+  .hero-desc{ font-size:.9rem; }
+  .hero-stats{ display:grid; grid-template-columns:1fr 1fr; gap:1rem 1.2rem; }  /* 2×2 вместо ряда */
+  .hs-v{ font-size:1.5rem; }
+  .hero-eyebrow{ font-size:.58rem; letter-spacing:2.5px; }
+  .slider-arrow{ display:none; }             /* на тач листают свайпом/точками */
+}
+
+/* --- Секции: меньше воздуха, крупнее читаемость --- */
+@media(max-width:640px){
+  .section{ padding-top:3.2rem; padding-bottom:3.2rem; }
+  .section-inner{ padding-left:1.1rem; padding-right:1.1rem; }
+  .section-title{ font-size:clamp(1.5rem, 7vw, 2rem) !important; }
+  .section-desc{ font-size:.88rem; }
+  .btn-lg{ width:100%; justify-content:center; }
+}
+
+/* --- Карточки: одна колонка, компактный низ --- */
+@media(max-width:640px){
+  .product-foot{ flex-wrap:wrap; gap:.7rem; }
+  .product-foot .btn{ width:100%; justify-content:center; }
+  .review-card{ padding:1.2rem; }
+  .trust-grid{ grid-template-columns:1fr 1fr; gap:10px; }
+  .trust-item{ padding:1.1rem .8rem; }
+  .trust-ico{ font-size:1.5rem; }
+  .trust-t{ font-size:.8rem; }
+  .trust-s{ font-size:.66rem; }
+}
+
+/* --- Карта Узбекистана на телефоне --- */
+@media(max-width:640px){
+  .uzmap-city text{ font-size:22px; }        /* палец ≠ курсор: подписи крупнее */
+  .uzmap-city .dot{ r:12; }
+  .uzmap-hint{ font-size:.68rem; padding:0 1rem; }
+}
+
+/* --- Маршруты (таймлайн) --- */
+@media(max-width:560px){
+  .itin-tab{ padding:.55rem 1.1rem; font-size:.78rem; }
+  .itin-card{ padding:.85rem 1rem; }
+  .itin-name{ font-size:.88rem; }
+  .itin-desc{ font-size:.74rem; }
+}
+
+/* --- Еда и related: карточки в 1-2 колонки --- */
+@media(max-width:640px){
+  .food-grid{ grid-template-columns:1fr 1fr; gap:10px; }
+  .food-card{ padding:1rem .85rem; }
+  .food-emoji{ font-size:1.6rem; }
+  .food-name{ font-size:.92rem; }
+  .food-desc{ font-size:.7rem; }
+  .related-grid{ grid-template-columns:1fr 1fr; gap:10px; }
+  .related-img{ height:120px; }
+  .related-name{ font-size:.85rem; padding:1.4rem .7rem .6rem; }
+}
+@media(max-width:360px){
+  .food-grid, .related-grid, .trust-grid{ grid-template-columns:1fr; }
+}
+
+/* --- Нижняя зона: разводим плавающие элементы --- */
+/* зелёный WhatsApp прячем там, где есть book-bar (дублирует его) */
+body:has(.book-bar) .wa-float{ display:none !important; }
+/* избранное поднимаем над book-bar */
+body:has(.book-bar) .wl-fab{ bottom:84px; }
+body:has(.book-bar) .wl-panel{ bottom:140px; }
+@media(max-width:640px){
+  .wa-float{ width:52px; height:52px; right:14px; bottom:14px; }
+  .wl-fab{ left:14px; bottom:14px; padding:.6rem .95rem; font-size:.76rem; }
+  body:has(.book-bar) .wl-fab{ bottom:78px; }
+  .book-bar{ left:10px; right:10px; transform:none; justify-content:center; bottom:10px; padding:6px; }
+  .bb-btn{ padding:.6rem .9rem; font-size:.76rem; flex:1; justify-content:center; }
+  body{ padding-bottom:0; }
+}
+
+/* --- Дачи и формы на телефоне --- */
+@media(max-width:640px){
+  .form-grid{ grid-template-columns:1fr; }
+  .faq-q{ font-size:.9rem; padding:1rem 1.1rem; }
+  .faq-a-inner{ font-size:.82rem; }
+}
+
+/* --- Страховка от горизонтального скролла --- */
+html, body{ overflow-x:hidden; }
+
+/* --- MOBILE PASS v1.1: фиксы по скринам --- */
+/* статистика на страницах городов — сеткой 2×2 */
+@media(max-width:640px){
+  .dest-hero-stats{ display:grid !important; grid-template-columns:1fr 1fr; gap:1.1rem 1.4rem; }
+  .dest-stat-n{ font-size:1.5rem; }
+}
+/* надёжное скрытие зелёного WhatsApp там, где есть book-bar (без :has) */
+.has-bookbar .wa-float{ display:none !important; }
+.has-bookbar .wl-fab{ bottom:84px; }
+.has-bookbar .wl-panel{ bottom:140px; }
+@media(max-width:640px){
+  .has-bookbar .wl-fab{ bottom:78px; }
+}
