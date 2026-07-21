@@ -1147,3 +1147,123 @@ img, video{ max-width: 100%; height: auto; }
 .bb-btn.bb-gold:hover{filter:brightness(1.08)}
 @media(min-width:900px){.book-bar{bottom:20px}}
 body:has(.book-bar){scroll-padding-bottom:80px}
+
+/* ============================================================
+   MOBILE POLISH v1 · телефонная версия от кнопки до строчки
+   ============================================================ */
+
+/* --- База: без случайного горизонтального скролла, зум iOS --- */
+html, body{ overflow-x: hidden; }
+@media (max-width: 767px){
+  /* iOS зумит страницу, если input < 16px — фиксируем */
+  input, select, textarea{ font-size: 16px !important; }
+
+  /* --- Тикер: компактнее, читаемо --- */
+  .ticker{ font-size: .58rem; }
+  .ticker-item{ letter-spacing: 1.5px; }
+
+  /* --- Навбар: плотнее, логотип меньше --- */
+  :root{ --nav-h: 60px; }
+  .nav-logo-mark{ width: 34px; height: 34px; font-size: .9rem; }
+  .nav-logo-name{ font-size: 1.05rem; }
+  .nav-logo-sub{ font-size: .5rem; }
+  .nav-cta{ padding: .5rem .9rem; font-size: .72rem; }
+  .nav-lang{ gap: 2px; }
+  .nav-lang a{ padding: .35rem .5rem; font-size: .68rem; }
+
+  /* --- Поиск: на весь экран, результаты скроллятся --- */
+  #searchBar{ padding: .7rem .9rem; }
+  .search-results{ max-height: 55vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .sr-item{ padding: .85rem .9rem; }
+
+  /* --- Hero: воздух и целые строки --- */
+  .hero-content{ padding-left: 1.1rem; padding-right: 1.1rem; }
+  .hero-h1{ font-size: clamp(2.2rem, 11vw, 3.4rem); }
+  .hero-eyebrow{ font-size: .58rem; letter-spacing: 2.5px; }
+  .hero-stats{ gap: 1.1rem 1.6rem; }
+  .hs-n{ font-size: 1.5rem; }
+
+  /* --- Секции: меньше вертикального жира --- */
+  .section{ padding-top: 3.2rem; padding-bottom: 3.2rem; }
+  .section-title{ font-size: clamp(1.5rem, 7vw, 2rem) !important; }
+  .section-inner{ padding-left: 1.1rem; padding-right: 1.1rem; }
+
+  /* --- Карточки: одна колонка, крупные фото --- */
+  .products-grid, .collections-grid{ grid-template-columns: 1fr !important; gap: 16px; }
+  .product-img-wrap{ height: 220px; }
+  .reviews-grid{ grid-template-columns: 1fr !important; }
+  .trust-grid{ grid-template-columns: 1fr 1fr; gap: 12px; }
+  .trust-item{ padding: 1.1rem .8rem; }
+  .trust-ico{ font-size: 1.5rem; }
+  .trust-t{ font-size: .8rem; }
+  .trust-s{ font-size: .66rem; }
+  .food-grid{ grid-template-columns: 1fr 1fr; gap: 12px; }
+  .food-card{ padding: 1.1rem .9rem; }
+  .related-grid{ grid-template-columns: 1fr 1fr; gap: 12px; }
+  .related-img{ height: 130px; }
+
+  /* --- Карта: подпись и отступы --- */
+  .uzmap-hint{ font-size: .66rem; padding: 0 1rem; }
+
+  /* --- FAQ и футер: тап-зоны --- */
+  .faq-q{ padding: 1rem 1.1rem; font-size: .9rem; min-height: 52px; }
+  .footer-col a{ padding: .3rem 0; display: inline-block; }
+
+  /* --- Плавающие элементы: разводим, чтобы не слипались --- */
+  .wa-float{
+    width: 50px; height: 50px; font-size: 1.35rem;
+    right: 14px; bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+  .wl-fab{
+    left: 14px; bottom: calc(14px + env(safe-area-inset-bottom));
+    padding: .6rem .9rem; font-size: .74rem;
+  }
+  .wl-panel{ left: 14px; bottom: calc(70px + env(safe-area-inset-bottom)); }
+
+  /* На страницах с book-bar поднимаем остальные кнопки над ним */
+  body:has(.book-bar) .wa-float{ bottom: calc(84px + env(safe-area-inset-bottom)); }
+  body:has(.book-bar) .wl-fab{ bottom: calc(84px + env(safe-area-inset-bottom)); }
+  body:has(.book-bar) .wl-panel{ bottom: calc(140px + env(safe-area-inset-bottom)); }
+  .book-bar{
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    width: calc(100% - 20px); max-width: 420px;
+    justify-content: space-between;
+  }
+  .bb-btn{ padding: .6rem .8rem; font-size: .74rem; flex: 1; justify-content: center; }
+  body:has(.book-bar){ padding-bottom: 90px; }
+
+  /* --- Маршруты: таймлайн впритык к краю --- */
+  .itin-card{ padding: .85rem 1rem; }
+  .itin-name{ font-size: .88rem; }
+  .itin-desc{ font-size: .74rem; }
+
+  /* --- Мобильное меню: safe-area, крупные пункты --- */
+  .mobile-nav{ padding-bottom: env(safe-area-inset-bottom); }
+  .mobile-nav-link{ padding: 1rem 1.3rem; font-size: 1rem; min-height: 54px; }
+
+  /* --- Кнопки: всегда удобные пальцу --- */
+  .btn-lg{ padding: .85rem 1.4rem; font-size: .88rem; }
+  .slider-arrow{ width: 42px; height: 42px; }
+}
+
+/* --- Совсем маленькие экраны (320-374) --- */
+@media (max-width: 374px){
+  .hero-h1{ font-size: 2rem; }
+  .trust-grid, .food-grid, .related-grid{ grid-template-columns: 1fr; }
+  .nav-lang{ display: none; } /* языки доступны в мобильном меню */
+  .book-bar .bb-btn i{ display: none; } /* только текст, чтобы влезло */
+}
+
+/* --- Планшеты (768-1024): две колонки, комфортные отступы --- */
+@media (min-width: 768px) and (max-width: 1024px){
+  .products-grid{ grid-template-columns: 1fr 1fr !important; }
+  .collections-grid{ grid-template-columns: 1fr 1fr !important; }
+  .hero-h1{ font-size: clamp(3rem, 7vw, 4.6rem); }
+}
+
+/* --- Тач-устройства: убираем hover-подвисания --- */
+@media (hover: none){
+  .product-card:hover, .dacha-card:hover, .related-card:hover,
+  .trust-item:hover, .food-card:hover{ transform: none; }
+  .wl-btn{ opacity: 1; }
+}
