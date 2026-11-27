@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>B2B Регистрация — Bek Tour Partner Hub</title>
+  <title>B2B Регистрация — Bek Tour Partner Hub</title><meta name="robots" content="noindex,nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -218,7 +218,7 @@ function togglePass(id, btn) {
   btn.innerHTML = `<i class="fa fa-eye${isPass ? '-slash' : ''}"></i>`;
 }
 
-function handleReg() {
+async function handleReg() {
   const name  = document.getElementById('regName').value.trim();
   const email = document.getElementById('regEmail').value.trim();
   const pass  = document.getElementById('regPass').value;
@@ -232,8 +232,9 @@ function handleReg() {
   if (!agree) { showToast('Примите условия использования', 'error'); return; }
 
   // Save to localStorage
+  const h = await hashPass(pass);
   const user = {
-    name, email, pass, type,
+    name, email, salt: h.salt, hash: h.hash, type,
     company: document.getElementById('regCompany').value.trim(),
     phone: document.getElementById('regPhone').value.trim(),
     created: new Date().toISOString(),
@@ -244,14 +245,37 @@ function handleReg() {
   setTimeout(() => window.location.href = 'dashboard.html', 1500);
 }
 
-function handleLogin() {
+// Пароль не хранится открытым текстом: PBKDF2-SHA256 + случайная соль.
+// Это учебная регистрация в браузере (без сервера) — для реальной защиты нужен бэкенд.
+async function hashPass(pass, saltB64) {
+  const enc = new TextEncoder();
+  const salt = saltB64 ? Uint8Array.from(atob(saltB64), c => c.charCodeAt(0)) : crypto.getRandomValues(new Uint8Array(16));
+  const key = await crypto.subtle.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveBits']);
+  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations: 210000, hash: 'SHA-256' }, key, 256);
+  const b64 = a => btoa(String.fromCharCode(...new Uint8Array(a)));
+  return { salt: b64(salt), hash: b64(bits) };
+}
+
+async function handleLogin() {
   const email = document.getElementById('loginEmail').value.trim();
   const pass  = document.getElementById('loginPass').value;
 
   if (!email || !pass) { showToast('Заполните все поля', 'error'); return; }
 
   const user = JSON.parse(localStorage.getItem('bt_user') || '{}');
-  if (user.email === email && user.pass === pass) {
+  let ok = false;
+  if (user.email === email) {
+    if (user.hash && user.salt) {
+      ok = (await hashPass(pass, user.salt)).hash === user.hash;
+    } else if (user.pass && user.pass === pass) {
+      // старая запись с открытым паролем: переводим на хэш при первом входе
+      const h = await hashPass(pass);
+      delete user.pass; user.salt = h.salt; user.hash = h.hash;
+      localStorage.setItem('bt_user', JSON.stringify(user));
+      ok = true;
+    }
+  }
+  if (ok) {
     showToast(`✅ Добро пожаловать, ${user.name.split(' ')[0]}!`, 'success');
     setTimeout(() => window.location.href = 'dashboard.html', 1200);
   } else {

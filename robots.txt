@@ -2,5 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 Disallow: /dashboard.html
+Disallow: /register.html
+Disallow: /properties.html
+Disallow: /property-form.html
 
 Sitemap: https://bektour-v3-production.up.railway.app/sitemap.xml
