@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>BEK TOUR — Админка</title>
+<title>BEK TOUR — Админка</title><meta name="robots" content="noindex,nofollow">
 <style>
 :root{--gold:#C8A45D;--dark:#061826;--dark2:#0a2236;--dark3:#04121f;--red:#e05555;--green:#3dba6f}
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,'Inter','Segoe UI',system-ui,sans-serif}
@@ -357,6 +357,7 @@ function log(t,c='inf',target='status'){const el=document.getElementById(target)
 const numOf=n=>{const m=n.match(/^(\d+)\./);return m?parseInt(m[1]):null;};
 const extOf=n=>n.split('.').pop().toLowerCase();
 const isMedia=n=>IMG_EXT.includes(extOf(n))||VID_EXT.includes(extOf(n));
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function utf8ToBase64(s){return btoa(unescape(encodeURIComponent(s)));}
 function base64ToUtf8(b){return decodeURIComponent(escape(atob(b)));}
 
@@ -386,7 +387,7 @@ async function loadSections(){
     <div class="sec-card" onclick="openDetail('${s.folder}','${s.name.replace(/'/g,"\\'")}')">
       <div class="sec-cover" style="${s.cover?`background-image:url('${s.cover}')`:''}">${s.cover?'':s.emoji}</div>
       <div class="sec-body">
-        <div class="sec-name">${s.name}</div>
+        <div class="sec-name">${esc(s.name)}</div>
         <div class="sec-count">${s.count} файл(ов)</div>
       </div>
     </div>`).join('');
@@ -417,7 +418,7 @@ async function openDetail(folder,title){
     heroFile=rawList.find(f=>/^hero\./i.test(f.name)&&IMG_EXT.includes(extOf(f.name)))||null;
     renderConstructor();
     renderGrid();
-  }catch(e){grid.innerHTML=`<div class="err" style="color:var(--red)">Ошибка: ${e.message}</div>`;}
+  }catch(e){grid.innerHTML=`<div class="err" style="color:var(--red)">Ошибка: ${esc(e.message)}</div>`;}
 }
 function renderGrid(){
   const grid=document.getElementById('photoGrid');
@@ -677,7 +678,7 @@ function openMove(i){
   const sel=document.getElementById('moveTarget');
   const all=[...BASE_SECTIONS,...propSections()].filter(s=>s.folder!==currentFolder);
   if(!all.length){alert('Нет других разделов');return;}
-  sel.innerHTML=all.map(s=>`<option value="${s.folder}">${s.name}</option>`).join('');
+  sel.innerHTML=all.map(s=>`<option value="${esc(s.folder)}">${esc(s.name)}</option>`).join('');
   sel.selectedIndex=0;
   document.getElementById('moveModal').classList.remove('hidden');
 }
@@ -719,7 +720,7 @@ async function loadProps(){
     const j=await r.json();propsSha=j.sha;
     propsData=JSON.parse(base64ToUtf8(j.content.replace(/\n/g,'')));
     renderProps();
-  }catch(e){list.innerHTML=`<div style="color:var(--red)">Ошибка: ${e.message}</div>`;}
+  }catch(e){list.innerHTML=`<div style="color:var(--red)">Ошибка: ${esc(e.message)}</div>`;}
 }
 function renderProps(){
   const list=document.getElementById('propList');
@@ -728,8 +729,8 @@ function renderProps(){
   const tl={dacha:'Дача',villa:'Вилла',guesthouse:'Гостевой дом',hotel:'Отель'};
   list.innerHTML=props.map(p=>`
     <div class="prop-item">
-      <div><div class="t">${p.name?.ru||p.id}${p.active===false?'<span class="off">скрыт</span>':''}</div>
-      <div class="s">${tl[p.type]||p.type} · $${p.price}/ночь · ${p.guests} гостей · id: ${p.id}</div></div>
+      <div><div class="t">${esc(p.name?.ru||p.id)}${p.active===false?'<span class="off">скрыт</span>':''}</div>
+      <div class="s">${tl[p.type]||p.type} · $${p.price}/ночь · ${p.guests} гостей · id: ${esc(p.id)}</div></div>
       <div style="display:flex;gap:8px;">
         <button class="btn btn-ghost btn-sm" onclick="propPhotos('${p.id}','${(p.name?.ru||p.id).replace(/'/g,"\\'")}')">📸 Фото</button>
         <button class="btn btn-ghost btn-sm" onclick="openForm('${p.id}')">✏️</button>
